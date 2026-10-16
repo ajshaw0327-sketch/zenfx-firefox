@@ -1,0 +1,205 @@
+{
+  "layout": {
+    "root": true,
+    "columns": "42px 42px 42px 42px 42px 42px",
+    "headings": [
+      "\"Favorites\"",
+      "\"Pinned tabs\"",
+      "\"Today tabs\""
+    ],
+    "tabs": [
+      {
+        "title": "Favorite A",
+        "pinned": true,
+        "tier": "favorite",
+        "marker": true,
+        "index": 0,
+        "rect": {
+          "x": 4,
+          "y": 85,
+          "width": 42,
+          "height": 39,
+          "top": 85,
+          "right": 46,
+          "bottom": 124,
+          "left": 4
+        },
+        "labelDisplay": "none"
+      },
+      {
+        "title": "Favorite B",
+        "pinned": true,
+        "tier": "favorite",
+        "marker": true,
+        "index": 1,
+        "rect": {
+          "x": 46,
+          "y": 85,
+          "width": 42,
+          "height": 39,
+          "top": 85,
+          "right": 88,
+          "bottom": 124,
+          "left": 46
+        },
+        "labelDisplay": "none"
+      },
+      {
+        "title": "Pinned document",
+        "pinned": true,
+        "tier": "pinned",
+        "marker": false,
+        "index": 2,
+        "rect": {
+          "x": 4,
+          "y": 163,
+          "width": 252,
+          "height": 39,
+          "top": 163,
+          "right": 256,
+          "bottom": 202,
+          "left": 4
+        },
+        "labelDisplay": "flex"
+      },
+      {
+        "title": "Today page",
+        "pinned": false,
+        "tier": "today",
+        "marker": false,
+        "index": 3,
+        "rect": {
+          "x": 0,
+          "y": 248.39999389648438,
+          "width": 260,
+          "height": 39.75,
+          "top": 248.39999389648438,
+          "right": 260,
+          "bottom": 288.1499938964844,
+          "left": 0
+        },
+        "labelDisplay": "flex"
+      }
+    ],
+    "lightChildren": 3,
+    "pinnedCount": 3
+  },
+  "serialized": {
+    "favorite": "true",
+    "pinned": true
+  },
+  "reload": {
+    "root": true,
+    "columns": "42px 42px 42px 42px 42px 42px",
+    "headings": [
+      "\"Favorites\"",
+      "\"Pinned tabs\"",
+      "\"Today tabs\""
+    ],
+    "tabs": [
+      {
+        "title": "Favorite A",
+        "pinned": true,
+        "tier": "favorite",
+        "marker": true,
+        "index": 0,
+        "rect": {
+          "x": 4,
+          "y": 85,
+          "width": 42,
+          "height": 39,
+          "top": 85,
+          "right": 46,
+          "bottom": 124,
+          "left": 4
+        },
+        "labelDisplay": "none"
+      },
+      {
+        "title": "Favorite B",
+        "pinned": true,
+        "tier": "favorite",
+        "marker": true,
+        "index": 1,
+        "rect": {
+          "x": 46,
+          "y": 85,
+          "width": 42,
+          "height": 39,
+          "top": 85,
+          "right": 88,
+          "bottom": 124,
+          "left": 46
+        },
+        "labelDisplay": "none"
+      },
+      {
+        "title": "Pinned document",
+        "pinned": true,
+        "tier": "pinned",
+        "marker": false,
+        "index": 2,
+        "rect": {
+          "x": 4,
+          "y": 163,
+          "width": 252,
+          "height": 39,
+          "top": 163,
+          "right": 256,
+          "bottom": 202,
+          "left": 4
+        },
+        "labelDisplay": "flex"
+      },
+      {
+        "title": "Today page",
+        "pinned": false,
+        "tier": "today",
+        "marker": false,
+        "index": 3,
+        "rect": {
+          "x": 0,
+          "y": 248.39999389648438,
+          "width": 260,
+          "height": 39.75,
+          "top": 248.39999389648438,
+          "right": 260,
+          "bottom": 288.1499938964844,
+          "left": 0
+        },
+        "labelDisplay": "flex"
+      }
+    ],
+    "lightChildren": 3,
+    "pinnedCount": 3
+  },
+  "reorder": [
+    "favorite",
+    "favorite",
+    "pinned",
+    "today"
+  ],
+  "restoredFavorite": {
+    "pinned": true,
+    "tier": "favorite",
+    "marker": true
+  },
+  "context": {
+    "correctTab": true,
+    "disabled": false,
+    "todayChecked": "true",
+    "label": "Today page",
+    "menu": "open",
+    "root": true
+  },
+  "collapsed": {
+    "heading": "none",
+    "width": 52
+  },
+  "split": {
+    "rejected": true,
+    "tier": "today",
+    "aligned": true
+  },
+  "pass": true
+}

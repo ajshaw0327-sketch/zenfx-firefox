@@ -4,7 +4,7 @@ This is a **standard Firefox WebExtension**, separate from the CSS theme and the
 
 ## Policy
 
-- Pinned tabs and all native Firefox group members are protected, including collapsed groups. Group titles styled as folders remain real groups.
+- Favorites created by the hierarchy hook are real pinned tabs and are protected. Other pinned tabs and all native Firefox group members are protected, including collapsed groups. Group titles styled as folders remain real groups.
 - Active/highlighted tabs, private tabs, audible/capturing tabs, loading tabs, file/internal pages, and tabs whose group status cannot be established are additionally protected.
 - Activity means tab activation or navigation, plus the time a tab leaves the active state. Reading an active tab cannot cause it to close. Protected tabs are also refreshed during checks. Removing a pin/group starts a fresh activity period when Firefox emits the corresponding update.
 - Existing tabs receive a full 24-hour grace period on first installation. Activity timestamps use Firefox's per-tab session storage; native restored-tab timestamps do not override a saved activity timestamp.

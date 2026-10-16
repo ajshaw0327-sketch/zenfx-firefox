@@ -68,7 +68,7 @@ def prepare(profile, application=None):
         profile / 'user.js': (prior + ('\n' if prior and not prior.endswith('\n') else '') + BLOCK).encode(),
         managed / 'userChrome.css': (ROOT / 'standalone' / 'userChrome.css').read_bytes(),
         managed / 'chrome.manifest': (ROOT / 'installer' / 'chrome.manifest').read_bytes(),
-        managed / 'enabled.json': b'{"zenfx":true,"version":"1.5"}\n',
+        managed / 'enabled.json': b'{"zenfx":true,"version":"1.6"}\n',
     }
     for source in (ROOT / 'optional-chrome').glob('*.uc.js'):
         files[managed / source.name] = source.read_bytes()
@@ -78,7 +78,12 @@ def prepare(profile, application=None):
         files[resources / 'defaults' / 'pref' / 'zenfx-autoconfig.js'] = (ROOT / 'installer' / 'zenfx-autoconfig.js').read_bytes()
         for p, data in list(files.items()):
             if p.is_relative_to(resources) and p.exists() and p.read_bytes() != data:
-                raise ValueError('A different existing file would be overwritten: ' + str(p))
+                # Upgrade only an exact previously shipped ZenFX loader. It is
+                # backed up by the same transaction; custom AutoConfig stays protected.
+                known_loader = p == resources / 'zenfx.cfg' and any(
+                    p.read_bytes() == old.read_bytes() for old in (ROOT / 'installer/legacy').glob('*.cfg'))
+                if not known_loader:
+                    raise ValueError('A different existing file would be overwritten: ' + str(p))
     for p in files:
         safe_target(p)
     return profile, managed, files

@@ -5,6 +5,7 @@ The browser target is Firefox 158.0 on macOS. Browser checks were performed only
 ## Browser checks
 
 - Native vertical tabs, groups, pinned tabs, collapsed rail, split panes, and native menus were exercised.
+- The Favorites/Pinned/Today hierarchy was checked in a disposable window: three headings, icon tiles and full-width rows, native/visual ordering after reordering, a real tab context menu and its priority command, native unpin clearing the Favorite marker, serialized-and-restored Favorite session data, script reload, the 52px collapsed rail, and preservation of native split alignment. See [the hierarchy report](TAB-HIERARCHY.md) and [fixture measurements](validation/tab-hierarchy.json).
 - Trusted pointer dragging resized the expanded sidebar from 173px to 263px to 203px. Collapse used the 52px rail; re-expansion retained the native width. The original width was restored.
 - Two temporary custom themes verified native toolbar images and light/dark sidebar/search colors. Folder icons were checked in 12 combinations of theme, open/closed state, and normal/matching/missing group tint; the minimum measured icon contrast in these fixtures was 7.60:1.
 - Native split pairs retained equal, horizontally aligned headers and actual side-by-side page panes. Header dividers were transparent with 173px and 280px sidebars, for active and inactive splits. The selected-tab outline remained visible.
@@ -19,6 +20,6 @@ Temporary themes/tabs were removed and user settings restored after focused chec
 
 ## Automated checks
 
-The repository includes 14 cleanup policy/recovery tests and 11 installer tests. Installer cases use temporary filesystem fixtures and cover backup/restore, explicit closed-browser confirmation, previews without writes, conflicts, version checking, symlink rejection, edited-file preservation, shared loader retention, and write-failure rollback.
+The repository includes 14 cleanup policy/recovery tests and 13 installer tests. Installer cases use temporary filesystem fixtures and cover backup/restore, explicit closed-browser confirmation, previews without writes, conflicts, version checking, symlink rejection, edited-file preservation, shared loader retention, write-failure rollback, an exact previous-loader upgrade with backup, and rejection of a modified loader.
 
 See [DEVELOPMENT.md](DEVELOPMENT.md) to run these checks and rebuild downloads. No real profile or application installation occurs during the automated tests.

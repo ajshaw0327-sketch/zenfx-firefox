@@ -626,6 +626,49 @@ sidebar-main,
   -moz-window-dragging: no-drag !important;
 }
 
+/* Optional hierarchy hook: retain native tab nodes, focus and drag behavior.
+ * Favorites are icon tiles; other native pinned tabs get readable full rows.
+ * Decorative headings live on pseudo-elements, never among real tab children. */
+@media ((-moz-platform: macos) or (-moz-platform: windows) or (-moz-platform: linux)) {
+  :root[zenfx-tab-hierarchy]:not([chromehidden]):not([customizing]) {
+    #tabbrowser-tabs[orient="vertical"][expanded] #pinned-tabs-container::part(items-wrapper) {
+      display: grid !important;
+      grid-template-columns: repeat(auto-fit, minmax(var(--zenfx-pin-size), 1fr)) !important;
+      grid-auto-rows: auto !important;
+      align-content: start !important;
+    }
+    #tabbrowser-tabs[orient="vertical"][expanded] #tabbrowser-arrowscrollbox::before {
+      display: block;
+      grid-column: 1 / -1;
+      padding: 10px 10px 6px;
+      font: 600 11px/1.4 system-ui;
+      color: color-mix(in srgb, currentColor 76%, transparent);
+      text-align: start;
+      pointer-events: none;
+      -moz-window-dragging: drag;
+    }
+    #tabbrowser-tabs[orient="vertical"][expanded] #pinned-tabs-container .tabbrowser-tab[zenfx-favorite] {
+      order: -1;
+    }
+    #tabbrowser-tabs[orient="vertical"][expanded] #pinned-tabs-container .tabbrowser-tab:not([zenfx-favorite]) {
+      order: 1;
+      grid-column: 1 / -1;
+      min-width: 0 !important;
+    }
+    #tabbrowser-tabs[orient="vertical"][expanded] #pinned-tabs-container .tabbrowser-tab:not([zenfx-favorite]) .tab-label-container {
+      display: flex !important;
+    }
+    #tabbrowser-tabs[orient="vertical"][expanded] #pinned-tabs-container .tabbrowser-tab:not([zenfx-favorite]) .tab-content {
+      justify-content: start !important;
+      column-gap: 8px !important;
+      padding-inline: 12px !important;
+    }
+    #tabbrowser-tabs[orient="vertical"][expanded] #tabbrowser-arrowscrollbox::before {
+      content: "Today tabs";
+    }
+  }
+}
+
 
 /* Your overrides survive updates when you keep this file.
  * Examples — uncomment only the values you want:

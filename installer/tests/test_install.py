@@ -36,6 +36,24 @@ class InstallerTests(unittest.TestCase):
         with self.assertRaises(ValueError):setup.install(self.profile,self.app,True)
         self.assertFalse((self.profile/'zenfx-install-state.json').exists())
         self.assertIn('company.cfg',p.read_text())
+    def test_known_previous_loader_is_upgraded_and_backed_up(self):
+        import json
+        old = (setup.ROOT/'installer/legacy/zenfx-1.5.cfg').read_bytes()
+        (self.app/'zenfx.cfg').write_bytes(old)
+        (self.app/'defaults/pref/zenfx-autoconfig.js').write_bytes((setup.ROOT/'installer/zenfx-autoconfig.js').read_bytes())
+        setup.install(self.profile,self.app,True)
+        self.assertEqual((self.app/'zenfx.cfg').read_bytes(),(setup.ROOT/'installer/zenfx.cfg').read_bytes())
+        state=json.loads((self.profile/'zenfx-install-state.json').read_text())
+        record=next(r for r in state['files'] if Path(r['path'])==self.app/'zenfx.cfg')
+        self.assertEqual(Path(record['backup']).read_bytes(),old)
+        setup.uninstall(self.profile,closed=True)
+        self.assertIn('zenfx-tab-hierarchy.uc.js',(self.app/'zenfx.cfg').read_text())
+    def test_modified_previous_loader_is_preserved(self):
+        old=(setup.ROOT/'installer/legacy/zenfx-1.5.cfg').read_bytes()+b'\n// User modification\n'
+        (self.app/'zenfx.cfg').write_bytes(old)
+        with self.assertRaises(ValueError):setup.install(self.profile,self.app,True)
+        self.assertEqual((self.app/'zenfx.cfg').read_bytes(),old)
+        self.assertFalse((self.profile/'zenfx-install-state.json').exists())
     def test_newer_version_is_not_claimed_compatible(self):
         (self.app/'application.ini').write_text('[App]\nVersion=159.0\n')
         with self.assertRaises(ValueError):setup.install(self.profile,self.app,True)

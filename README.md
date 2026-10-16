@@ -7,7 +7,7 @@ A Zen-inspired Firefox interface using native vertical tabs, folder-style tab gr
 ## Download
 
 - **[Appearance only](https://github.com/ajshaw0327-sketch/zenfx-firefox/raw/refs/heads/main/dist/ZenFX-Appearance.zip)** — just `userChrome.css` and installation instructions.
-- **[Full setup](https://github.com/ajshaw0327-sketch/zenfx-firefox/raw/refs/heads/main/dist/ZenFX-Setup.zip)** — appearance, the three optional scripts, guided installer, and unsigned tab-cleanup source.
+- **[Full setup](https://github.com/ajshaw0327-sketch/zenfx-firefox/raw/refs/heads/main/dist/ZenFX-Setup.zip)** — appearance, the four optional scripts, guided installer, and unsigned tab-cleanup source.
 - **[Single CSS file](standalone/userChrome.css)** — replace your stylesheet, enable Firefox's custom stylesheets preference, and restart.
 
 Start with [appearance installation](appearance/README.md) or [full setup instructions](START-HERE.md).
@@ -19,8 +19,23 @@ Start with [appearance installation](appearance/README.md) or [full setup instru
 | Appearance | Resizable vertical sidebar, theme-aware folder icons, rounded page frame, floating address-field styling, paired split-tab headers without an internal divider, draggable empty sidebar space | `userChrome.css` |
 | Floating New Tab search | New Tab opens the real search/address field over the current webpage; Escape cancels; submitting opens a tab | Optional browser script |
 | Drag to split | Drag one ordinary tab onto the left or right side of the current page to create native Split View | Optional browser script |
+| Tab hierarchy | Favorites as icon tiles, Pinned tabs as full rows, Today tabs below; right-click → Tab priority to change a tab’s section | Optional browser script |
 | Compact Mode controls | Button and editable shortcut; the default takes over Firefox's sidebar-toggle binding, Control+Z in the tested macOS build | Optional browser script |
 | Tab cleanup | Protect pinned/grouped tabs; close eligible ordinary web tabs after 24 hours of inactivity, with pause, preview, and recovery controls | Separate unsigned WebExtension source |
+
+## Tab hierarchy
+
+Right-click a tab → **Tab priority** → **Favorites**, **Pinned tabs**, or **Today tabs**.
+
+- **Favorites:** icon tiles at the top, with saved per-tab status. They are native pinned tabs and are protected from automatic cleanup.
+- **Pinned tabs:** native pinned tabs shown as full rows with their titles; also protected from cleanup.
+- **Today tabs:** ordinary unpinned tabs and groups. Eligible ungrouped web tabs use the optional cleanup add-on's 24-hour inactivity rule. The label does not delete tabs at midnight or change Firefox's session-restore setting.
+
+Empty Favorites/Pinned sections hide their headings. The collapsed sidebar retains the native icon rail. Separate a native Split View before changing one of its tabs to Favorites or Pinned tabs. [Details and validation](docs/TAB-HIERARCHY.md).
+
+This feature requires the **fourth optional script plus the updated CSS and loader**; appearance-only CSS cannot save Favorites or add the priority menu. Existing installations must update the loader's script list as well as the stylesheet/scripts.
+
+![Favorites, Pinned tabs, and Today tabs](docs/images/tab-hierarchy.png)
 
 ![Native split-tab headers with no divider](docs/images/split-tabs.png)
 
@@ -36,7 +51,7 @@ For CSS-only Compact Mode, create Boolean preferences `zenfx.compact.top` and/or
 
 ## Keep the scripts across restarts
 
-The three scripts are in [optional-chrome](optional-chrome/). Copying them into `chrome` does not execute them. They need a compatible browser script loader.
+The four scripts are in [optional-chrome](optional-chrome/). Copying them into `chrome` does not execute them. They need a compatible browser script loader.
 
 The [full setup](START-HERE.md) offers an AutoConfig loader when you explicitly select both your profile and the Firefox application. This writes two files into that application and backs up changed profile files. Python 3.10+ is required; the graphical installer also needs Tk. Existing AutoConfig conflicts are refused.
 

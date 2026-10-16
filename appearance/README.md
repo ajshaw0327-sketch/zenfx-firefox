@@ -19,6 +19,8 @@ Optional: in `about:config`, create Boolean preferences `zenfx.compact.top` and/
 
 **Side-by-side pages:** right-click a tab → **Add Split View**, then choose the other tab. You can also select two tabs with Command-click and right-click → **Open in Split View**. Native split pairs have two equal-width headers in one row in the expanded sidebar, without a divider between the headers. Long titles truncate within their own half. Firefox creates and manages the actual page panes.
 
+The Favorites / Pinned tabs / Today tabs hierarchy requires the separate `zenfx-tab-hierarchy.uc.js` script and updated loader; this CSS-only package cannot save Favorite status or provide its priority menu.
+
 Firefox's native groups remain available. Automatic tab cleanup, current-page New Tab command interception, and page-drop drag-to-split require separate code and are not in this package.
 
 Tested on desktop Firefox 158/macOS. Windows/Linux styling is experimental; mobile Firefox and other Firefox versions are not verified.

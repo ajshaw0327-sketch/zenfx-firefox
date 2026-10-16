@@ -6,6 +6,7 @@ These are privileged Firefox 158 interface scripts, not normal WebExtensions. A 
 | --- | --- |
 | `zenfx-newtab-overlay.uc.js` | New Tab opens the real address/search field over the current live webpage, including Split View. Opening/repeating/Escape does not create tabs; submitting opens a tab. Tab switching cancels the overlay. Ordinary address editing remains native. |
 | `zenfx-drag-to-split.uc.js` | Drag one ordinary unpinned tab onto the left/right half of the current page to create native Split View. Copy, modified, multi-tab, cross-window, and existing-split gestures remain outside this hook. |
+| `zenfx-tab-hierarchy.uc.js` | Adds Favorites icon tiles, full-width Pinned tabs, and Today tabs. Right-click → Tab priority to change sections. Favorites use native pinning and saved session metadata; the cleanup add-on protects them as pinned tabs. |
 | `zenfx-compact-toggle.uc.js` | Adds the Compact Mode toolbar button and editable shortcut. Its default replaces Firefox's localized sidebar-toggle shortcut (Control+Z on tested macOS). Choosing another shortcut, No shortcut, or uninstall restores native handling. |
 
 Right-click the Compact Mode button or use **Tools → ZenFX shortcut settings…** to change its binding. Choose **Use default → Save** to use the sidebar shortcut if you previously customized it.
@@ -18,6 +19,6 @@ The scripts and actual new-window loading were browser-tested in an isolated pro
 
 ## Removal
 
-Remove the scripts from your chosen loader and restart, or use the [installer's restore flow](../START-HERE.md#restore--uninstall). To unload them temporarily from the current browser window, their browser-chrome APIs are `window.ZenfxNewTabOverlay.uninstall()`, `window.ZenfxDragToSplit.uninstall()`, and `window.ZenfxCompactToggle.uninstall()`. Do not run these expressions in an ordinary webpage console.
+Remove the scripts from your chosen loader and restart, or use the [installer's restore flow](../START-HERE.md#restore--uninstall). To unload them temporarily from the current browser window, their browser-chrome APIs are `window.ZenfxNewTabOverlay.uninstall()`, `window.ZenfxDragToSplit.uninstall()`, `window.ZenfxCompactToggle.uninstall()`, and `window.ZenfxTabHierarchy.uninstall()`. Do not run these expressions in an ordinary webpage console.
 
 See the [validation report](../docs/VALIDATION.md) for tested behavior and remaining limits. The appearance CSS works independently; tab cleanup is a [separate add-on](../companion/README.md).
