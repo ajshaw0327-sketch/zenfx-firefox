@@ -19,7 +19,7 @@ Start with [appearance installation](appearance/README.md) or [full setup instru
 | Appearance | Resizable vertical sidebar, theme-aware folder icons, rounded page frame, floating address-field styling, paired split-tab headers without an internal divider, draggable empty sidebar space | `userChrome.css` |
 | Floating New Tab search | New Tab opens the real search/address field over the current webpage; Escape cancels; submitting opens a tab | Optional browser script |
 | Drag to split | Drag one ordinary tab onto the left or right side of the current page to create native Split View | Optional browser script |
-| Tab hierarchy | Favorites as icon tiles, Pinned tabs as full rows, Today tabs below; right-click → Tab priority to change a tab’s section | Optional browser script |
+| Tab hierarchy | Favorites as icon tiles, Pinned tabs as full rows, unlabeled ordinary tabs below a Clear control; right-click → Tab priority to change a tab’s section | Optional browser script |
 | Compact Mode controls | Button and editable shortcut; the default takes over Firefox's sidebar-toggle binding, Control+Z in the tested macOS build | Optional browser script |
 | Tab cleanup | Protect pinned/grouped tabs; close eligible ordinary web tabs after 24 hours of inactivity, with pause, preview, and recovery controls | Separate unsigned WebExtension source |
 
@@ -29,11 +29,11 @@ Right-click a tab → **Tab priority** → **Favorites**, **Pinned tabs**, or **
 
 - **Favorites:** icon tiles at the top, with saved per-tab status. They are native pinned tabs and are protected from automatic cleanup.
 - **Pinned tabs:** native pinned tabs shown as full rows with their titles; also protected from cleanup.
-- **Today tabs:** ordinary unpinned tabs and groups. Eligible ungrouped web tabs use the optional cleanup add-on's 24-hour inactivity rule. The label does not delete tabs at midnight or change Firefox's session-restore setting.
+- **Today tabs:** ordinary unpinned, ungrouped tabs, shown without a section heading. Eligible web tabs use the optional cleanup add-on's 24-hour inactivity rule; native session settings still apply.
 
-The sidebar follows Zen’s quieter visual hierarchy: Favorites fill a compact icon grid, pinned rows stay transparent at rest, and thin dividers reveal their section labels on hover. The collapsed sidebar retains the native icon rail. Separate a native Split View before changing one of its tabs to Favorites or Pinned tabs. [Details and validation](docs/TAB-HIERARCHY.md). [Public Zen styling reference](https://github.com/zen-browser/desktop/blob/dev/src/zen/tabs/zen-tabs/vertical-tabs.css).
+Favorites fill a compact icon grid. Pinned rows and group-colored outline folders sit above one divider with **↓ Clear**; **New Tab** and ordinary tabs sit below it. There is no space name or Today heading. **Clear** closes visible ordinary tabs, including ordinary split pairs, while preserving Favorites, pins, folders, and hidden tabs. Firefox’s **Reopen Closed Tab** recovers closed tabs. The collapsed sidebar retains the native icon rail. Separate a native Split View before changing one of its tabs to Favorites or Pinned tabs. [Details and validation](docs/TAB-HIERARCHY.md). [Public Zen styling reference](https://github.com/zen-browser/desktop/blob/dev/src/zen/tabs/zen-tabs/vertical-tabs.css).
 
-This feature requires the **fourth optional script plus the updated CSS and loader**; appearance-only CSS cannot save Favorites or add the priority menu. Existing installations must update the loader's script list as well as the stylesheet/scripts.
+This feature requires the **fourth optional script plus the updated CSS and loader**; appearance-only CSS cannot save Favorites, add the priority menu, or make Clear work. Existing installations must update the loader's script list as well as the stylesheet/scripts.
 
 ![Favorites, Pinned tabs, and Today tabs](docs/images/tab-hierarchy.png)
 

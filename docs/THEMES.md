@@ -4,7 +4,7 @@ ZenFX keeps the Zen-style layout while letting Firefox choose the actual sidebar
 
 Firefox 158 Nova treats the vertical-tab launcher as part of the browser frame. A theme's `sidebar` and `sidebar_text` fields apply to sidebar panels; using those older panel colors to paint the launcher would cover the frame image and differ from default Firefox. Themes should define their frame/tab-bar text color, such as `tab_background_text`; omitted fields retain Firefox's own fallback behavior. ZenFX does not invent replacements for missing theme properties.
 
-Folder icons use the native `--tab-group-color`, with a matching subtle header tint. Changing the group color through Firefox updates both immediately. The open/closed folder masks remain opaque; names use the native frame text color. A faint theme-ink edge helps the icon remain identifiable against a similar background. Forced-colors mode follows the system's readable CanvasText instead of forcing a decorative palette.
+Outline folder icons use the native `--tab-group-color`, with transparent headers at rest. Changing the group color through Firefox updates the icon immediately. The open/closed folder masks remain opaque; names use the native frame text color. A faint theme-ink edge helps the icon remain identifiable against a similar background. Forced-colors mode follows the system's readable CanvasText instead of forcing a decorative palette.
 
 ## Verified on Firefox 158/macOS
 

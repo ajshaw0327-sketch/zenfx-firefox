@@ -6,7 +6,7 @@ These are privileged Firefox 158 interface scripts, not normal WebExtensions. A 
 | --- | --- |
 | `zenfx-newtab-overlay.uc.js` | New Tab opens the real address/search field over the current live webpage, including Split View. Opening/repeating/Escape does not create tabs; submitting opens a tab. Tab switching cancels the overlay. Ordinary address editing remains native. |
 | `zenfx-drag-to-split.uc.js` | Drag one ordinary unpinned tab onto the left/right half of the current page to create native Split View. Copy, modified, multi-tab, cross-window, and existing-split gestures remain outside this hook. |
-| `zenfx-tab-hierarchy.uc.js` | Adds Favorites icon tiles, full-width Pinned tabs, and Today tabs. Right-click → Tab priority to change sections. Favorites use native pinning and saved session metadata; the cleanup add-on protects them as pinned tabs. |
+| `zenfx-tab-hierarchy.uc.js` | Adds Favorites icon tiles, full-width Pinned tabs, protected folders, and unlabeled ordinary tabs. A **↓ Clear** divider closes ordinary tabs; New Tab sits immediately below it. Right-click → Tab priority to change sections. Favorites use native pinning and saved session metadata; the cleanup add-on protects them as pinned tabs. |
 | `zenfx-compact-toggle.uc.js` | Adds the Compact Mode toolbar button and editable shortcut. Its default replaces Firefox's localized sidebar-toggle shortcut (Control+Z on tested macOS). Choosing another shortcut, No shortcut, or uninstall restores native handling. |
 
 Right-click the Compact Mode button or use **Tools → ZenFX shortcut settings…** to change its binding. Choose **Use default → Save** to use the sidebar shortcut if you previously customized it.

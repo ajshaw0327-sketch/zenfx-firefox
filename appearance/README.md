@@ -13,13 +13,13 @@ Contains only CSS and these instructions. No extensions, installer, startup load
 
 **Move the window:** the supplied sidebar window-drag rules are included for empty sidebar space, with exclusions for tabs, folder headers, buttons, links, inputs, split-tab pairs, and resize handles.
 
-Includes Zen-like sidebar/tab and folder-group styling, rounded page frame, focused floating address bar styling, and optional compact-mode CSS. Firefox add-on themes supply the colors and header images; the CSS no longer forces a fixed palette over them. Firefox paints the sidebar’s native frame colors and images itself. Folder icons and header tints follow their native tab-group colors, while names use Firefox’s frame text color. Webpage content is not restyled.
+Includes Zen-like sidebar/tab and folder-group styling, rounded page frame, focused floating address bar styling, and optional compact-mode CSS. Firefox add-on themes supply the colors and header images; the CSS no longer forces a fixed palette over them. Firefox paints the sidebar’s native frame colors and images itself. Outline folder icons follow their native tab-group colors, while names use Firefox’s frame text color. Webpage content is not restyled.
 
 Optional: in `about:config`, create Boolean preferences `zenfx.compact.top` and/or `zenfx.compact.sidebar`. `true` enables edge-reveal hiding; `false` keeps the toolbar/sidebar visible. This CSS-only package has no custom toggle button, keyboard shortcut, or shortcut editor.
 
 **Side-by-side pages:** right-click a tab → **Add Split View**, then choose the other tab. You can also select two tabs with Command-click and right-click → **Open in Split View**. Native split pairs have two equal-width headers in one row in the expanded sidebar, without a divider between the headers. Long titles truncate within their own half. Firefox creates and manages the actual page panes.
 
-The Favorites / Pinned tabs / Today tabs hierarchy requires the separate `zenfx-tab-hierarchy.uc.js` script and updated loader; this CSS-only package cannot save Favorite status or provide its priority menu.
+The Favorites / Pinned tabs / Today tabs hierarchy requires the separate `zenfx-tab-hierarchy.uc.js` script and updated loader; this CSS-only package cannot save Favorite status, provide its priority menu, or provide a working Clear tabs control.
 
 Firefox's native groups remain available. Automatic tab cleanup, current-page New Tab command interception, and page-drop drag-to-split require separate code and are not in this package.
 

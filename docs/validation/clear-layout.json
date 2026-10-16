@@ -1,0 +1,318 @@
+{
+  "layout": {
+    "tabs": [
+      {
+        "title": "Favorite",
+        "rect": {
+          "x": 4,
+          "y": 50,
+          "width": 232,
+          "height": 42,
+          "top": 50,
+          "right": 236,
+          "bottom": 92,
+          "left": 4
+        },
+        "slot": null
+      },
+      {
+        "title": "Welcome!",
+        "rect": {
+          "x": 8.25,
+          "y": 126,
+          "width": 231.75,
+          "height": 36,
+          "top": 126,
+          "right": 240,
+          "bottom": 162,
+          "left": 8.25
+        },
+        "slot": null
+      },
+      {
+        "title": "Settings",
+        "rect": {
+          "x": 0,
+          "y": 228,
+          "width": 240,
+          "height": 36,
+          "top": 228,
+          "right": 240,
+          "bottom": 264,
+          "left": 0
+        },
+        "slot": null
+      },
+      {
+        "title": "Privacy Policy",
+        "rect": {
+          "x": 0,
+          "y": 264,
+          "width": 240,
+          "height": 36,
+          "top": 264,
+          "right": 240,
+          "bottom": 300,
+          "left": 0
+        },
+        "slot": null
+      }
+    ],
+    "folder": {
+      "x": 7,
+      "y": 92,
+      "width": 226,
+      "height": 34,
+      "top": 92,
+      "right": 233,
+      "bottom": 126,
+      "left": 7
+    },
+    "groupSlot": "zenfx-protected-folders",
+    "clear": {
+      "x": 10,
+      "y": 165,
+      "width": 220,
+      "height": 24,
+      "top": 165,
+      "right": 230,
+      "bottom": 189,
+      "left": 10
+    },
+    "newTab": {
+      "x": 7,
+      "y": 190,
+      "width": 226,
+      "height": 36,
+      "top": 190,
+      "right": 233,
+      "bottom": 226,
+      "left": 7
+    },
+    "pin": {
+      "x": 0,
+      "y": 46,
+      "width": 240,
+      "height": 46,
+      "top": 46,
+      "right": 240,
+      "bottom": 92,
+      "left": 0
+    },
+    "normal": {
+      "x": 0,
+      "y": 92,
+      "width": 240,
+      "height": 724.5,
+      "top": 92,
+      "right": 240,
+      "bottom": 816.5,
+      "left": 0
+    },
+    "headings": [
+      "none",
+      "none"
+    ],
+    "disabled": false
+  },
+  "grid": [
+    {
+      "width": 180,
+      "a": {
+        "x": 4,
+        "y": 50,
+        "width": 84,
+        "height": 42,
+        "top": 50,
+        "right": 88,
+        "bottom": 92,
+        "left": 4
+      },
+      "b": {
+        "x": 92,
+        "y": 50,
+        "width": 84,
+        "height": 42,
+        "top": 50,
+        "right": 176,
+        "bottom": 92,
+        "left": 92
+      },
+      "pin": {
+        "x": 4,
+        "y": 92,
+        "width": 172,
+        "height": 36,
+        "top": 92,
+        "right": 176,
+        "bottom": 128,
+        "left": 4
+      },
+      "folder": {
+        "x": 7,
+        "y": 128,
+        "width": 166,
+        "height": 34,
+        "top": 128,
+        "right": 173,
+        "bottom": 162,
+        "left": 7
+      }
+    },
+    {
+      "width": 240,
+      "a": {
+        "x": 4,
+        "y": 50,
+        "width": 114,
+        "height": 42,
+        "top": 50,
+        "right": 118,
+        "bottom": 92,
+        "left": 4
+      },
+      "b": {
+        "x": 122,
+        "y": 50,
+        "width": 114,
+        "height": 42,
+        "top": 50,
+        "right": 236,
+        "bottom": 92,
+        "left": 122
+      },
+      "pin": {
+        "x": 4,
+        "y": 92,
+        "width": 232,
+        "height": 36,
+        "top": 92,
+        "right": 236,
+        "bottom": 128,
+        "left": 4
+      },
+      "folder": {
+        "x": 7,
+        "y": 128,
+        "width": 226,
+        "height": 34,
+        "top": 128,
+        "right": 233,
+        "bottom": 162,
+        "left": 7
+      }
+    },
+    {
+      "width": 300,
+      "a": {
+        "x": 4,
+        "y": 50,
+        "width": 144,
+        "height": 42,
+        "top": 50,
+        "right": 148,
+        "bottom": 92,
+        "left": 4
+      },
+      "b": {
+        "x": 152,
+        "y": 50,
+        "width": 144,
+        "height": 42,
+        "top": 50,
+        "right": 296,
+        "bottom": 92,
+        "left": 152
+      },
+      "pin": {
+        "x": 4,
+        "y": 92,
+        "width": 292,
+        "height": 36,
+        "top": 92,
+        "right": 296,
+        "bottom": 128,
+        "left": 4
+      },
+      "folder": {
+        "x": 7,
+        "y": 128,
+        "width": 286,
+        "height": 34,
+        "top": 128,
+        "right": 293,
+        "bottom": 162,
+        "left": 7
+      }
+    }
+  ],
+  "beforeClick": {
+    "normal": {
+      "x": 0,
+      "y": 92,
+      "width": 240,
+      "height": 724.5,
+      "top": 92,
+      "right": 240,
+      "bottom": 816.5,
+      "left": 0
+    },
+    "box": {
+      "x": 0,
+      "y": 92,
+      "width": 240,
+      "height": 724.5,
+      "top": 92,
+      "right": 240,
+      "bottom": 816.5,
+      "left": 0
+    },
+    "scrollLeft": 0,
+    "scrollWidth": 240,
+    "clear": {
+      "x": 182,
+      "y": 166,
+      "width": 48,
+      "height": 22,
+      "top": 166,
+      "right": 230,
+      "bottom": 188,
+      "left": 182
+    }
+  },
+  "clear": {
+    "remaining": [
+      "Favorite",
+      "Welcome!"
+    ],
+    "favorite": true,
+    "folder": true,
+    "closed": true,
+    "disabled": true
+  },
+  "undo": [
+    "Favorite",
+    "Welcome!",
+    "Settings",
+    "Privacy Policy"
+  ],
+  "reload": 1,
+  "collapsed": "none",
+  "uninstall": {
+    "slot": null,
+    "clear": false
+  },
+  "splitAlignment": true,
+  "protection": {
+    "pin": true,
+    "hidden": true,
+    "group": true,
+    "favorite": true,
+    "splitClosed": true
+  },
+  "lastTab": {
+    "open": true,
+    "count": 1
+  },
+  "pass": true
+}

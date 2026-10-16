@@ -129,7 +129,7 @@
         },
         "body": {
           "bg": "rgb(220, 195, 168)",
-          "image": "url(\"fixture-header.svg\"), none",
+          "image": "url(\"moz-extension://f18dbd3f-2b2c-4807-a1a5-c0c2a0729c58/header.svg\"), none",
           "ink": "rgb(60, 42, 36)"
         },
         "selected": {
@@ -156,7 +156,7 @@
         },
         "body": {
           "bg": "rgb(220, 195, 168)",
-          "image": "url(\"fixture-header.svg\"), none",
+          "image": "url(\"moz-extension://f18dbd3f-2b2c-4807-a1a5-c0c2a0729c58/header.svg\"), none",
           "ink": "rgb(60, 42, 36)"
         },
         "selected": {
@@ -242,7 +242,7 @@
         },
         "body": {
           "bg": "rgb(24, 38, 59)",
-          "image": "url(\"fixture-header.svg\"), none",
+          "image": "url(\"moz-extension://e40ef5c8-3d25-4459-8712-511ab70a2a45/header.svg\"), none",
           "ink": "rgb(232, 242, 251)"
         },
         "selected": {
@@ -269,7 +269,7 @@
         },
         "body": {
           "bg": "rgb(24, 38, 59)",
-          "image": "url(\"fixture-header.svg\"), none",
+          "image": "url(\"moz-extension://e40ef5c8-3d25-4459-8712-511ab70a2a45/header.svg\"), none",
           "ink": "rgb(232, 242, 251)"
         },
         "selected": {
@@ -355,7 +355,7 @@
         },
         "body": {
           "bg": "rgb(24, 38, 59)",
-          "image": "url(\"fixture-header.svg\"), none",
+          "image": "url(\"moz-extension://38a686b1-f5a8-4fac-97d5-ad01cd126668/header.svg\"), none",
           "ink": "rgb(232, 242, 251)"
         },
         "selected": {
@@ -382,7 +382,7 @@
         },
         "body": {
           "bg": "rgb(24, 38, 59)",
-          "image": "url(\"fixture-header.svg\"), none",
+          "image": "url(\"moz-extension://38a686b1-f5a8-4fac-97d5-ad01cd126668/header.svg\"), none",
           "ink": "rgb(232, 242, 251)"
         },
         "selected": {

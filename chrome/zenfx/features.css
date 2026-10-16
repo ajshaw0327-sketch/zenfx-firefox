@@ -20,7 +20,7 @@
       padding: 0 !important;
       block-size: auto !important;
       border-radius: var(--zenfx-tab-radius) !important;
-      background: color-mix(in srgb, var(--tab-group-color) var(--zenfx-folder-tint), transparent) !important;
+      background: transparent !important;
       box-shadow: none !important;
     }
     #tabbrowser-tabs[orient="vertical"][expanded] tab-group .tab-group-label {
@@ -36,7 +36,7 @@
       background: transparent !important;
       color: var(--zenfx-foreground) !important;
       font-size: 13px !important;
-      font-weight: 550 !important;
+      font-weight: 600 !important;
     }
     #tabbrowser-tabs[orient="vertical"][expanded] tab-group .tab-group-label::before {
       content: "";
@@ -53,12 +53,12 @@
       background-color: var(--tab-group-color, var(--zenfx-foreground)) !important;
       background-image: none !important;
       filter: drop-shadow(0 0 .6px color-mix(in srgb, var(--zenfx-foreground) 55%, transparent));
-      mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v2H7l-4 8V7Z' fill='none' stroke='black' stroke-width='1.6' stroke-linejoin='round'/%3E%3Cpath d='M3 19h15l4-8H7l-4 8Z' fill='black' fill-opacity='1' stroke='black' stroke-width='1.5' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat !important;
+      mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 19V6a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2v2M3 19h15l4-9H7l-4 9Z' fill='none' stroke='black' stroke-width='1.8' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat !important;
       mask-mode: alpha !important;
       pointer-events: none;
     }
     #tabbrowser-tabs[orient="vertical"][expanded] tab-group[collapsed] .tab-group-label::before {
-      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v10H3V7Z' fill='black' fill-opacity='1' stroke='black' stroke-width='1.6' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v10H3V7Z' fill='none' stroke='black' stroke-width='1.8' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
     }
     #tabbrowser-tabs[orient="vertical"][expanded] tab-group .tab-group-label::after {
       content: "";
@@ -336,32 +336,23 @@ sidebar-main,
       column-gap: 8px !important;
       padding-inline: 10px !important;
     }
-    #tabbrowser-tabs[orient="vertical"][expanded] #vertical-pinned-tabs-splitter {
-      height: 4px !important;
-      min-height: 4px !important;
-      margin-block: 0 !important;
-      background: transparent !important;
+    #tabbrowser-tabs[orient="vertical"] { gap: 0 !important; }
+    #tabbrowser-tabs[orient="vertical"] #vertical-pinned-tabs-splitter { display: none !important; }
+    #tabbrowser-tabs[orient="vertical"][expanded] #pinned-tabs-container {
+      height: auto !important;
+      min-height: 0 !important;
+      flex: 0 1 auto !important;
+      max-height: 35vh;
     }
-    #tabbrowser-tabs[orient="vertical"][expanded] #tabbrowser-arrowscrollbox::before {
-      content: none;
+    #tabbrowser-tabs[orient="vertical"][expanded] #tabbrowser-arrowscrollbox::before,
+    #tabbrowser-tabs[orient="vertical"][expanded] #tabbrowser-arrowscrollbox::after { content: none !important; display: none !important; }
+    #tabbrowser-tabs[orient="vertical"][expanded] #tabs-newtab-button {
+      min-height: 36px !important;
+      margin-block: 0 2px !important;
+      margin-inline: 7px !important;
+      width: calc(100% - 14px) !important;
     }
-    &:is([zenfx-has-pins], [zenfx-has-favorites]) #tabbrowser-tabs[orient="vertical"][expanded] #tabbrowser-arrowscrollbox::before {
-      content: "Today tabs";
-      display: block;
-      box-sizing: border-box;
-      height: 18px;
-      margin: 1px 10px 3px;
-      font: 500 10px/18px system-ui;
-      color: transparent;
-      background: linear-gradient(var(--zenfx-hierarchy-line), var(--zenfx-hierarchy-line)) center / 100% 1px no-repeat;
-      pointer-events: none;
-      -moz-window-dragging: drag;
-    }
-    #tabbrowser-tabs[orient="vertical"][expanded] #tabbrowser-arrowscrollbox:hover::before {
-      color: var(--zenfx-hierarchy-label);
-      background-position: right center;
-      background-size: calc(100% - 62px) 1px;
-    }
+    #tabbrowser-tabs[orient="vertical"][expanded] #tabbrowser-arrowscrollbox-periphery { min-height: 0 !important; }
     @media not (forced-colors) {
       #tabbrowser-tabs[orient="vertical"][expanded] #pinned-tabs-container .tabbrowser-tab:not([zenfx-favorite], [selected], [multiselected], :hover) .tab-background {
         background: transparent !important;
