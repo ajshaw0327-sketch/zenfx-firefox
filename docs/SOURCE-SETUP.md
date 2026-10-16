@@ -2,7 +2,33 @@
 
 This runs the readable setup source through your installed Python. No ZenFX app signing, Apple Developer account, Tk, or downloaded `.command` launcher is required. It does not change macOS security settings or clear quarantine attributes. It is not an Apple-notarized installer, and it does not guarantee that every macOS policy will permit execution.
 
-## Start the guided setup
+## Quick Mac setup: copy once
+
+Requires an installed **Python 3.10+**. Open **Terminal**, paste this entire block, and press Return. It downloads the setup archive from this repository, checks its SHA-256 checksum, extracts it into a temporary folder, and starts the guided installer. You do not need to find the downloaded installer or type its path.
+
+```sh
+(
+  set -eu
+  command -v python3 >/dev/null || { echo "Install Python from https://www.python.org/downloads/ first."; exit 1; }
+  python3 -c 'import sys; sys.exit(0 if sys.version_info >= (3, 10) else "Python 3.10+ is required.")'
+  zenfx_setup_dir=$(mktemp -d "${TMPDIR:-/tmp}/zenfx-setup.XXXXXX")
+  trap 'rm -rf "$zenfx_setup_dir"' EXIT
+  zenfx_downloads="https://raw.githubusercontent.com/ajshaw0327-sketch/zenfx-firefox/main/dist"
+  curl --fail --location --silent --show-error "$zenfx_downloads/ZenFX-Setup.zip" -o "$zenfx_setup_dir/ZenFX-Setup.zip"
+  curl --fail --location --silent --show-error "$zenfx_downloads/SHA256SUMS.txt" -o "$zenfx_setup_dir/SHA256SUMS.txt"
+  awk '$2 == "ZenFX-Setup.zip" { print }' "$zenfx_setup_dir/SHA256SUMS.txt" > "$zenfx_setup_dir/setup.sha256"
+  test -s "$zenfx_setup_dir/setup.sha256"
+  (cd "$zenfx_setup_dir" && shasum -a 256 -c setup.sha256)
+  ditto -xk "$zenfx_setup_dir/ZenFX-Setup.zip" "$zenfx_setup_dir/extracted"
+  python3 "$zenfx_setup_dir/extracted/ZenFX/installer/install.py" --guided
+)
+```
+
+The checksum checks download integrity against this repository’s checksum file; it is not Apple signing or independent verification. Setup still shows the proposed file changes and asks before writing. Downloaded temporary files are removed when setup exits; installed files and profile backups stay.
+
+Choose **1** for appearance or **2** for the full feature set. When asked for the profile, open `about:support` in Firefox → **Profile Folder → Show in Finder**, then drag that folder into Terminal. Full setup also asks for Firefox.app. Quit Firefox when prompted, review the changes, and type `yes` to install. See the full-setup Mac limitation below.
+
+## Manual source setup
 
 1. [Download the setup ZIP](https://github.com/ajshaw0327-sketch/zenfx-firefox/raw/refs/heads/main/dist/ZenFX-Setup.zip) and extract it. Open the **ZenFX** folder. You can inspect `installer/install.py` before running it.
 2. Use **Python 3.10+**. If needed, get it from [python.org](https://www.python.org/downloads/); Tk is not needed for this method.

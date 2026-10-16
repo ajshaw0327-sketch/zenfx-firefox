@@ -2,13 +2,13 @@
 
 **Desktop Firefox 158. macOS is browser-tested. Windows/Linux launchers and styles are experimental and have not been browser-tested. Mobile Firefox, older Firefox/ESR, and arbitrary future releases are not supported by this build.**
 
-**Mac source setup:** [Follow the guided Python instructions](docs/SOURCE-SETUP.md). This avoids the downloaded `.command` launcher and needs no ZenFX app signing or Tk. It does not change macOS security settings.
+**Easiest on Mac: [Copy the quick setup command](docs/SOURCE-SETUP.md#quick-mac-setup-copy-once).** It downloads the package, checks the checksum, and starts setup. Python 3.10+ is required; no Tk, app signing, or downloaded launcher is needed.
 
 ## Before you start
 
 - **Want only the look?** [Download appearance only](https://github.com/ajshaw0327-sketch/zenfx-firefox/raw/refs/heads/main/dist/ZenFX-Appearance.zip) and follow its [four copy-and-restart steps](appearance/README.md). Python is not needed.
 - **Want the tab features and Compact controls?** [Download full setup](https://github.com/ajshaw0327-sketch/zenfx-firefox/raw/refs/heads/main/dist/ZenFX-Setup.zip), extract the whole ZIP, and use the steps below. No Git or build step is needed.
-- Full setup needs **Python 3.10+**. The graphical installer additionally needs Tk; [guided source setup](docs/SOURCE-SETUP.md) does not. If Python is missing, use the [official Python downloads](https://www.python.org/downloads/). The official macOS and Windows Python distributions include Tk; Linux users may need their distribution’s Tk package. [Python’s Tk documentation](https://docs.python.org/3/library/tkinter.html) explains how to check it.
+- Full setup needs **Python 3.10+**. Launchers use the text wizard by default. The optional graphical installer (`--gui`) additionally needs Tk; [guided source setup](docs/SOURCE-SETUP.md) does not. If Python is missing, use the [official Python downloads](https://www.python.org/downloads/). The official macOS and Windows Python distributions include Tk; Linux users may need their distribution’s Tk package. [Python’s Tk documentation](https://docs.python.org/3/library/tkinter.html) explains how to check it.
 
 ## Install
 
@@ -17,12 +17,12 @@
 
    | System | Open | Firefox application field |
    | --- | --- | --- |
-   | macOS | [Guided Python setup](docs/SOURCE-SETUP.md) (no Tk); `Install.command` is the unsigned graphical launcher | Select `Firefox.app`, usually in Applications |
+   | macOS | [Quick setup command](docs/SOURCE-SETUP.md#quick-mac-setup-copy-once) (no Tk); `Install.command` is an alternative unsigned text-wizard launcher | Select `Firefox.app`, usually in Applications |
    | Windows | Double-click **Install.cmd** | Select the Firefox installation folder containing `application.ini` |
    | Linux | Run **Install.sh** from a terminal with `sh Install.sh` | Select the Firefox installation folder containing `application.ini` |
 
-3. In **Firefox profile folder**, choose the folder from step 1. For floating New Tab search, drag-to-split, Favorites, Clear, and Compact controls, also choose the **Firefox application**. Leaving that field blank installs only the appearance.
-4. Check **Firefox is completely closed**. Click **Review and install**, inspect the listed files, and confirm installation. Setup backs up the files it replaces.
+3. In the text wizard, choose **1** for appearance or **2** for full setup and paste/drag the profile folder from step 1. If using the optional graphical installer, choose it in **Firefox profile folder**. For floating New Tab search, drag-to-split, Favorites, Clear, and Compact controls, also choose the **Firefox application**. In the graphical installer, leaving that field blank installs only the appearance.
+4. Confirm Firefox is completely closed, inspect the listed files, and type `yes` to proceed. In the optional graphical installer, check **Firefox is completely closed** and click **Review and install**. Setup backs up the files it replaces.
 5. Reopen that Firefox profile, then check the controls below.
 
 ## Check it worked
@@ -41,8 +41,8 @@ The last four checks need the optional scripts. If only the appearance changes, 
 
 | Problem | What to do |
 | --- | --- |
-| Setup will not open / Python or Tk is missing | Install Python with Tk using the official links above, or use the [command-line alternative](#command-line-alternative). Do not run the launcher from inside the ZIP. |
-| A launcher is not executable | From the extracted ZenFX folder, use `python3 installer/install.py --gui` on Mac/Linux or `py -3 installer/install.py --gui` on Windows. |
+| Setup will not open / Python or Tk is missing | Use [guided source setup](docs/SOURCE-SETUP.md), which needs Python but no Tk. Do not run the launcher from inside the ZIP. |
+| A launcher is not executable | From the extracted ZenFX folder, use `python3 installer/install.py --guided` on Mac/Linux or `py -3 installer/install.py --guided` on Windows. |
 | Firefox looks unchanged | Recheck the exact profile in `about:support`. In `about:config`, confirm `toolkit.legacyUserProfileCustomizations.stylesheets` is `true`, then fully quit and reopen Firefox. Enable native Vertical Tabs in the sidebar settings if needed. |
 | Appearance works, but the scripts are missing | Confirm setup included the Firefox application. For an existing managed install, use the [update/restore instructions](#favorites-pinned-tabs-and-today-tabs). Copying scripts into the profile alone does not run them. See the startup limitation below. |
 | Setup says another AutoConfig exists | Keep that configuration. This installer refuses conflicts; use appearance only or integrate the scripts with your existing compatible loader. |
@@ -51,7 +51,7 @@ The last four checks need the optional scripts. If only the appearance changes, 
 
 ## What setup changes
 
-Choosing only a profile installs the appearance and enables native vertical tabs. Existing `userChrome.css` is backed up and replaced with the ZenFX entry; existing `user.js` settings are retained with an appended ZenFX block. Firefox must be closed. No network downloads, account access, automatic elevation, or extension-signature changes occur.
+Choosing only a profile installs the appearance and enables native vertical tabs. Existing `userChrome.css` is backed up and replaced with the ZenFX entry; existing `user.js` settings are retained with an appended ZenFX block. Firefox must be closed. The installer itself performs no network downloads, account access, automatic elevation, or extension-signature changes. The quick Mac command downloads the archive and checksum before starting it.
 
 For the full New Tab overlay, drag-to-split, Compact Mode controls, and tab hierarchy to load after restart, also select the **Firefox application** in setup. On macOS this is `Firefox.app`; on Windows/Linux it is the directory containing `application.ini`. This optional choice adds **`zenfx.cfg` and `defaults/pref/zenfx-autoconfig.js` to that application**. It enables privileged AutoConfig JavaScript, as required by the supplied startup loader. Only profiles explicitly containing the ZenFX managed marker/scripts load the hooks. An existing AutoConfig setup or conflicting files cause setup to stop rather than overwrite them. An unwritable application folder requires a separately authorized administrator install; this installer does not request elevation. Application updates may remove these files. On macOS, these application writes can affect Firefox’s code signature; appearance-only avoids them.
 
@@ -97,7 +97,7 @@ python3 installer/install.py --profile "/path/to/profile" --application "/path/t
 python3 installer/install.py --profile "/path/to/profile" --closed-confirmed --uninstall
 ```
 
-On Windows, replace `python3` with `py -3`. GUI setup needs Tk; the command-line path does not. For prompts instead of path flags, run `python3 installer/install.py --guided` from the extracted ZenFX folder.
+On Windows, replace `python3` with `py -3`. Only the optional `--gui` mode needs Tk; default and `--guided` modes do not. For prompts instead of path flags, run `python3 installer/install.py --guided` from the extracted ZenFX folder.
 
 [Full feature and installation notes](README.md) · [What was tested](docs/VALIDATION.md)
 

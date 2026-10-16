@@ -8,21 +8,21 @@ A Zen-inspired Firefox interface using native vertical tabs, folder-style tab gr
 
 **[Download ZenFX Setup](https://github.com/ajshaw0327-sketch/zenfx-firefox/raw/refs/heads/main/dist/ZenFX-Setup.zip)** · **[Step-by-step setup guide](START-HERE.md)**
 
-**Mac: [Use the guided Python source setup](docs/SOURCE-SETUP.md)** to install without opening a ZenFX app or `.command` launcher. No Apple Developer account or Tk is needed.
+**Mac: [Copy the quick setup command](docs/SOURCE-SETUP.md#quick-mac-setup-copy-once).** It downloads, checks, and starts setup for you. Requires Python 3.10+; no Apple Developer account, Tk, or downloaded app launcher is needed.
 
 No Git, cloning, or build tools are needed. Download the ZIP above and extract it before running setup; GitHub’s **Code → Download ZIP** is the source repository.
 
 | Choose | What you get | Requirements |
 | --- | --- | --- |
-| **[Full setup](START-HERE.md)** | Appearance, floating New Tab search, drag-to-split, Favorites/Pinned/Today, Clear tabs, Compact Mode button and shortcut editor | Desktop Firefox 158; Python 3.10+ (Tk only for the graphical installer); select both profile and application for startup scripts |
+| **[Full setup](START-HERE.md)** | Appearance, floating New Tab search, drag-to-split, Favorites/Pinned/Today, Clear tabs, Compact Mode button and shortcut editor | Desktop Firefox 158; Python 3.10+ (Tk only if you explicitly choose the optional graphical installer); select both profile and application for startup scripts |
 | **[Appearance only](https://github.com/ajshaw0327-sketch/zenfx-firefox/raw/refs/heads/main/dist/ZenFX-Appearance.zip)** | Sidebar, folders, rounded frame, floating address-field styling, and split-header styling | Desktop Firefox 158; copy one CSS file; no Python required |
 
 ### Full setup in five steps
 
 1. **Prepare:** use desktop Firefox 158 and install [Python](START-HERE.md#before-you-start) if needed. macOS is browser-tested; Windows/Linux remain experimental.
 2. **Find your profile:** enter `about:support` in Firefox, then click **Profile Folder → Open Folder / Show in Finder**. Keep that folder open and quit Firefox completely.
-3. **Open setup:** extract the [full setup ZIP](https://github.com/ajshaw0327-sketch/zenfx-firefox/raw/refs/heads/main/dist/ZenFX-Setup.zip), open its `ZenFX` folder, then use [guided source setup](docs/SOURCE-SETUP.md) on Mac. Windows/Linux can also use it, or launch `Install.cmd` / `Install.sh` for the graphical installer.
-4. **Choose both targets:** select the profile folder and the Firefox application. Check **Firefox is completely closed**, click **Review and install**, and review the listed changes. Originals are backed up. Leave the application blank to install appearance only.
+3. **Open setup:** extract the [full setup ZIP](https://github.com/ajshaw0327-sketch/zenfx-firefox/raw/refs/heads/main/dist/ZenFX-Setup.zip), open its `ZenFX` folder, then use [guided source setup](docs/SOURCE-SETUP.md) on Mac. Windows/Linux can also use it, or launch `Install.cmd` / `Install.sh` to start the text wizard.
+4. **Choose your features:** choose **2 — Full setup**, then paste/drag the profile folder and Firefox application into the wizard. Confirm Firefox is closed, review the listed changes, and type `yes`. Originals are backed up. Choose **1** instead for appearance only.
 5. **Reopen Firefox:** right-click a tab → **Tab priority**; right-click the Compact Mode button to change visibility or its shortcut. Use the [setup checks](START-HERE.md#check-it-worked) if something is missing.
 
 **Current limits:** startup scripts use an application AutoConfig loader whose full quit/relaunch path remains unverified. On Mac, its application writes can affect Firefox’s signature. Automatic 24-hour cleanup is a separate unsigned add-on and is not installed by setup. [Details, troubleshooting, and removal](START-HERE.md).

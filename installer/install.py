@@ -267,8 +267,14 @@ def main():
         try: guided()
         except (EOFError, KeyboardInterrupt): print('\nSetup interrupted. No further changes were made.')
         return
-    if args.gui or not args.profile:
+    if args.gui:
         gui(); return
+    if not args.profile:
+        if args.application or args.uninstall or args.dry_run or args.closed_confirmed:
+            parser.error('--profile is required with these setup flags')
+        try: guided()
+        except (EOFError, KeyboardInterrupt): print('\nSetup interrupted. No further changes were made.')
+        return
     result = uninstall(args.profile, args.closed_confirmed, args.dry_run) if args.uninstall else install(args.profile, args.application, args.closed_confirmed, args.dry_run)
     print(json.dumps(result, indent=2))
 

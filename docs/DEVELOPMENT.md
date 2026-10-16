@@ -1,6 +1,6 @@
 # Build and test
 
-Python 3.10+ and Node.js are needed for development. Builds use Python's standard library, perform no downloads, and install nothing. Tk is needed only for the graphical installer; `python3 installer/install.py --guided` runs the source wizard without Tk.
+Python 3.10+ and Node.js are needed for development. Builds use Python's standard library, perform no downloads, and install nothing. The launchers and default command use the text wizard. Tk is needed only for the explicit `--gui` graphical installer; `python3 installer/install.py --guided` runs the source wizard without Tk.
 
 From the repository root:
 
