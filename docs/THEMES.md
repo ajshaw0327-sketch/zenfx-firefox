@@ -17,3 +17,5 @@ Three native group colors were checked both open and closed in all four themes (
 ![Group colors with a dark theme](images/folder-colors-dark.png)
 
 [Measurements](validation/native-theme-colors.json) · [Mozilla's current Nova theme mapping](https://blog.mozilla.org/addons/2026/09/29/nova-is-here-what-changes-for-your-firefox-theme/) · [Theme manifest reference](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/theme)
+
+In Compact Mode, the floating top toolbar paints the window body’s native background color, images, position, size, and repeat settings. Its surface stays opaque over webpage content without imposing a separate palette. Normal toolbar and sidebar painting stay native.

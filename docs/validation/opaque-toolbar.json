@@ -1,0 +1,70 @@
+{
+  "version": "158.0",
+  "cases": [
+    {
+      "theme": "default",
+      "toolbar": {
+        "color": "rgb(37, 36, 40)",
+        "image": "linear-gradient(96deg, oklab(0.350395 0.0333667 -0.0714453 / 0.5) 39.84%, oklab(0.363806 0.0999189 0.068457 / 0.5) 101.72%)",
+        "opacity": "1",
+        "position": "fixed",
+        "top": 0
+      },
+      "body": {
+        "color": "rgb(37, 36, 40)",
+        "image": "linear-gradient(96deg, oklab(0.350395 0.0333667 -0.0714453 / 0.5) 39.84%, oklab(0.363806 0.0999189 0.068457 / 0.5) 101.72%)"
+      },
+      "sidebar": "rgba(0, 0, 0, 0)",
+      "pageIndependentPixels": true
+    },
+    {
+      "theme": "light",
+      "toolbar": {
+        "color": "rgb(220, 195, 168)",
+        "image": "url(\"moz-extension://d097c605-874d-4a20-b820-bf98c7832173/header.svg\"), none",
+        "opacity": "1",
+        "position": "fixed",
+        "top": 0
+      },
+      "body": {
+        "color": "rgb(220, 195, 168)",
+        "image": "url(\"moz-extension://d097c605-874d-4a20-b820-bf98c7832173/header.svg\"), none"
+      },
+      "sidebar": "rgba(0, 0, 0, 0)",
+      "pageIndependentPixels": true
+    },
+    {
+      "theme": "dark",
+      "toolbar": {
+        "color": "rgb(24, 38, 59)",
+        "image": "url(\"moz-extension://273f6751-ec74-4890-9dba-544f0fc60f55/header.svg\"), none",
+        "opacity": "1",
+        "position": "fixed",
+        "top": 0
+      },
+      "body": {
+        "color": "rgb(24, 38, 59)",
+        "image": "url(\"moz-extension://273f6751-ec74-4890-9dba-544f0fc60f55/header.svg\"), none"
+      },
+      "sidebar": "rgba(0, 0, 0, 0)",
+      "pageIndependentPixels": true
+    },
+    {
+      "theme": "frame-only",
+      "toolbar": {
+        "color": "rgb(24, 38, 59)",
+        "image": "url(\"moz-extension://5a55c777-f97a-4804-b178-a5761ac6719a/header.svg\"), none",
+        "opacity": "1",
+        "position": "fixed",
+        "top": 0
+      },
+      "body": {
+        "color": "rgb(24, 38, 59)",
+        "image": "url(\"moz-extension://5a55c777-f97a-4804-b178-a5761ac6719a/header.svg\"), none"
+      },
+      "sidebar": "rgba(0, 0, 0, 0)",
+      "pageIndependentPixels": true
+    }
+  ],
+  "pass": true
+}

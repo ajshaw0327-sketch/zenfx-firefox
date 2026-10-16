@@ -256,6 +256,13 @@
         transform: translateY(calc(-100% + var(--zenfx-edge-size))) !important;
         z-index: 10 !important;
         opacity: var(--zenfx-overlay-opacity) !important;
+        /* Native toolbars are transparent over body. Once floated over page
+         * content, paint that same frame surface here, including theme images. */
+        background-color: inherit !important;
+        background-image: inherit !important;
+        background-position: inherit !important;
+        background-size: inherit !important;
+        background-repeat: inherit !important;
         box-shadow: var(--zenfx-shadow) !important;
         border-radius: 0 0 var(--zenfx-content-radius) var(--zenfx-content-radius) !important;
         transition: transform var(--zenfx-animation-speed) ease var(--zenfx-hide-delay) !important;
