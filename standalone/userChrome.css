@@ -239,6 +239,10 @@
 }
 
 
+/* Page context menus and form popups, including nested submenus, do not reveal browser chrome.
+ * Only other browser menus participate in menu-based reveal.
+ */
+
 /* Independent persistent modes. These are USER-CREATED Boolean preferences,
  * not Firefox/Zen built-in settings. Missing = false. Verified live in 158.
  * zenfx.compact.top      false = visible; true = edge-reveal top toolbar
@@ -289,12 +293,18 @@
         transition: opacity 0s linear calc(var(--zenfx-hide-delay) + var(--zenfx-animation-speed)) !important;
       }
       #navigator-toolbox:is(:hover, :focus-within, :has([open="true"], #urlbar[focused])),
-      &:has(panel[panelopen="true"], menupopup[open="true"]) #navigator-toolbox {
+      &:has(:is(panel[panelopen="true"], menupopup[open="true"]):not(
+        :where(#contentAreaContextMenu, #ContentSelectDropdown, #PopupAutoComplete, #DateTimePickerPanel, #invalid-form-popup, #autoscroller),
+        :where(#contentAreaContextMenu, #ContentSelectDropdown, #PopupAutoComplete, #DateTimePickerPanel, #invalid-form-popup, #autoscroller) *
+      )) #navigator-toolbox {
         transform: translateY(0) !important;
         transition-delay: 0ms !important;
       }
       #navigator-toolbox:is(:hover, :focus-within, :has([open="true"], #urlbar[focused])) > toolbar,
-      &:has(panel[panelopen="true"], menupopup[open="true"]) #navigator-toolbox > toolbar {
+      &:has(:is(panel[panelopen="true"], menupopup[open="true"]):not(
+        :where(#contentAreaContextMenu, #ContentSelectDropdown, #PopupAutoComplete, #DateTimePickerPanel, #invalid-form-popup, #autoscroller),
+        :where(#contentAreaContextMenu, #ContentSelectDropdown, #PopupAutoComplete, #DateTimePickerPanel, #invalid-form-popup, #autoscroller) *
+      )) #navigator-toolbox > toolbar {
         opacity: 1 !important;
         pointer-events: auto !important;
         transition: none !important;
@@ -341,7 +351,10 @@
         -moz-window-dragging: no-drag;
       }
       #sidebar-container:is(:hover, :focus-within, [sidebar-ongoing-animations]),
-      &:has(panel[panelopen="true"], menupopup[open="true"], #tabbrowser-tabs[movingtab]) #sidebar-container {
+      &:has(:is(panel[panelopen="true"], menupopup[open="true"]):not(
+        :where(#contentAreaContextMenu, #ContentSelectDropdown, #PopupAutoComplete, #DateTimePickerPanel, #invalid-form-popup, #autoscroller),
+        :where(#contentAreaContextMenu, #ContentSelectDropdown, #PopupAutoComplete, #DateTimePickerPanel, #invalid-form-popup, #autoscroller) *
+      ), #tabbrowser-tabs[movingtab]) #sidebar-container {
         transform: translateX(0) !important;
         transition-delay: 0ms !important;
       }
@@ -370,7 +383,10 @@
     @media not -moz-pref("zenfx.compact.independent-reveal") {
       &:has(#navigator-toolbox:is(:hover, :focus-within, :has([open="true"], #urlbar[focused]))),
       &:has(#sidebar-container:is(:hover, :focus-within, [sidebar-ongoing-animations])),
-      &:has(panel[panelopen="true"], menupopup[open="true"], #tabbrowser-tabs[movingtab]) {
+      &:has(:is(panel[panelopen="true"], menupopup[open="true"]):not(
+        :where(#contentAreaContextMenu, #ContentSelectDropdown, #PopupAutoComplete, #DateTimePickerPanel, #invalid-form-popup, #autoscroller),
+        :where(#contentAreaContextMenu, #ContentSelectDropdown, #PopupAutoComplete, #DateTimePickerPanel, #invalid-form-popup, #autoscroller) *
+      ), #tabbrowser-tabs[movingtab]) {
         #navigator-toolbox { transform: translateY(0) !important; transition-delay: 0ms !important; }
         #navigator-toolbox > toolbar { opacity: 1 !important; pointer-events: auto !important; transition-delay: 0ms !important; }
         #sidebar-container { transform: translateX(0) !important; transition-delay: 0ms !important; }

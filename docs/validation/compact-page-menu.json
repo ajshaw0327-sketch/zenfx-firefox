@@ -1,0 +1,144 @@
+{
+  "method": "Firefox 158/macOS headless test profile, disposable window. Actual page right-click plus controlled native-menu open attributes for selector coverage; native OS popup hold is not certified headlessly.",
+  "cases": [
+    {
+      "topCompact": true,
+      "sideCompact": true,
+      "independent": false,
+      "menu": "page menu",
+      "top": -40,
+      "side": -165
+    },
+    {
+      "topCompact": true,
+      "sideCompact": true,
+      "independent": false,
+      "menu": "page submenu",
+      "top": -40,
+      "side": -165
+    },
+    {
+      "topCompact": true,
+      "sideCompact": true,
+      "independent": false,
+      "menu": "tab menu",
+      "top": 0,
+      "side": 0
+    },
+    {
+      "topCompact": true,
+      "sideCompact": true,
+      "independent": true,
+      "menu": "page menu",
+      "top": -40,
+      "side": -165
+    },
+    {
+      "topCompact": true,
+      "sideCompact": true,
+      "independent": true,
+      "menu": "page submenu",
+      "top": -40,
+      "side": -165
+    },
+    {
+      "topCompact": true,
+      "sideCompact": true,
+      "independent": true,
+      "menu": "tab menu",
+      "top": 0,
+      "side": 0
+    },
+    {
+      "topCompact": true,
+      "sideCompact": false,
+      "independent": false,
+      "menu": "page menu",
+      "top": -40,
+      "side": 0
+    },
+    {
+      "topCompact": true,
+      "sideCompact": false,
+      "independent": false,
+      "menu": "page submenu",
+      "top": -40,
+      "side": 0
+    },
+    {
+      "topCompact": true,
+      "sideCompact": false,
+      "independent": false,
+      "menu": "tab menu",
+      "top": 0,
+      "side": 0
+    },
+    {
+      "topCompact": false,
+      "sideCompact": true,
+      "independent": false,
+      "menu": "page menu",
+      "top": 0,
+      "side": -165
+    },
+    {
+      "topCompact": false,
+      "sideCompact": true,
+      "independent": false,
+      "menu": "page submenu",
+      "top": 0,
+      "side": -165
+    },
+    {
+      "topCompact": false,
+      "sideCompact": true,
+      "independent": false,
+      "menu": "tab menu",
+      "top": 0,
+      "side": 0
+    }
+  ],
+  "sourceSHA256": "7c19e9d4eee085dd60fd8916d2729a4354769da7900aa0777c317c3867c1ceb9",
+  "before": {
+    "top": 0,
+    "side": 0
+  },
+  "formPopups": [
+    {
+      "popup": "ContentSelectDropdown",
+      "top": -40,
+      "side": -165
+    },
+    {
+      "popup": "PopupAutoComplete",
+      "top": -40,
+      "side": -165
+    },
+    {
+      "popup": "DateTimePickerPanel",
+      "top": -40,
+      "side": -165
+    },
+    {
+      "popup": "invalid-form-popup",
+      "top": -40,
+      "side": -165
+    }
+  ],
+  "actualWebSelect": {
+    "top": -40,
+    "side": -165,
+    "open": true
+  },
+  "actualPageRightClick": {
+    "top": -40,
+    "side": -165,
+    "menuState": "open"
+  },
+  "actualBrowserMenu": {
+    "top": 0,
+    "side": 0,
+    "menuState": "open"
+  },
+  "pass": true
+}

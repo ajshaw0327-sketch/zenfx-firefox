@@ -3,12 +3,12 @@
   "Install.cmd": "a665afec9e30c34d1876d6980424942d81bb5b616b55ca3d359cbe2f8fe3138d",
   "Install.command": "570abf48e18facd11ab4f7dd129468da09ec1b1fe894519b7b1c3ef8c22551b5",
   "Install.sh": "570abf48e18facd11ab4f7dd129468da09ec1b1fe894519b7b1c3ef8c22551b5",
-  "README.md": "02c05ffc957fa57835e47d3a00d2d398ada7494224f951fcac4772bae8dbde33",
+  "README.md": "e896bb1e9689a74c5f27f34201d3554842c98dab52c0b3148d2124761e07b550",
   "START-HERE.md": "5cdb9fb5e6a7f8a1d587444abbd780770e3abc7425b6ee3167d97e5a7d09702b",
   "appearance/README.md": "db9c5ef8fe0d6cb9a817defc4a4c15eec0a4921f7bd87f744550a74d8afdfb55",
   "build.py": "51c1c0e492aeaf11f59aa9dbff34576fd56e6db4cb684aa281cf0a02b75653c5",
   "chrome/userChrome.css": "26ec077516f8f37db45ba5297cef61b1f7cead3bd53906f76d543db726b0dcfb",
-  "chrome/zenfx/compact.css": "462a562dd0b5130071c69bcada0200e7396174bad757d4318d8eb7639fff3ce3",
+  "chrome/zenfx/compact.css": "7c19e9d4eee085dd60fd8916d2729a4354769da7900aa0777c317c3867c1ceb9",
   "chrome/zenfx/custom.css": "fcac60a0c41dc79fcb3920a57ace3f583487837b7c81407854dabcd3ad8b5b0a",
   "chrome/zenfx/features.css": "1d42dcfaad4dd58be2b47ff83a50071f13b914649ec75cd4e5bd3aea9e327681",
   "chrome/zenfx/theme.css": "c3faf05227560f7be58fb52ef05b501dac6f5ccd31de04043c4d9e0f6959a687",
@@ -29,7 +29,7 @@
   "docs/TAB-HIERARCHY.md": "0465b600e7ff449e5661f17757abe3f874a4a5ebb2ea5f0612d9e9f40a7edc68",
   "docs/THEMES.md": "3df366503b8560da100872a999dedcc5a8fbc672ebed779f109b08331fabd8d7",
   "docs/UPDATING.md": "5a9604ddf883ca01b53380f44d91f43523e0282f1c4550f1e3dea05f4032c5c2",
-  "docs/VALIDATION.md": "fabe8ca7bfbbd94bff28df73068465c5594d889febe4a1fb7c071cb5bd95db8f",
+  "docs/VALIDATION.md": "908db35f92d511a9ba3781aefa0cdb53679eb299ee82df14ff582be5abfad807",
   "docs/images/compact-interaction.png": "e383a72f91dcf63d7af1d934980a1decc32811673d0adf03b5bb8236435ed34a",
   "docs/images/compact-settings.png": "05016372f79847f9a95633da6d407588ad06938d0dc5cd3385ddae7d8804a2c1",
   "docs/images/folder-colors-dark.png": "7771ed1d1f4b96807b913c29462ed065134d35014e4dde5c06ebffd47be7d848",
@@ -43,6 +43,7 @@
   "docs/validation/cleanup-filter.json": "da094c6c0ff9a5de636b638e83c0add5a5918bad9b88ac0ec9b9cc2c0756a80b",
   "docs/validation/clear-layout.json": "ac831e2610526f39a4d7bb53f003390ff5e78e5b506701fb2b3a054140b986a3",
   "docs/validation/compact-interaction.json": "13fada7da1a67661d91760fc70a42c70b71eae677435f22e0cffa12740ba0193",
+  "docs/validation/compact-page-menu.json": "26b7c7552141f7ae7070565a00c47880fe96ecddab6baa1f4244d4b0c3ef6c79",
   "docs/validation/compact-trigger.json": "28c4fd8bfe89bab54d2935438f77f562bec3302816781895bb07e59d6d516049",
   "docs/validation/managed-update.json": "1b3efb037847ade068c6d06f88084049f3a7040777b822b3b2c849d806237e56",
   "docs/validation/minimal-audit.json": "7d6e1b16fad15aaa635de7eb244fe5d3c59817bab1c9c76894d7ef9765a15f79",
@@ -75,5 +76,5 @@
   "optional-chrome/zenfx-drag-to-split.uc.js": "bdb5fcf7adf8ee0564ffaaac44503317f16adbd7e3f2c26002f5cfd511637d89",
   "optional-chrome/zenfx-newtab-overlay.uc.js": "8d7d32a75dff57e477903a5ae3c5c6249decf18af5939a3ab9a62a0782add18d",
   "optional-chrome/zenfx-tab-hierarchy.uc.js": "88f5ed355d4ed47ae8b7bda0bb837c9673b8f24be94df7119aa857925e7d24ae",
-  "standalone/userChrome.css": "10dbe217deba5f5f0e8a0b67b595980d1dc99afed9b807be769cc49b6c262a09"
+  "standalone/userChrome.css": "142e87406228f3ea197f3b4603d3ab536671c39e5d0900b42c6bf434dd00a4b4"
 }

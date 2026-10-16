@@ -70,6 +70,8 @@ For CSS-only Compact Mode, create Boolean preferences `zenfx.compact.top` and/or
 
 Both reveal areas extend 12px inward from the window edge. To change their size, add `:root { --zenfx-edge-size: 16px; }` to your custom CSS. The top toolbar's visible peek stays 4px; the extra trigger area is transparent.
 
+Webpage right-click menus, select dropdowns, form suggestions, and date pickers do not reveal the compact bars. Browser menus can keep them visible while you interact with browser controls.
+
 ## Keep the scripts across restarts
 
 The four scripts are in [optional-chrome](optional-chrome/). Copying them into `chrome` does not execute them. They need a compatible browser script loader.
