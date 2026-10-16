@@ -1,6 +1,6 @@
 # ZenFX for Firefox
 
-A Zen-inspired Firefox interface using native vertical tabs, folder-style tab groups, a floating address field, and native Split View. Custom Firefox themes still supply the colors and header images; the sidebar stays resizable.
+A Zen-inspired Firefox interface using native vertical tabs, folder-style tab groups, a floating address field, and native Split View. Firefox supplies the sidebar’s native colors and header images; folder icons follow their native group colors, and the sidebar stays resizable.
 
 **Tested on Firefox 158 for macOS.** Windows/Linux styling and launchers are experimental. This is an independent customization, not an official Mozilla or Zen Browser product.
 
@@ -68,6 +68,7 @@ The [cleanup companion](companion/README.md) is optional and independent. Its [d
 - [Modular CSS](chrome/zenfx/) and [complete CSS](standalone/userChrome.css)
 - [Scripts and their installation limits](optional-chrome/README.md)
 - [Installer, backup, and removal instructions](START-HERE.md)
+- [Native theme colors and group-colored folders](docs/THEMES.md)
 - [Browser validation and remaining limitations](docs/VALIDATION.md)
 - [Build and test instructions](docs/DEVELOPMENT.md)
 

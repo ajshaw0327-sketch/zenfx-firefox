@@ -107,11 +107,12 @@
     /* 6. Keep Firefox's own sidebar expansion/collapse and resize behavior.
      * Do not override its inline expanded width with !important. */
     #sidebar-container {
-      --zenfx-foreground: var(--sidebar-text-color, var(--toolbox-text-color, CanvasText));
-      background-color: var(--sidebar-background-color, var(--zenfx-background)) !important;
+      /* Vertical tabs share Firefox's frame surface (including Nova images).
+       * sidebar/sidebar_text style sidebar panels, not this launcher surface. */
+      --zenfx-foreground: var(--toolbox-text-color-current, var(--toolbox-text-color, CanvasText));
+      --zenfx-hover: var(--tab-background-color-hover, var(--toolbarbutton-background-color-hover, transparent));
       border: 0 !important;
       border-radius: 0 !important;
-      color: var(--zenfx-foreground) !important;
     }
     #sidebar-container:not([sidebar-launcher-expanded]):not([sidebar-ongoing-animations]) {
       width: var(--zenfx-sidebar-collapsed-width) !important;

@@ -87,9 +87,9 @@
   "selectedPaint": {
     "image": "none",
     "outline": "none",
-    "fill": "color(srgb 0.267451 0.261176 0.27451)"
+    "fill": "rgb(23, 21, 25)"
   },
-  "divider": "linear-gradient(color(srgb 0.976471 0.976471 0.980392 / 0.14), color(srgb 0.976471 0.976471 0.980392 / 0.14))",
+  "divider": "linear-gradient(color(srgb 0.94902 0.941177 0.972549 / 0.14), color(srgb 0.94902 0.941177 0.972549 / 0.14))",
   "serialized": {
     "favorite": "true",
     "pinned": true
@@ -210,23 +210,23 @@
   "themes": [
     {
       "theme": "light",
-      "sidebar": "rgb(234, 214, 191)",
-      "ink": "rgb(82, 55, 41)",
-      "selected": "color(srgb 0.757647 0.648627 0.540392)",
+      "sidebar": "rgba(0, 0, 0, 0)",
+      "ink": "rgb(60, 42, 36)",
+      "selected": "rgb(221, 193, 162)",
       "selectedImage": "none",
       "outline": "none",
       "pin": "rgba(0, 0, 0, 0)",
-      "frame": "Temporary theme fixture header.svg (native image retained)"
+      "frame": "url(\"fixture-header.svg\"), none"
     },
     {
       "theme": "dark",
-      "sidebar": "rgb(32, 50, 74)",
-      "ink": "rgb(200, 226, 255)",
-      "selected": "color(srgb 0.335686 0.459608 0.560784)",
+      "sidebar": "rgba(0, 0, 0, 0)",
+      "ink": "rgb(232, 242, 251)",
+      "selected": "rgb(57, 90, 115)",
       "selectedImage": "none",
       "outline": "none",
       "pin": "rgba(0, 0, 0, 0)",
-      "frame": "Temporary theme fixture header.svg (native image retained)"
+      "frame": "url(\"fixture-header.svg\"), none"
     }
   ],
   "pass": true

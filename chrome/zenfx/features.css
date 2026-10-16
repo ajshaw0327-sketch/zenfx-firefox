@@ -45,13 +45,14 @@
       inset-block-start: calc((var(--zenfx-tab-height) - var(--zenfx-folder-icon-size)) / 2);
       width: var(--zenfx-folder-icon-size);
       height: var(--zenfx-folder-icon-size);
-      /* Use the same theme ink as the label, rather than a translucent group
-       * tint that can disappear against a custom sidebar background. */
+      /* Native group color supplies the folder accent. Keep the mask opaque;
+       * a subtle theme-ink edge preserves its shape on matching backgrounds. */
       display: block !important;
       visibility: visible !important;
       opacity: 1 !important;
-      background-color: currentColor !important;
+      background-color: var(--tab-group-color, var(--zenfx-foreground)) !important;
       background-image: none !important;
+      filter: drop-shadow(0 0 .6px color-mix(in srgb, var(--zenfx-foreground) 55%, transparent));
       mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v2H7l-4 8V7Z' fill='none' stroke='black' stroke-width='1.6' stroke-linejoin='round'/%3E%3Cpath d='M3 19h15l4-8H7l-4 8Z' fill='black' fill-opacity='1' stroke='black' stroke-width='1.5' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat !important;
       mask-mode: alpha !important;
       pointer-events: none;
@@ -365,13 +366,13 @@ sidebar-main,
       #tabbrowser-tabs[orient="vertical"][expanded] #pinned-tabs-container .tabbrowser-tab:not([zenfx-favorite], [selected], [multiselected], :hover) .tab-background {
         background: transparent !important;
       }
-      #tabbrowser-tabs[orient="vertical"][expanded] .tabbrowser-tab[zenfx-favorite]:not([selected], [multiselected]) .tab-background {
-        background: var(--zenfx-hover) !important;
+      #tabbrowser-tabs[orient="vertical"][expanded] .tabbrowser-tab[zenfx-favorite]:not([selected], [multiselected], :hover) .tab-background {
+        background: color-mix(in srgb, currentColor 7%, transparent) !important;
         outline: none !important;
       }
-      /* Override Nova's painted gradient border with a soft theme-derived fill. */
+      /* Keep the theme's exact selected fill; remove only Nova's painted border. */
       #tabbrowser-tabs[orient="vertical"][expanded] .tabbrowser-tab[selected]:not([multiselected]) .tab-background {
-        background: color-mix(in srgb, var(--tab-background-color-selected, var(--zenfx-selected)) 80%, currentColor 20%) !important;
+        background: var(--tab-background-color-selected, var(--zenfx-selected)) !important;
         outline: none !important;
         border-color: transparent !important;
         box-shadow: 0 1px 2px rgb(0 0 0 / 10%) !important;
@@ -381,5 +382,12 @@ sidebar-main,
         outline-offset: -2px !important;
       }
     }
+  }
+}
+
+@media (forced-colors: active) {
+  #tabbrowser-tabs[orient="vertical"][expanded] tab-group .tab-group-label::before {
+    background-color: CanvasText !important;
+    filter: none;
   }
 }

@@ -13,7 +13,7 @@ Contains only CSS and these instructions. No extensions, installer, startup load
 
 **Move the window:** the supplied sidebar window-drag rules are included for empty sidebar space, with exclusions for tabs, folder headers, buttons, links, inputs, split-tab pairs, and resize handles.
 
-Includes Zen-like sidebar/tab and folder-group styling, rounded page frame, focused floating address bar styling, and optional compact-mode CSS. Firefox add-on themes supply the colors and header images; the CSS no longer forces a fixed palette over them. Folder icons use the label’s theme text color at full opacity to stay readable across themes. Webpage content is not restyled.
+Includes Zen-like sidebar/tab and folder-group styling, rounded page frame, focused floating address bar styling, and optional compact-mode CSS. Firefox add-on themes supply the colors and header images; the CSS no longer forces a fixed palette over them. Firefox paints the sidebar’s native frame colors and images itself. Folder icons and header tints follow their native tab-group colors, while names use Firefox’s frame text color. Webpage content is not restyled.
 
 Optional: in `about:config`, create Boolean preferences `zenfx.compact.top` and/or `zenfx.compact.sidebar`. `true` enables edge-reveal hiding; `false` keeps the toolbar/sidebar visible. This CSS-only package has no custom toggle button, keyboard shortcut, or shortcut editor.
 

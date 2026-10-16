@@ -1,0 +1,462 @@
+{
+  "version": "158.0",
+  "cases": [
+    {
+      "theme": "default",
+      "styled": {
+        "box": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "image": "none",
+          "ink": "rgb(242, 240, 248)"
+        },
+        "main": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "image": "none",
+          "ink": "rgb(242, 240, 248)"
+        },
+        "body": {
+          "bg": "rgb(37, 36, 40)",
+          "image": "linear-gradient(96deg, oklab(0.350395 0.0333667 -0.0714453 / 0.5) 39.84%, oklab(0.363806 0.0999189 0.068457 / 0.5) 101.72%)",
+          "ink": "rgb(242, 240, 248)"
+        },
+        "selected": {
+          "bg": "rgb(23, 21, 25)",
+          "image": "none",
+          "ink": "rgb(242, 240, 248)"
+        },
+        "text": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "image": "none",
+          "ink": "rgb(242, 240, 248)"
+        }
+      },
+      "native": {
+        "box": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "image": "none",
+          "ink": "rgb(242, 240, 248)"
+        },
+        "main": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "image": "none",
+          "ink": "rgb(242, 240, 248)"
+        },
+        "body": {
+          "bg": "rgb(37, 36, 40)",
+          "image": "linear-gradient(96deg, oklab(0.350395 0.0333667 -0.0714453 / 0.5) 39.84%, oklab(0.363806 0.0999189 0.068457 / 0.5) 101.72%)",
+          "ink": "rgb(242, 240, 248)"
+        },
+        "selected": {
+          "bg": "rgb(23, 21, 25)",
+          "image": "linear-gradient(96deg, rgb(184, 156, 255) 20.68%, rgb(255, 149, 101) 79.34%), none",
+          "ink": "rgb(242, 240, 248)"
+        },
+        "text": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "image": "none",
+          "ink": "rgb(242, 240, 248)"
+        }
+      },
+      "folders": [
+        {
+          "color": "blue",
+          "collapsed": false,
+          "fill": "rgb(123, 178, 255)",
+          "expected": "rgb(123, 178, 255)",
+          "opacity": "1",
+          "mask": true,
+          "ink": "rgb(242, 240, 248)"
+        },
+        {
+          "color": "blue",
+          "collapsed": true,
+          "fill": "rgb(123, 178, 255)",
+          "expected": "rgb(123, 178, 255)",
+          "opacity": "1",
+          "mask": true,
+          "ink": "rgb(242, 240, 248)"
+        },
+        {
+          "color": "red",
+          "collapsed": false,
+          "fill": "rgb(255, 137, 152)",
+          "expected": "rgb(255, 137, 152)",
+          "opacity": "1",
+          "mask": true,
+          "ink": "rgb(242, 240, 248)"
+        },
+        {
+          "color": "red",
+          "collapsed": true,
+          "fill": "rgb(255, 137, 152)",
+          "expected": "rgb(255, 137, 152)",
+          "opacity": "1",
+          "mask": true,
+          "ink": "rgb(242, 240, 248)"
+        },
+        {
+          "color": "green",
+          "collapsed": false,
+          "fill": "rgb(74, 204, 166)",
+          "expected": "rgb(74, 204, 166)",
+          "opacity": "1",
+          "mask": true,
+          "ink": "rgb(242, 240, 248)"
+        },
+        {
+          "color": "green",
+          "collapsed": true,
+          "fill": "rgb(74, 204, 166)",
+          "expected": "rgb(74, 204, 166)",
+          "opacity": "1",
+          "mask": true,
+          "ink": "rgb(242, 240, 248)"
+        }
+      ]
+    },
+    {
+      "theme": "light",
+      "styled": {
+        "box": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "image": "none",
+          "ink": "rgb(60, 42, 36)"
+        },
+        "main": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "image": "none",
+          "ink": "rgb(60, 42, 36)"
+        },
+        "body": {
+          "bg": "rgb(220, 195, 168)",
+          "image": "url(\"fixture-header.svg\"), none",
+          "ink": "rgb(60, 42, 36)"
+        },
+        "selected": {
+          "bg": "rgb(221, 193, 162)",
+          "image": "none",
+          "ink": "rgb(60, 42, 36)"
+        },
+        "text": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "image": "none",
+          "ink": "rgb(48, 28, 17)"
+        }
+      },
+      "native": {
+        "box": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "image": "none",
+          "ink": "rgb(60, 42, 36)"
+        },
+        "main": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "image": "none",
+          "ink": "rgb(60, 42, 36)"
+        },
+        "body": {
+          "bg": "rgb(220, 195, 168)",
+          "image": "url(\"fixture-header.svg\"), none",
+          "ink": "rgb(60, 42, 36)"
+        },
+        "selected": {
+          "bg": "rgb(221, 193, 162)",
+          "image": "none",
+          "ink": "rgb(60, 42, 36)"
+        },
+        "text": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "image": "none",
+          "ink": "rgb(48, 28, 17)"
+        }
+      },
+      "folders": [
+        {
+          "color": "blue",
+          "collapsed": false,
+          "fill": "rgb(69, 95, 231)",
+          "expected": "rgb(69, 95, 231)",
+          "opacity": "1",
+          "mask": true,
+          "ink": "rgb(60, 42, 36)"
+        },
+        {
+          "color": "blue",
+          "collapsed": true,
+          "fill": "rgb(69, 95, 231)",
+          "expected": "rgb(69, 95, 231)",
+          "opacity": "1",
+          "mask": true,
+          "ink": "rgb(60, 42, 36)"
+        },
+        {
+          "color": "red",
+          "collapsed": false,
+          "fill": "rgb(197, 45, 79)",
+          "expected": "rgb(197, 45, 79)",
+          "opacity": "1",
+          "mask": true,
+          "ink": "rgb(60, 42, 36)"
+        },
+        {
+          "color": "red",
+          "collapsed": true,
+          "fill": "rgb(197, 45, 79)",
+          "expected": "rgb(197, 45, 79)",
+          "opacity": "1",
+          "mask": true,
+          "ink": "rgb(60, 42, 36)"
+        },
+        {
+          "color": "green",
+          "collapsed": false,
+          "fill": "rgb(0, 136, 101)",
+          "expected": "rgb(0, 136, 101)",
+          "opacity": "1",
+          "mask": true,
+          "ink": "rgb(60, 42, 36)"
+        },
+        {
+          "color": "green",
+          "collapsed": true,
+          "fill": "rgb(0, 136, 101)",
+          "expected": "rgb(0, 136, 101)",
+          "opacity": "1",
+          "mask": true,
+          "ink": "rgb(60, 42, 36)"
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "styled": {
+        "box": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "image": "none",
+          "ink": "rgb(232, 242, 251)"
+        },
+        "main": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "image": "none",
+          "ink": "rgb(232, 242, 251)"
+        },
+        "body": {
+          "bg": "rgb(24, 38, 59)",
+          "image": "url(\"fixture-header.svg\"), none",
+          "ink": "rgb(232, 242, 251)"
+        },
+        "selected": {
+          "bg": "rgb(57, 90, 115)",
+          "image": "none",
+          "ink": "rgb(232, 242, 251)"
+        },
+        "text": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "image": "none",
+          "ink": "rgb(255, 255, 255)"
+        }
+      },
+      "native": {
+        "box": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "image": "none",
+          "ink": "rgb(232, 242, 251)"
+        },
+        "main": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "image": "none",
+          "ink": "rgb(232, 242, 251)"
+        },
+        "body": {
+          "bg": "rgb(24, 38, 59)",
+          "image": "url(\"fixture-header.svg\"), none",
+          "ink": "rgb(232, 242, 251)"
+        },
+        "selected": {
+          "bg": "rgb(57, 90, 115)",
+          "image": "none",
+          "ink": "rgb(232, 242, 251)"
+        },
+        "text": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "image": "none",
+          "ink": "rgb(255, 255, 255)"
+        }
+      },
+      "folders": [
+        {
+          "color": "blue",
+          "collapsed": false,
+          "fill": "rgb(123, 178, 255)",
+          "expected": "rgb(123, 178, 255)",
+          "opacity": "1",
+          "mask": true,
+          "ink": "rgb(232, 242, 251)"
+        },
+        {
+          "color": "blue",
+          "collapsed": true,
+          "fill": "rgb(123, 178, 255)",
+          "expected": "rgb(123, 178, 255)",
+          "opacity": "1",
+          "mask": true,
+          "ink": "rgb(232, 242, 251)"
+        },
+        {
+          "color": "red",
+          "collapsed": false,
+          "fill": "rgb(255, 137, 152)",
+          "expected": "rgb(255, 137, 152)",
+          "opacity": "1",
+          "mask": true,
+          "ink": "rgb(232, 242, 251)"
+        },
+        {
+          "color": "red",
+          "collapsed": true,
+          "fill": "rgb(255, 137, 152)",
+          "expected": "rgb(255, 137, 152)",
+          "opacity": "1",
+          "mask": true,
+          "ink": "rgb(232, 242, 251)"
+        },
+        {
+          "color": "green",
+          "collapsed": false,
+          "fill": "rgb(74, 204, 166)",
+          "expected": "rgb(74, 204, 166)",
+          "opacity": "1",
+          "mask": true,
+          "ink": "rgb(232, 242, 251)"
+        },
+        {
+          "color": "green",
+          "collapsed": true,
+          "fill": "rgb(74, 204, 166)",
+          "expected": "rgb(74, 204, 166)",
+          "opacity": "1",
+          "mask": true,
+          "ink": "rgb(232, 242, 251)"
+        }
+      ]
+    },
+    {
+      "theme": "frame-only",
+      "styled": {
+        "box": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "image": "none",
+          "ink": "rgb(232, 242, 251)"
+        },
+        "main": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "image": "none",
+          "ink": "rgb(232, 242, 251)"
+        },
+        "body": {
+          "bg": "rgb(24, 38, 59)",
+          "image": "url(\"fixture-header.svg\"), none",
+          "ink": "rgb(232, 242, 251)"
+        },
+        "selected": {
+          "bg": "rgb(57, 90, 115)",
+          "image": "none",
+          "ink": "rgb(232, 242, 251)"
+        },
+        "text": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "image": "none",
+          "ink": "rgb(255, 255, 255)"
+        }
+      },
+      "native": {
+        "box": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "image": "none",
+          "ink": "rgb(232, 242, 251)"
+        },
+        "main": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "image": "none",
+          "ink": "rgb(232, 242, 251)"
+        },
+        "body": {
+          "bg": "rgb(24, 38, 59)",
+          "image": "url(\"fixture-header.svg\"), none",
+          "ink": "rgb(232, 242, 251)"
+        },
+        "selected": {
+          "bg": "rgb(57, 90, 115)",
+          "image": "none",
+          "ink": "rgb(232, 242, 251)"
+        },
+        "text": {
+          "bg": "rgba(0, 0, 0, 0)",
+          "image": "none",
+          "ink": "rgb(255, 255, 255)"
+        }
+      },
+      "folders": [
+        {
+          "color": "blue",
+          "collapsed": false,
+          "fill": "rgb(123, 178, 255)",
+          "expected": "rgb(123, 178, 255)",
+          "opacity": "1",
+          "mask": true,
+          "ink": "rgb(232, 242, 251)"
+        },
+        {
+          "color": "blue",
+          "collapsed": true,
+          "fill": "rgb(123, 178, 255)",
+          "expected": "rgb(123, 178, 255)",
+          "opacity": "1",
+          "mask": true,
+          "ink": "rgb(232, 242, 251)"
+        },
+        {
+          "color": "red",
+          "collapsed": false,
+          "fill": "rgb(255, 137, 152)",
+          "expected": "rgb(255, 137, 152)",
+          "opacity": "1",
+          "mask": true,
+          "ink": "rgb(232, 242, 251)"
+        },
+        {
+          "color": "red",
+          "collapsed": true,
+          "fill": "rgb(255, 137, 152)",
+          "expected": "rgb(255, 137, 152)",
+          "opacity": "1",
+          "mask": true,
+          "ink": "rgb(232, 242, 251)"
+        },
+        {
+          "color": "green",
+          "collapsed": false,
+          "fill": "rgb(74, 204, 166)",
+          "expected": "rgb(74, 204, 166)",
+          "opacity": "1",
+          "mask": true,
+          "ink": "rgb(232, 242, 251)"
+        },
+        {
+          "color": "green",
+          "collapsed": true,
+          "fill": "rgb(74, 204, 166)",
+          "expected": "rgb(74, 204, 166)",
+          "opacity": "1",
+          "mask": true,
+          "ink": "rgb(232, 242, 251)"
+        }
+      ]
+    }
+  ],
+  "change": {
+    "before": "rgb(123, 178, 255)",
+    "after": "rgb(212, 144, 255)"
+  },
+  "pass": true
+}
