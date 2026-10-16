@@ -1,0 +1,631 @@
+{
+  "version": "158.0",
+  "method": "Test-only :hover lock holds the floating sidebar open to isolate paint; this does not certify physical edge-hover behavior. Sampled sidebar and toolbar pixels are compared over white and black fixture-page backgrounds.",
+  "cases": [
+    {
+      "body": {
+        "color": "rgb(37, 36, 40)",
+        "image": "linear-gradient(96deg, oklab(0.350395 0.0333667 -0.0714453 / 0.5) 39.84%, oklab(0.363806 0.0999189 0.068457 / 0.5) 101.72%)",
+        "opacity": "1",
+        "x": 0,
+        "y": 0,
+        "width": 1185
+      },
+      "parent": {
+        "color": "rgb(37, 36, 40)",
+        "image": "linear-gradient(96deg, oklab(0.350395 0.0333667 -0.0714453 / 0.5) 39.84%, oklab(0.363806 0.0999189 0.068457 / 0.5) 101.72%)",
+        "opacity": "1",
+        "x": 0,
+        "y": 44,
+        "width": 1185
+      },
+      "sidebar": {
+        "color": "rgb(37, 36, 40)",
+        "image": "linear-gradient(96deg, oklab(0.350395 0.0333667 -0.0714453 / 0.5) 39.84%, oklab(0.363806 0.0999189 0.068457 / 0.5) 101.72%)",
+        "opacity": "1",
+        "x": 0,
+        "y": 44,
+        "width": 52
+      },
+      "toolbar": {
+        "color": "rgba(0, 0, 0, 0)",
+        "image": "none",
+        "opacity": "1",
+        "x": 0,
+        "y": 0,
+        "width": 1185
+      },
+      "theme": "default",
+      "top": false,
+      "expanded": false,
+      "sidebarPixelsStable": true,
+      "toolbarPixelsStable": true
+    },
+    {
+      "body": {
+        "color": "rgb(37, 36, 40)",
+        "image": "linear-gradient(96deg, oklab(0.350395 0.0333667 -0.0714453 / 0.5) 39.84%, oklab(0.363806 0.0999189 0.068457 / 0.5) 101.72%)",
+        "opacity": "1",
+        "x": 0,
+        "y": 0,
+        "width": 1185
+      },
+      "parent": {
+        "color": "rgb(37, 36, 40)",
+        "image": "linear-gradient(96deg, oklab(0.350395 0.0333667 -0.0714453 / 0.5) 39.84%, oklab(0.363806 0.0999189 0.068457 / 0.5) 101.72%)",
+        "opacity": "1",
+        "x": 0,
+        "y": 44,
+        "width": 1185
+      },
+      "sidebar": {
+        "color": "rgb(37, 36, 40)",
+        "image": "linear-gradient(96deg, oklab(0.350395 0.0333667 -0.0714453 / 0.5) 39.84%, oklab(0.363806 0.0999189 0.068457 / 0.5) 101.72%)",
+        "opacity": "1",
+        "x": 0,
+        "y": 44,
+        "width": 208
+      },
+      "toolbar": {
+        "color": "rgba(0, 0, 0, 0)",
+        "image": "none",
+        "opacity": "1",
+        "x": 0,
+        "y": 0,
+        "width": 1185
+      },
+      "theme": "default",
+      "top": false,
+      "expanded": true,
+      "sidebarPixelsStable": true,
+      "toolbarPixelsStable": true
+    },
+    {
+      "body": {
+        "color": "rgb(37, 36, 40)",
+        "image": "linear-gradient(96deg, oklab(0.350395 0.0333667 -0.0714453 / 0.5) 39.84%, oklab(0.363806 0.0999189 0.068457 / 0.5) 101.72%)",
+        "opacity": "1",
+        "x": 0,
+        "y": 0,
+        "width": 1185
+      },
+      "parent": {
+        "color": "rgb(37, 36, 40)",
+        "image": "linear-gradient(96deg, oklab(0.350395 0.0333667 -0.0714453 / 0.5) 39.84%, oklab(0.363806 0.0999189 0.068457 / 0.5) 101.72%)",
+        "opacity": "1",
+        "x": 0,
+        "y": 0,
+        "width": 1185
+      },
+      "sidebar": {
+        "color": "rgb(37, 36, 40)",
+        "image": "linear-gradient(96deg, oklab(0.350395 0.0333667 -0.0714453 / 0.5) 39.84%, oklab(0.363806 0.0999189 0.068457 / 0.5) 101.72%)",
+        "opacity": "1",
+        "x": 0,
+        "y": 44,
+        "width": 52
+      },
+      "toolbar": {
+        "color": "rgb(37, 36, 40)",
+        "image": "linear-gradient(96deg, oklab(0.350395 0.0333667 -0.0714453 / 0.5) 39.84%, oklab(0.363806 0.0999189 0.068457 / 0.5) 101.72%)",
+        "opacity": "1",
+        "x": 0,
+        "y": 0,
+        "width": 1185
+      },
+      "theme": "default",
+      "top": true,
+      "expanded": false,
+      "sidebarPixelsStable": true,
+      "toolbarPixelsStable": true
+    },
+    {
+      "body": {
+        "color": "rgb(37, 36, 40)",
+        "image": "linear-gradient(96deg, oklab(0.350395 0.0333667 -0.0714453 / 0.5) 39.84%, oklab(0.363806 0.0999189 0.068457 / 0.5) 101.72%)",
+        "opacity": "1",
+        "x": 0,
+        "y": 0,
+        "width": 1185
+      },
+      "parent": {
+        "color": "rgb(37, 36, 40)",
+        "image": "linear-gradient(96deg, oklab(0.350395 0.0333667 -0.0714453 / 0.5) 39.84%, oklab(0.363806 0.0999189 0.068457 / 0.5) 101.72%)",
+        "opacity": "1",
+        "x": 0,
+        "y": 0,
+        "width": 1185
+      },
+      "sidebar": {
+        "color": "rgb(37, 36, 40)",
+        "image": "linear-gradient(96deg, oklab(0.350395 0.0333667 -0.0714453 / 0.5) 39.84%, oklab(0.363806 0.0999189 0.068457 / 0.5) 101.72%)",
+        "opacity": "1",
+        "x": 0,
+        "y": 44,
+        "width": 208
+      },
+      "toolbar": {
+        "color": "rgb(37, 36, 40)",
+        "image": "linear-gradient(96deg, oklab(0.350395 0.0333667 -0.0714453 / 0.5) 39.84%, oklab(0.363806 0.0999189 0.068457 / 0.5) 101.72%)",
+        "opacity": "1",
+        "x": 0,
+        "y": 0,
+        "width": 1185
+      },
+      "theme": "default",
+      "top": true,
+      "expanded": true,
+      "sidebarPixelsStable": true,
+      "toolbarPixelsStable": true
+    },
+    {
+      "body": {
+        "color": "rgb(220, 195, 168)",
+        "image": "url(\"moz-extension://1ee16ac9-4ee8-4f89-8532-0747e37ee13a/header.svg\"), none",
+        "opacity": "1",
+        "x": 0,
+        "y": 0,
+        "width": 1185
+      },
+      "parent": {
+        "color": "rgb(220, 195, 168)",
+        "image": "url(\"moz-extension://1ee16ac9-4ee8-4f89-8532-0747e37ee13a/header.svg\"), none",
+        "opacity": "1",
+        "x": 0,
+        "y": 44,
+        "width": 1185
+      },
+      "sidebar": {
+        "color": "rgb(220, 195, 168)",
+        "image": "url(\"moz-extension://1ee16ac9-4ee8-4f89-8532-0747e37ee13a/header.svg\"), none",
+        "opacity": "1",
+        "x": 0,
+        "y": 44,
+        "width": 52
+      },
+      "toolbar": {
+        "color": "rgba(0, 0, 0, 0)",
+        "image": "none",
+        "opacity": "1",
+        "x": 0,
+        "y": 0,
+        "width": 1185
+      },
+      "theme": "light",
+      "top": false,
+      "expanded": false,
+      "sidebarPixelsStable": true,
+      "toolbarPixelsStable": true
+    },
+    {
+      "body": {
+        "color": "rgb(220, 195, 168)",
+        "image": "url(\"moz-extension://1ee16ac9-4ee8-4f89-8532-0747e37ee13a/header.svg\"), none",
+        "opacity": "1",
+        "x": 0,
+        "y": 0,
+        "width": 1185
+      },
+      "parent": {
+        "color": "rgb(220, 195, 168)",
+        "image": "url(\"moz-extension://1ee16ac9-4ee8-4f89-8532-0747e37ee13a/header.svg\"), none",
+        "opacity": "1",
+        "x": 0,
+        "y": 44,
+        "width": 1185
+      },
+      "sidebar": {
+        "color": "rgb(220, 195, 168)",
+        "image": "url(\"moz-extension://1ee16ac9-4ee8-4f89-8532-0747e37ee13a/header.svg\"), none",
+        "opacity": "1",
+        "x": 0,
+        "y": 44,
+        "width": 208
+      },
+      "toolbar": {
+        "color": "rgba(0, 0, 0, 0)",
+        "image": "none",
+        "opacity": "1",
+        "x": 0,
+        "y": 0,
+        "width": 1185
+      },
+      "theme": "light",
+      "top": false,
+      "expanded": true,
+      "sidebarPixelsStable": true,
+      "toolbarPixelsStable": true
+    },
+    {
+      "body": {
+        "color": "rgb(220, 195, 168)",
+        "image": "url(\"moz-extension://1ee16ac9-4ee8-4f89-8532-0747e37ee13a/header.svg\"), none",
+        "opacity": "1",
+        "x": 0,
+        "y": 0,
+        "width": 1185
+      },
+      "parent": {
+        "color": "rgb(220, 195, 168)",
+        "image": "url(\"moz-extension://1ee16ac9-4ee8-4f89-8532-0747e37ee13a/header.svg\"), none",
+        "opacity": "1",
+        "x": 0,
+        "y": 0,
+        "width": 1185
+      },
+      "sidebar": {
+        "color": "rgb(220, 195, 168)",
+        "image": "url(\"moz-extension://1ee16ac9-4ee8-4f89-8532-0747e37ee13a/header.svg\"), none",
+        "opacity": "1",
+        "x": 0,
+        "y": 44,
+        "width": 52
+      },
+      "toolbar": {
+        "color": "rgb(220, 195, 168)",
+        "image": "url(\"moz-extension://1ee16ac9-4ee8-4f89-8532-0747e37ee13a/header.svg\"), none",
+        "opacity": "1",
+        "x": 0,
+        "y": 0,
+        "width": 1185
+      },
+      "theme": "light",
+      "top": true,
+      "expanded": false,
+      "sidebarPixelsStable": true,
+      "toolbarPixelsStable": true
+    },
+    {
+      "body": {
+        "color": "rgb(220, 195, 168)",
+        "image": "url(\"moz-extension://1ee16ac9-4ee8-4f89-8532-0747e37ee13a/header.svg\"), none",
+        "opacity": "1",
+        "x": 0,
+        "y": 0,
+        "width": 1185
+      },
+      "parent": {
+        "color": "rgb(220, 195, 168)",
+        "image": "url(\"moz-extension://1ee16ac9-4ee8-4f89-8532-0747e37ee13a/header.svg\"), none",
+        "opacity": "1",
+        "x": 0,
+        "y": 0,
+        "width": 1185
+      },
+      "sidebar": {
+        "color": "rgb(220, 195, 168)",
+        "image": "url(\"moz-extension://1ee16ac9-4ee8-4f89-8532-0747e37ee13a/header.svg\"), none",
+        "opacity": "1",
+        "x": 0,
+        "y": 44,
+        "width": 208
+      },
+      "toolbar": {
+        "color": "rgb(220, 195, 168)",
+        "image": "url(\"moz-extension://1ee16ac9-4ee8-4f89-8532-0747e37ee13a/header.svg\"), none",
+        "opacity": "1",
+        "x": 0,
+        "y": 0,
+        "width": 1185
+      },
+      "theme": "light",
+      "top": true,
+      "expanded": true,
+      "sidebarPixelsStable": true,
+      "toolbarPixelsStable": true
+    },
+    {
+      "body": {
+        "color": "rgb(24, 38, 59)",
+        "image": "url(\"moz-extension://440e50c3-c6b0-4ef0-84f8-7efd9392896a/header.svg\"), none",
+        "opacity": "1",
+        "x": 0,
+        "y": 0,
+        "width": 1185
+      },
+      "parent": {
+        "color": "rgb(24, 38, 59)",
+        "image": "url(\"moz-extension://440e50c3-c6b0-4ef0-84f8-7efd9392896a/header.svg\"), none",
+        "opacity": "1",
+        "x": 0,
+        "y": 44,
+        "width": 1185
+      },
+      "sidebar": {
+        "color": "rgb(24, 38, 59)",
+        "image": "url(\"moz-extension://440e50c3-c6b0-4ef0-84f8-7efd9392896a/header.svg\"), none",
+        "opacity": "1",
+        "x": 0,
+        "y": 44,
+        "width": 52
+      },
+      "toolbar": {
+        "color": "rgba(0, 0, 0, 0)",
+        "image": "none",
+        "opacity": "1",
+        "x": 0,
+        "y": 0,
+        "width": 1185
+      },
+      "theme": "dark",
+      "top": false,
+      "expanded": false,
+      "sidebarPixelsStable": true,
+      "toolbarPixelsStable": true
+    },
+    {
+      "body": {
+        "color": "rgb(24, 38, 59)",
+        "image": "url(\"moz-extension://440e50c3-c6b0-4ef0-84f8-7efd9392896a/header.svg\"), none",
+        "opacity": "1",
+        "x": 0,
+        "y": 0,
+        "width": 1185
+      },
+      "parent": {
+        "color": "rgb(24, 38, 59)",
+        "image": "url(\"moz-extension://440e50c3-c6b0-4ef0-84f8-7efd9392896a/header.svg\"), none",
+        "opacity": "1",
+        "x": 0,
+        "y": 44,
+        "width": 1185
+      },
+      "sidebar": {
+        "color": "rgb(24, 38, 59)",
+        "image": "url(\"moz-extension://440e50c3-c6b0-4ef0-84f8-7efd9392896a/header.svg\"), none",
+        "opacity": "1",
+        "x": 0,
+        "y": 44,
+        "width": 208
+      },
+      "toolbar": {
+        "color": "rgba(0, 0, 0, 0)",
+        "image": "none",
+        "opacity": "1",
+        "x": 0,
+        "y": 0,
+        "width": 1185
+      },
+      "theme": "dark",
+      "top": false,
+      "expanded": true,
+      "sidebarPixelsStable": true,
+      "toolbarPixelsStable": true
+    },
+    {
+      "body": {
+        "color": "rgb(24, 38, 59)",
+        "image": "url(\"moz-extension://440e50c3-c6b0-4ef0-84f8-7efd9392896a/header.svg\"), none",
+        "opacity": "1",
+        "x": 0,
+        "y": 0,
+        "width": 1185
+      },
+      "parent": {
+        "color": "rgb(24, 38, 59)",
+        "image": "url(\"moz-extension://440e50c3-c6b0-4ef0-84f8-7efd9392896a/header.svg\"), none",
+        "opacity": "1",
+        "x": 0,
+        "y": 0,
+        "width": 1185
+      },
+      "sidebar": {
+        "color": "rgb(24, 38, 59)",
+        "image": "url(\"moz-extension://440e50c3-c6b0-4ef0-84f8-7efd9392896a/header.svg\"), none",
+        "opacity": "1",
+        "x": 0,
+        "y": 44,
+        "width": 52
+      },
+      "toolbar": {
+        "color": "rgb(24, 38, 59)",
+        "image": "url(\"moz-extension://440e50c3-c6b0-4ef0-84f8-7efd9392896a/header.svg\"), none",
+        "opacity": "1",
+        "x": 0,
+        "y": 0,
+        "width": 1185
+      },
+      "theme": "dark",
+      "top": true,
+      "expanded": false,
+      "sidebarPixelsStable": true,
+      "toolbarPixelsStable": true
+    },
+    {
+      "body": {
+        "color": "rgb(24, 38, 59)",
+        "image": "url(\"moz-extension://440e50c3-c6b0-4ef0-84f8-7efd9392896a/header.svg\"), none",
+        "opacity": "1",
+        "x": 0,
+        "y": 0,
+        "width": 1185
+      },
+      "parent": {
+        "color": "rgb(24, 38, 59)",
+        "image": "url(\"moz-extension://440e50c3-c6b0-4ef0-84f8-7efd9392896a/header.svg\"), none",
+        "opacity": "1",
+        "x": 0,
+        "y": 0,
+        "width": 1185
+      },
+      "sidebar": {
+        "color": "rgb(24, 38, 59)",
+        "image": "url(\"moz-extension://440e50c3-c6b0-4ef0-84f8-7efd9392896a/header.svg\"), none",
+        "opacity": "1",
+        "x": 0,
+        "y": 44,
+        "width": 208
+      },
+      "toolbar": {
+        "color": "rgb(24, 38, 59)",
+        "image": "url(\"moz-extension://440e50c3-c6b0-4ef0-84f8-7efd9392896a/header.svg\"), none",
+        "opacity": "1",
+        "x": 0,
+        "y": 0,
+        "width": 1185
+      },
+      "theme": "dark",
+      "top": true,
+      "expanded": true,
+      "sidebarPixelsStable": true,
+      "toolbarPixelsStable": true
+    },
+    {
+      "body": {
+        "color": "rgb(24, 38, 59)",
+        "image": "url(\"moz-extension://0cee31da-3587-4665-b3af-cb33ef413d3f/header.svg\"), none",
+        "opacity": "1",
+        "x": 0,
+        "y": 0,
+        "width": 1185
+      },
+      "parent": {
+        "color": "rgb(24, 38, 59)",
+        "image": "url(\"moz-extension://0cee31da-3587-4665-b3af-cb33ef413d3f/header.svg\"), none",
+        "opacity": "1",
+        "x": 0,
+        "y": 44,
+        "width": 1185
+      },
+      "sidebar": {
+        "color": "rgb(24, 38, 59)",
+        "image": "url(\"moz-extension://0cee31da-3587-4665-b3af-cb33ef413d3f/header.svg\"), none",
+        "opacity": "1",
+        "x": 0,
+        "y": 44,
+        "width": 52
+      },
+      "toolbar": {
+        "color": "rgba(0, 0, 0, 0)",
+        "image": "none",
+        "opacity": "1",
+        "x": 0,
+        "y": 0,
+        "width": 1185
+      },
+      "theme": "frame-only",
+      "top": false,
+      "expanded": false,
+      "sidebarPixelsStable": true,
+      "toolbarPixelsStable": true
+    },
+    {
+      "body": {
+        "color": "rgb(24, 38, 59)",
+        "image": "url(\"moz-extension://0cee31da-3587-4665-b3af-cb33ef413d3f/header.svg\"), none",
+        "opacity": "1",
+        "x": 0,
+        "y": 0,
+        "width": 1185
+      },
+      "parent": {
+        "color": "rgb(24, 38, 59)",
+        "image": "url(\"moz-extension://0cee31da-3587-4665-b3af-cb33ef413d3f/header.svg\"), none",
+        "opacity": "1",
+        "x": 0,
+        "y": 44,
+        "width": 1185
+      },
+      "sidebar": {
+        "color": "rgb(24, 38, 59)",
+        "image": "url(\"moz-extension://0cee31da-3587-4665-b3af-cb33ef413d3f/header.svg\"), none",
+        "opacity": "1",
+        "x": 0,
+        "y": 44,
+        "width": 208
+      },
+      "toolbar": {
+        "color": "rgba(0, 0, 0, 0)",
+        "image": "none",
+        "opacity": "1",
+        "x": 0,
+        "y": 0,
+        "width": 1185
+      },
+      "theme": "frame-only",
+      "top": false,
+      "expanded": true,
+      "sidebarPixelsStable": true,
+      "toolbarPixelsStable": true
+    },
+    {
+      "body": {
+        "color": "rgb(24, 38, 59)",
+        "image": "url(\"moz-extension://0cee31da-3587-4665-b3af-cb33ef413d3f/header.svg\"), none",
+        "opacity": "1",
+        "x": 0,
+        "y": 0,
+        "width": 1185
+      },
+      "parent": {
+        "color": "rgb(24, 38, 59)",
+        "image": "url(\"moz-extension://0cee31da-3587-4665-b3af-cb33ef413d3f/header.svg\"), none",
+        "opacity": "1",
+        "x": 0,
+        "y": 0,
+        "width": 1185
+      },
+      "sidebar": {
+        "color": "rgb(24, 38, 59)",
+        "image": "url(\"moz-extension://0cee31da-3587-4665-b3af-cb33ef413d3f/header.svg\"), none",
+        "opacity": "1",
+        "x": 0,
+        "y": 44,
+        "width": 52
+      },
+      "toolbar": {
+        "color": "rgb(24, 38, 59)",
+        "image": "url(\"moz-extension://0cee31da-3587-4665-b3af-cb33ef413d3f/header.svg\"), none",
+        "opacity": "1",
+        "x": 0,
+        "y": 0,
+        "width": 1185
+      },
+      "theme": "frame-only",
+      "top": true,
+      "expanded": false,
+      "sidebarPixelsStable": true,
+      "toolbarPixelsStable": true
+    },
+    {
+      "body": {
+        "color": "rgb(24, 38, 59)",
+        "image": "url(\"moz-extension://0cee31da-3587-4665-b3af-cb33ef413d3f/header.svg\"), none",
+        "opacity": "1",
+        "x": 0,
+        "y": 0,
+        "width": 1185
+      },
+      "parent": {
+        "color": "rgb(24, 38, 59)",
+        "image": "url(\"moz-extension://0cee31da-3587-4665-b3af-cb33ef413d3f/header.svg\"), none",
+        "opacity": "1",
+        "x": 0,
+        "y": 0,
+        "width": 1185
+      },
+      "sidebar": {
+        "color": "rgb(24, 38, 59)",
+        "image": "url(\"moz-extension://0cee31da-3587-4665-b3af-cb33ef413d3f/header.svg\"), none",
+        "opacity": "1",
+        "x": 0,
+        "y": 44,
+        "width": 208
+      },
+      "toolbar": {
+        "color": "rgb(24, 38, 59)",
+        "image": "url(\"moz-extension://0cee31da-3587-4665-b3af-cb33ef413d3f/header.svg\"), none",
+        "opacity": "1",
+        "x": 0,
+        "y": 0,
+        "width": 1185
+      },
+      "theme": "frame-only",
+      "top": true,
+      "expanded": true,
+      "sidebarPixelsStable": true,
+      "toolbarPixelsStable": true
+    }
+  ],
+  "pass": true
+}

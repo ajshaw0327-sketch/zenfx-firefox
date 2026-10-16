@@ -291,6 +291,16 @@
   @media -moz-pref("zenfx.compact.sidebar") {
     :root:has(#tabbrowser-tabs[orient="vertical"]):not([chromehidden]):not([customizing]):not([inDOMFullscreen]):not([sizemode="fullscreen"]) {
       #browser { position: relative !important; }
+      /* The sidebar's parent is #browser, not body. Carry the native frame
+       * surface through that parent so the overlay has an opaque backing. */
+      #browser,
+      #sidebar-container:not([hidden]) {
+        background-color: inherit !important;
+        background-image: inherit !important;
+        background-position: inherit !important;
+        background-size: inherit !important;
+        background-repeat: inherit !important;
+      }
       #sidebar-container:not([hidden]) {
         position: absolute !important;
         inset: 0 auto 0 0 !important;

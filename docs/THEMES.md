@@ -1,6 +1,6 @@
 # Native Firefox colors and group-colored folders
 
-ZenFX keeps the Zen-style layout while letting Firefox choose the actual sidebar colors. The launcher has no custom background or text-color override, so native gradients, theme images, frame colors, and text colors paint normally. The selected tab uses Firefox's exact selected fill and text color; the layout removes Nova's painted gradient border without adding another color tint. Unselected Favorites use a subtle native-text tint, and native tab hover colors supply hover feedback.
+ZenFX keeps the Zen-style layout while letting Firefox choose the actual sidebar colors. In the docked layout, the launcher has no custom background or text-color override, so native gradients, theme images, frame colors, and text colors paint normally. The selected tab uses Firefox's exact selected fill and text color; the layout removes Nova's painted gradient border without adding another color tint. Unselected Favorites use a subtle native-text tint, and native tab hover colors supply hover feedback.
 
 Firefox 158 Nova treats the vertical-tab launcher as part of the browser frame. A theme's `sidebar` and `sidebar_text` fields apply to sidebar panels; using those older panel colors to paint the launcher would cover the frame image and differ from default Firefox. Themes should define their frame/tab-bar text color, such as `tab_background_text`; omitted fields retain Firefox's own fallback behavior. ZenFX does not invent replacements for missing theme properties.
 
@@ -18,4 +18,4 @@ Three native group colors were checked both open and closed in all four themes (
 
 [Measurements](validation/native-theme-colors.json) · [Mozilla's current Nova theme mapping](https://blog.mozilla.org/addons/2026/09/29/nova-is-here-what-changes-for-your-firefox-theme/) · [Theme manifest reference](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/theme)
 
-In Compact Mode, the floating top toolbar paints the window body’s native background color, images, position, size, and repeat settings. Its surface stays opaque over webpage content without imposing a separate palette. Normal toolbar and sidebar painting stay native.
+In Compact Mode, both floating surfaces paint the window body’s native background color, images, position, size, and repeat settings. The sidebar inherits that surface through its `#browser` parent. This supplies an opaque backing over webpage content without imposing a separate palette. Docked toolbar and sidebar painting stay native.
