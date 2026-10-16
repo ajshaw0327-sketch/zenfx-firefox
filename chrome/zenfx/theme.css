@@ -29,7 +29,8 @@
   --zenfx-shadow: 0 5px 18px rgb(0 0 0 / 16%);
   --zenfx-animation-speed: 140ms;
   --zenfx-hide-delay: 220ms;
-  --zenfx-edge-size: 4px;
+  --zenfx-edge-size: 12px;
+  --zenfx-top-peek-size: 4px;
   --zenfx-folder-tint: 9%;
   --zenfx-folder-icon-size: 20px;
   --zenfx-search-width: 640px;

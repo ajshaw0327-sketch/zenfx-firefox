@@ -32,7 +32,8 @@
   --zenfx-shadow: 0 5px 18px rgb(0 0 0 / 16%);
   --zenfx-animation-speed: 140ms;
   --zenfx-hide-delay: 220ms;
-  --zenfx-edge-size: 4px;
+  --zenfx-edge-size: 12px;
+  --zenfx-top-peek-size: 4px;
   --zenfx-folder-tint: 9%;
   --zenfx-folder-icon-size: 20px;
   --zenfx-search-width: 640px;
@@ -253,7 +254,8 @@
         position: fixed !important;
         inset: 0 0 auto 0 !important;
         width: auto !important;
-        transform: translateY(calc(-100% + var(--zenfx-edge-size))) !important;
+        overflow: visible !important;
+        transform: translateY(calc(-100% + var(--zenfx-top-peek-size))) !important;
         z-index: 10 !important;
         opacity: var(--zenfx-overlay-opacity) !important;
         /* Native toolbars are transparent over body. Once floated over page
@@ -267,8 +269,18 @@
         border-radius: 0 0 var(--zenfx-content-radius) var(--zenfx-content-radius) !important;
         transition: transform var(--zenfx-animation-speed) ease var(--zenfx-hide-delay) !important;
       }
-      /* Retain focusability for Cmd+L and toolbar keyboard navigation. The only
-       * page hit target while hidden is the 4px edge strip. */
+      /* Enlarge the invisible hit area without exposing more toolbar paint. */
+      #navigator-toolbox::after {
+        content: "";
+        position: absolute;
+        inset-inline: 0;
+        inset-block-start: 100%;
+        height: max(0px, calc(var(--zenfx-edge-size) - var(--zenfx-top-peek-size)));
+        background: transparent;
+        -moz-window-dragging: no-drag;
+      }
+      /* Retain focusability for Cmd+L and toolbar keyboard navigation. Hidden
+       * controls do not intercept clicks beyond the reveal area. */
       #navigator-toolbox:not(:hover):not(:focus-within):not(:has([open="true"], #urlbar[focused])) > toolbar {
         opacity: 0;
         pointer-events: none;
@@ -764,6 +776,7 @@ sidebar-main,
  * Examples — uncomment only the values you want:
  * :root {
  *   --zenfx-sidebar-width: 260px;
+ *   --zenfx-edge-size: 16px;
  *   --zenfx-content-radius: 12px;
  *   --zenfx-accent: #789580;
  * }

@@ -68,6 +68,8 @@ Drag the expanded sidebar's right edge to resize it. Right-click a tab and choos
 
 For CSS-only Compact Mode, create Boolean preferences `zenfx.compact.top` and/or `zenfx.compact.sidebar`: `true` hides that bar until its edge is hovered, and `false` keeps it visible. When both are enabled, either edge reveals both bars as one shared area; the sidebar stays below the toolbar while you move between them. The sidebar resize handle is available when sidebar Compact Mode is off.
 
+Both reveal areas extend 12px inward from the window edge. To change their size, add `:root { --zenfx-edge-size: 16px; }` to your custom CSS. The top toolbar's visible peek stays 4px; the extra trigger area is transparent.
+
 ## Keep the scripts across restarts
 
 The four scripts are in [optional-chrome](optional-chrome/). Copying them into `chrome` does not execute them. They need a compatible browser script loader.

@@ -3,6 +3,7 @@
  * Examples — uncomment only the values you want:
  * :root {
  *   --zenfx-sidebar-width: 260px;
+ *   --zenfx-edge-size: 16px;
  *   --zenfx-content-radius: 12px;
  *   --zenfx-accent: #789580;
  * }

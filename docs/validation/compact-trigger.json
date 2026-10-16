@@ -1,0 +1,418 @@
+{
+  "method": "Trusted pointer input in a disposable window of the same Firefox 158/macOS test profile, running headlessly. No hover locks.",
+  "cases": [
+    {
+      "edge": 12,
+      "top": true,
+      "side": true,
+      "independent": false,
+      "target": "top",
+      "inside": 10,
+      "outside": 13,
+      "hidden": {
+        "topY": -40,
+        "topHeight": 44,
+        "topBottom": 4,
+        "sideX": -260,
+        "sideY": 44,
+        "topExtension": 8,
+        "sideTrigger": 12,
+        "edge": "12px"
+      },
+      "revealed": {
+        "topY": 0,
+        "topHeight": 44,
+        "topBottom": 44,
+        "sideX": 0,
+        "sideY": 44,
+        "topExtension": 8,
+        "sideTrigger": 12,
+        "edge": "12px"
+      }
+    },
+    {
+      "edge": 12,
+      "top": true,
+      "side": true,
+      "independent": false,
+      "target": "sidebar",
+      "inside": 10,
+      "outside": 13,
+      "hidden": {
+        "topY": -40,
+        "topHeight": 44,
+        "topBottom": 4,
+        "sideX": -260,
+        "sideY": 44,
+        "topExtension": 8,
+        "sideTrigger": 12,
+        "edge": "12px"
+      },
+      "revealed": {
+        "topY": 0,
+        "topHeight": 44,
+        "topBottom": 44,
+        "sideX": 0,
+        "sideY": 44,
+        "topExtension": 8,
+        "sideTrigger": 12,
+        "edge": "12px"
+      }
+    },
+    {
+      "edge": 12,
+      "top": true,
+      "side": true,
+      "independent": true,
+      "target": "top",
+      "inside": 10,
+      "outside": 13,
+      "hidden": {
+        "topY": -40,
+        "topHeight": 44,
+        "topBottom": 4,
+        "sideX": -260,
+        "sideY": 44,
+        "topExtension": 8,
+        "sideTrigger": 12,
+        "edge": "12px"
+      },
+      "revealed": {
+        "topY": 0,
+        "topHeight": 44,
+        "topBottom": 44,
+        "sideX": -260,
+        "sideY": 44,
+        "topExtension": 8,
+        "sideTrigger": 12,
+        "edge": "12px"
+      }
+    },
+    {
+      "edge": 12,
+      "top": true,
+      "side": true,
+      "independent": true,
+      "target": "sidebar",
+      "inside": 10,
+      "outside": 13,
+      "hidden": {
+        "topY": -40,
+        "topHeight": 44,
+        "topBottom": 4,
+        "sideX": -260,
+        "sideY": 44,
+        "topExtension": 8,
+        "sideTrigger": 12,
+        "edge": "12px"
+      },
+      "revealed": {
+        "topY": -40,
+        "topHeight": 44,
+        "topBottom": 4,
+        "sideX": 0,
+        "sideY": 44,
+        "topExtension": 8,
+        "sideTrigger": 12,
+        "edge": "12px"
+      }
+    },
+    {
+      "edge": 12,
+      "top": true,
+      "side": false,
+      "independent": false,
+      "target": "top",
+      "inside": 10,
+      "outside": 13,
+      "hidden": {
+        "topY": -40,
+        "topHeight": 44,
+        "topBottom": 4,
+        "sideX": 0,
+        "sideY": 0,
+        "topExtension": 8,
+        "sideTrigger": null,
+        "edge": "12px"
+      },
+      "revealed": {
+        "topY": 0,
+        "topHeight": 44,
+        "topBottom": 44,
+        "sideX": 0,
+        "sideY": 0,
+        "topExtension": 8,
+        "sideTrigger": null,
+        "edge": "12px"
+      }
+    },
+    {
+      "edge": 12,
+      "top": false,
+      "side": true,
+      "independent": false,
+      "target": "sidebar",
+      "inside": 10,
+      "outside": 13,
+      "hidden": {
+        "topY": 0,
+        "topHeight": 44,
+        "topBottom": 44,
+        "sideX": -260,
+        "sideY": 44,
+        "topExtension": null,
+        "sideTrigger": 12,
+        "edge": "12px"
+      },
+      "revealed": {
+        "topY": 0,
+        "topHeight": 44,
+        "topBottom": 44,
+        "sideX": 0,
+        "sideY": 44,
+        "topExtension": null,
+        "sideTrigger": 12,
+        "edge": "12px"
+      }
+    },
+    {
+      "edge": 20,
+      "top": true,
+      "side": true,
+      "independent": false,
+      "target": "top",
+      "inside": 18,
+      "outside": 21,
+      "hidden": {
+        "topY": -40,
+        "topHeight": 44,
+        "topBottom": 4,
+        "sideX": -260,
+        "sideY": 44,
+        "topExtension": 16,
+        "sideTrigger": 20,
+        "edge": "20px"
+      },
+      "revealed": {
+        "topY": 0,
+        "topHeight": 44,
+        "topBottom": 44,
+        "sideX": 0,
+        "sideY": 44,
+        "topExtension": 16,
+        "sideTrigger": 20,
+        "edge": "20px"
+      }
+    },
+    {
+      "edge": 20,
+      "top": true,
+      "side": true,
+      "independent": false,
+      "target": "sidebar",
+      "inside": 18,
+      "outside": 21,
+      "hidden": {
+        "topY": -40,
+        "topHeight": 44,
+        "topBottom": 4,
+        "sideX": -260,
+        "sideY": 44,
+        "topExtension": 16,
+        "sideTrigger": 20,
+        "edge": "20px"
+      },
+      "revealed": {
+        "topY": 0,
+        "topHeight": 44,
+        "topBottom": 44,
+        "sideX": 0,
+        "sideY": 44,
+        "topExtension": 16,
+        "sideTrigger": 20,
+        "edge": "20px"
+      }
+    },
+    {
+      "edge": 20,
+      "top": true,
+      "side": true,
+      "independent": true,
+      "target": "top",
+      "inside": 18,
+      "outside": 21,
+      "hidden": {
+        "topY": -40,
+        "topHeight": 44,
+        "topBottom": 4,
+        "sideX": -260,
+        "sideY": 44,
+        "topExtension": 16,
+        "sideTrigger": 20,
+        "edge": "20px"
+      },
+      "revealed": {
+        "topY": 0,
+        "topHeight": 44,
+        "topBottom": 44,
+        "sideX": -260,
+        "sideY": 44,
+        "topExtension": 16,
+        "sideTrigger": 20,
+        "edge": "20px"
+      }
+    },
+    {
+      "edge": 20,
+      "top": true,
+      "side": true,
+      "independent": true,
+      "target": "sidebar",
+      "inside": 18,
+      "outside": 21,
+      "hidden": {
+        "topY": -40,
+        "topHeight": 44,
+        "topBottom": 4,
+        "sideX": -260,
+        "sideY": 44,
+        "topExtension": 16,
+        "sideTrigger": 20,
+        "edge": "20px"
+      },
+      "revealed": {
+        "topY": -40,
+        "topHeight": 44,
+        "topBottom": 4,
+        "sideX": 0,
+        "sideY": 44,
+        "topExtension": 16,
+        "sideTrigger": 20,
+        "edge": "20px"
+      }
+    },
+    {
+      "edge": 20,
+      "top": true,
+      "side": false,
+      "independent": false,
+      "target": "top",
+      "inside": 18,
+      "outside": 21,
+      "hidden": {
+        "topY": -40,
+        "topHeight": 44,
+        "topBottom": 4,
+        "sideX": 0,
+        "sideY": 0,
+        "topExtension": 16,
+        "sideTrigger": null,
+        "edge": "20px"
+      },
+      "revealed": {
+        "topY": 0,
+        "topHeight": 44,
+        "topBottom": 44,
+        "sideX": 0,
+        "sideY": 0,
+        "topExtension": 16,
+        "sideTrigger": null,
+        "edge": "20px"
+      }
+    },
+    {
+      "edge": 20,
+      "top": false,
+      "side": true,
+      "independent": false,
+      "target": "sidebar",
+      "inside": 18,
+      "outside": 21,
+      "hidden": {
+        "topY": 0,
+        "topHeight": 44,
+        "topBottom": 44,
+        "sideX": -260,
+        "sideY": 44,
+        "topExtension": null,
+        "sideTrigger": 20,
+        "edge": "20px"
+      },
+      "revealed": {
+        "topY": 0,
+        "topHeight": 44,
+        "topBottom": 44,
+        "sideX": 0,
+        "sideY": 44,
+        "topExtension": null,
+        "sideTrigger": 20,
+        "edge": "20px"
+      }
+    }
+  ],
+  "sourceSHA256": {
+    "theme.css": "c3faf05227560f7be58fb52ef05b501dac6f5ccd31de04043c4d9e0f6959a687",
+    "compact.css": "462a562dd0b5130071c69bcada0200e7396174bad757d4318d8eb7639fff3ce3"
+  },
+  "cssOnlySharedCorner": {
+    "topY": 0,
+    "topHeight": 44,
+    "topBottom": 44,
+    "sideX": 0,
+    "sideY": 72,
+    "topExtension": 8,
+    "sideTrigger": 12,
+    "edge": "12px"
+  },
+  "errors": [],
+  "pass": true,
+  "tallerBookmarksToolbar": {
+    "top": {
+      "hidden": {
+        "topY": -80,
+        "topHeight": 84,
+        "topBottom": 4,
+        "sideX": -165,
+        "sideY": 84,
+        "topExtension": 8,
+        "sideTrigger": 12,
+        "edge": "12px"
+      },
+      "revealed": {
+        "topY": 0,
+        "topHeight": 84,
+        "topBottom": 84,
+        "sideX": 0,
+        "sideY": 84,
+        "topExtension": 8,
+        "sideTrigger": 12,
+        "edge": "12px"
+      }
+    },
+    "sidebar": {
+      "hidden": {
+        "topY": -80,
+        "topHeight": 84,
+        "topBottom": 4,
+        "sideX": -165,
+        "sideY": 84,
+        "topExtension": 8,
+        "sideTrigger": 12,
+        "edge": "12px"
+      },
+      "revealed": {
+        "topY": 0,
+        "topHeight": 84,
+        "topBottom": 84,
+        "sideX": 0,
+        "sideY": 84,
+        "topExtension": 8,
+        "sideTrigger": 12,
+        "edge": "12px"
+      }
+    }
+  },
+  "limitations": [
+    "Native OS context-menu hold could not be reverified headlessly. The same failure occurred with the unchanged published CSS."
+  ]
+}
