@@ -1,0 +1,7 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+.venv/
+*.log
+zenfx-install-state.json
+zenfx-backups/

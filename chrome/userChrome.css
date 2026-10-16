@@ -1,0 +1,8 @@
+/* ZenFX — Firefox 158 / macOS. CSS only. See README.md before installing.
+ * Keep imports first. Put your overrides in zenfx/custom.css.
+ * No userContent.css is needed: webpages are never restyled.
+ */
+@import url("zenfx/theme.css");
+@import url("zenfx/compact.css");
+@import url("zenfx/features.css");
+@import url("zenfx/custom.css");

@@ -1,0 +1,3 @@
+477169c055199dac4750c81bf40e8ad58da86224743cadbde5068a87c2b39f08  ZenFX-Appearance.zip
+57b6c06ad97725a1ef35cf08abb8568013eb3056764951aa8478deaf6858c87c  ZenFX-Setup.zip
+4a1f5dcb2a4ac3cc895d3056b941795f34be8921309b0dfb478b9f98084bac90  ZenFX-Tab-Cleanup-1.0.0-unsigned.zip

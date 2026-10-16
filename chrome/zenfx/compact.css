@@ -1,0 +1,98 @@
+/* Independent persistent modes. These are USER-CREATED Boolean preferences,
+ * not Firefox/Zen built-in settings. Missing = false. Verified live in 158.
+ * zenfx.compact.top      false = visible; true = edge-reveal top toolbar
+ * zenfx.compact.sidebar  false = visible; true = edge-reveal sidebar
+ * No JavaScript, native commands, shortcuts, or hidden toolbar buttons added.
+ */
+@media ((-moz-platform: macos) or (-moz-platform: windows) or (-moz-platform: linux)) {
+  /* Top: remove toolbox from flow; translate by its actual height. Bookmarks
+   * toolbar, if enabled, is part of this overlay, with no hardcoded height. */
+  @media -moz-pref("zenfx.compact.top") {
+    :root:has(#tabbrowser-tabs[orient="vertical"]):not([chromehidden]):not([customizing]):not([inDOMFullscreen]):not([sizemode="fullscreen"]) {
+      #navigator-toolbox {
+        position: fixed !important;
+        inset: 0 0 auto 0 !important;
+        width: auto !important;
+        transform: translateY(calc(-100% + var(--zenfx-edge-size))) !important;
+        z-index: 10 !important;
+        opacity: var(--zenfx-overlay-opacity) !important;
+        box-shadow: var(--zenfx-shadow) !important;
+        border-radius: 0 0 var(--zenfx-content-radius) var(--zenfx-content-radius) !important;
+        transition: transform var(--zenfx-animation-speed) ease var(--zenfx-hide-delay) !important;
+      }
+      /* Retain focusability for Cmd+L and toolbar keyboard navigation. The only
+       * page hit target while hidden is the 4px edge strip. */
+      #navigator-toolbox:not(:hover):not(:focus-within):not(:has([open="true"], #urlbar[focused])) > toolbar {
+        opacity: 0;
+        pointer-events: none;
+      }
+      #navigator-toolbox:is(:hover, :focus-within, :has([open="true"], #urlbar[focused])),
+      &:has(panel[panelopen="true"], menupopup[open="true"]) #navigator-toolbox {
+        transform: translateY(0) !important;
+        transition-delay: 0ms !important;
+      }
+      &:has(panel[panelopen="true"], menupopup[open="true"]) #navigator-toolbox > toolbar {
+        opacity: 1;
+        pointer-events: auto;
+      }
+    }
+  }
+
+  /* Sidebar: anchor relative to #browser, so an independently visible top bar
+   * is never covered. An empty pseudo-element supplies the discoverable edge
+   * target; the hidden sidebar itself does not intercept webpage clicks. */
+  @media -moz-pref("zenfx.compact.sidebar") {
+    :root:has(#tabbrowser-tabs[orient="vertical"]):not([chromehidden]):not([customizing]):not([inDOMFullscreen]):not([sizemode="fullscreen"]) {
+      #browser { position: relative !important; }
+      #sidebar-container:not([hidden]) {
+        position: absolute !important;
+        inset: 0 auto 0 0 !important;
+        height: auto !important;
+        max-height: none !important;
+        transform: translateX(-100%) !important;
+        overflow: visible !important;
+        z-index: 9 !important;
+        opacity: var(--zenfx-overlay-opacity) !important;
+        border-radius: 0 var(--zenfx-content-radius) var(--zenfx-content-radius) 0 !important;
+        box-shadow: var(--zenfx-shadow) !important;
+        transition: transform var(--zenfx-animation-speed) ease var(--zenfx-hide-delay) !important;
+      }
+      #sidebar-container:not([hidden])::after {
+        content: "";
+        position: absolute;
+        inset-block: 0;
+        inset-inline-start: 100%;
+        width: var(--zenfx-edge-size);
+        background: transparent;
+        -moz-window-dragging: no-drag;
+      }
+      #sidebar-container:is(:hover, :focus-within, [sidebar-ongoing-animations]),
+      &:has(panel[panelopen="true"], menupopup[open="true"], #tabbrowser-tabs[movingtab]) #sidebar-container {
+        transform: translateX(0) !important;
+        transition-delay: 0ms !important;
+      }
+      /* Native expand-on-hover adds a content offset. Compact has no rail,
+       * therefore remove that offset, including when a tool panel is open. */
+      #tabbrowser-tabbox {
+        margin-inline-start: var(--zenfx-content-margin) !important;
+      }
+      #sidebar-box { margin-inline-start: 0 !important; }
+      #sidebar-launcher-splitter { display: none !important; }
+    }
+  }
+}
+
+/* Both floating components remain usable at once: move only the overlay below
+ * a revealed top bar, without moving or resizing the webpage. */
+@media ((-moz-platform: macos) or (-moz-platform: windows) or (-moz-platform: linux)) and -moz-pref("zenfx.compact.top") and -moz-pref("zenfx.compact.sidebar") {
+  :root:has(#tabbrowser-tabs[orient="vertical"]):not([chromehidden]):not([customizing]):not([inDOMFullscreen]):not([sizemode="fullscreen"]) {
+    --zenfx-floating-top-height: var(--zenfx-toolbar-height);
+    &:has(#PersonalToolbar:not([collapsed]):not([hidden])) {
+      --zenfx-floating-top-height: calc(var(--zenfx-toolbar-height) + var(--zenfx-bookmarks-height));
+    }
+    &:has(#navigator-toolbox:is(:hover, :focus-within, :has([open="true"], #urlbar[focused]))),
+    &:has(panel[panelopen="true"], menupopup[open="true"]) {
+      #sidebar-container { inset-block-start: var(--zenfx-floating-top-height) !important; }
+    }
+  }
+}

@@ -1,0 +1,234 @@
+/* ZenFX 1.1 — Multiple Toolbars foundation.
+ * Original implementation; dimensions informed by Zen 1.23.2b public source.
+ * Compatibility boundary: Firefox 158 native vertical tabs; desktop, LTR, left sidebar. macOS verified; Windows/Linux unverified.
+ */
+
+/* 1. Central customization. Native theme colors remain the starting point. */
+:root {
+  --zenfx-sidebar-width: 240px;
+  --zenfx-sidebar-collapsed-width: 52px;
+  --zenfx-sidebar-padding: 7px;
+  --zenfx-tab-height: 34px;
+  --zenfx-tab-gap: 3px;
+  --zenfx-pin-size: 40px;
+  --zenfx-toolbar-height: 44px;
+  --zenfx-bookmarks-height: 28px;
+  --zenfx-content-margin: 8px;
+  --zenfx-content-radius: 10px;
+  --zenfx-tab-radius: 7px;
+  --zenfx-control-radius: 7px;
+  --zenfx-accent: var(--focus-outline-color, AccentColor);
+  --zenfx-background: var(--toolbox-background-color, var(--toolbar-bgcolor, Canvas));
+  --zenfx-foreground: var(--toolbox-text-color-current, var(--toolbox-text-color, var(--toolbar-color, CanvasText)));
+  --zenfx-hover: var(--toolbarbutton-background-color-hover, color-mix(in srgb, currentColor 8%, transparent));
+  --zenfx-selected: var(--urlbarview-background-color-selected, color-mix(in srgb, currentColor 14%, transparent));
+  --zenfx-field: var(--toolbar-field-background-color, var(--zenfx-background));
+  --zenfx-panel: var(--urlbar-background-color-focus, var(--toolbar-field-background-color-focus, var(--zenfx-background)));
+  --zenfx-panel-text: var(--toolbar-field-text-color-focus, var(--zenfx-foreground));
+  --zenfx-search-selected-text: var(--urlbarview-text-color-selected, var(--zenfx-panel-text));
+  --zenfx-shadow: 0 5px 18px rgb(0 0 0 / 16%);
+  --zenfx-animation-speed: 140ms;
+  --zenfx-hide-delay: 220ms;
+  --zenfx-edge-size: 4px;
+  --zenfx-folder-tint: 9%;
+  --zenfx-folder-icon-size: 20px;
+  --zenfx-search-width: 640px;
+  --zenfx-search-top: 20vh;
+  --zenfx-search-radius: 12px;
+  --zenfx-search-field-height: 44px;
+  --zenfx-search-row-height: 34px;
+  --zenfx-search-border: var(--toolbar-field-border-color, color-mix(in srgb, var(--zenfx-panel-text) 16%, transparent));
+  --zenfx-search-muted: color-mix(in srgb, var(--zenfx-panel-text) 64%, var(--zenfx-panel));
+  /* Keep overlays opaque for reliable contrast. No backdrop-filter. */
+  --zenfx-overlay-opacity: 1;
+}
+
+/* Gate layout changes to actual native vertical tabs. Popup browser windows and
+ * Customize Toolbar retain Firefox's own layout. No Zen-only selectors. */
+@media ((-moz-platform: macos) or (-moz-platform: windows) or (-moz-platform: linux)) {
+  :root:has(#tabbrowser-tabs[orient="vertical"]):not([chromehidden]):not([customizing]) {
+    --tab-min-height: var(--zenfx-tab-height) !important;
+    --tab-border-radius: var(--zenfx-tab-radius) !important;
+    --tab-margin-inline-inner: var(--zenfx-sidebar-padding) !important;
+    --tab-collapsed-background-width: var(--zenfx-tab-height) !important;
+    --tab-collapsed-width: var(--zenfx-sidebar-collapsed-width) !important;
+    --tab-margin-block: 0px !important;
+    --toolbarbutton-border-radius: var(--zenfx-control-radius) !important;
+    /* Initial width only; Firefox's native resize state owns the saved width. */
+    --sidebar-expanded-launcher-width: var(--zenfx-sidebar-width);
+    --sidebar-launcher-collapsed-width: var(--zenfx-sidebar-collapsed-width) !important;
+
+    /* 2. Firefox owns the theme surfaces, images and foregrounds. Keep native
+     * painting on body/toolbox/toolbars rather than covering it with a palette. */
+    #navigator-toolbox {
+      border: 0 !important;
+      box-shadow: none !important;
+      z-index: 8 !important;
+      /* Deliberately no transform here: keeps native popup anchors unchanged. */
+    }
+
+    /* 3–4. Native macOS controls stay in their native nav-bar/titlebar area.
+     * Do not move, hide, recolor or synthesize traffic-light controls. */
+    #nav-bar {
+      min-height: var(--zenfx-toolbar-height) !important;
+      box-sizing: border-box !important;
+      padding-block: 2px !important;
+      border: 0 !important;
+      box-shadow: none !important;
+      -moz-window-dragging: drag;
+    }
+    #nav-bar :is(toolbarbutton, toolbaritem, input, moz-input-box),
+    #urlbar, #searchbar { -moz-window-dragging: no-drag; }
+    #nav-bar .toolbarbutton-1 {
+      --toolbarbutton-inner-padding: 6px;
+      padding-inline: 2px !important;
+    }
+    #PersonalToolbar {
+      border: 0 !important;
+      padding-inline: var(--zenfx-content-margin) !important;
+    }
+
+    /* 5. URL field remains in the horizontal toolbar. Preserve Firefox's
+     * breakout positioning, autocomplete, permissions and identity indicators. */
+    #urlbar > .urlbar-background {
+      border-radius: var(--zenfx-control-radius) !important;
+      box-shadow: none !important;
+    }
+    #urlbar[focused] > .urlbar-background {
+      background: var(--zenfx-panel) !important;
+      border-color: color-mix(in srgb, var(--zenfx-accent) 55%, transparent) !important;
+    }
+    #urlbar[focused] > .urlbar-background {
+      box-shadow: var(--zenfx-shadow) !important;
+    }
+    .urlbarView { color: var(--zenfx-panel-text) !important; }
+    .urlbarView-row-inner { border-radius: var(--zenfx-control-radius) !important; }
+
+    /* 6. Keep Firefox's own sidebar expansion/collapse and resize behavior.
+     * Do not override its inline expanded width with !important. */
+    #sidebar-container {
+      --zenfx-foreground: var(--sidebar-text-color, var(--toolbox-text-color, CanvasText));
+      background-color: var(--sidebar-background-color, var(--zenfx-background)) !important;
+      border: 0 !important;
+      border-radius: 0 !important;
+      color: var(--zenfx-foreground) !important;
+    }
+    #sidebar-container:not([sidebar-launcher-expanded]):not([sidebar-ongoing-animations]) {
+      width: var(--zenfx-sidebar-collapsed-width) !important;
+      min-width: 0 !important;
+    }
+    #sidebar-launcher-splitter {
+      border-color: transparent !important;
+      background: transparent !important;
+    }
+    #vertical-tabs { padding-block: 2px !important; }
+
+    /* 7. Regular tabs. Preserve the tab content grid: title, sound indicator,
+     * throbber, container line and close targets remain native. */
+    #tabbrowser-tabs[orient="vertical"] {
+      --tab-padding-block-start: 0px !important;
+      --tab-padding-block-end: var(--zenfx-tab-gap) !important;
+      --tab-label-line-height: 1.4;
+    }
+    #tabbrowser-tabs[orient="vertical"] .tab-background {
+      border-radius: var(--zenfx-tab-radius) !important;
+      box-shadow: none !important;
+    }
+    #tabbrowser-tabs[orient="vertical"] .tabbrowser-tab[multiselected] .tab-background {
+      box-shadow: inset 2px 0 var(--zenfx-accent) !important;
+    }
+    #tabbrowser-tabs[orient="vertical"] .tabbrowser-tab {
+      font-size: 13px !important;
+      -moz-window-dragging: no-drag;
+    }
+    /* Opacity retains the close button's reserved column and accessible target.
+     * Keyboard focus and selection always make it visible. */
+    #tabbrowser-tabs[orient="vertical"][expanded] .tabbrowser-tab:not([pinned], [selected], :hover, :focus-within) .tab-close-button {
+      opacity: 0 !important;
+    }
+    #tabs-newtab-button, #vertical-tabs-newtab-button {
+      border-radius: var(--zenfx-tab-radius) !important;
+      min-height: var(--zenfx-tab-height) !important;
+      color: var(--zenfx-foreground) !important;
+    }
+
+    /* 8. Firefox 158 already supplies a native pinned grid. Do not replace its
+     * items-wrapper layout or DnD positioning. Native hover-expansion uses rows. */
+    #pinned-tabs-container[orient="vertical"] {
+      --tab-pinned-min-width-expanded: var(--zenfx-pin-size) !important;
+      --tab-background-width-pinned-expanded: var(--zenfx-pin-size) !important;
+    }
+    #vertical-pinned-tabs-splitter {
+      opacity: .45;
+      /* Keep its native resize interaction. */
+    }
+
+    /* 9. Groups remain groups, not simulated workspaces. Leave native collapse
+     * and group-drop geometry intact; only tint the existing label surfaces. */
+    #tabbrowser-tabs[orient="vertical"][expanded] .tab-group-label-container {
+      width: auto !important;
+      margin-inline: var(--zenfx-sidebar-padding) !important;
+      border-radius: var(--zenfx-tab-radius) !important;
+      -moz-window-dragging: no-drag;
+    }
+    #tabbrowser-tabs[orient="vertical"] .tab-group-label-hover-highlight {
+      border-radius: var(--zenfx-tab-radius) !important;
+      background: color-mix(in srgb, var(--tab-group-color) 16%, transparent) !important;
+    }
+    #tabbrowser-tabs[orient="vertical"] .tab-group-label {
+      border-radius: var(--zenfx-tab-radius) !important;
+      font-weight: 550 !important;
+    }
+
+    /* 10. Round the native browser shell, never the website document.
+     * overflow:clip clips remote-browser painting without a new scroll container.
+     * Avoid transforms/filters/contain on content: fixed/sticky layout stays native.
+     * Findbar remains inside tabbox, below the clipped page panels. */
+    #tabbrowser-tabbox {
+      margin: var(--zenfx-content-margin) !important;
+      margin-inline-start: 0 !important;
+      min-width: 0 !important;
+      background: transparent !important;
+      border: 0 !important;
+      box-shadow: none !important;
+    }
+    #tabbrowser-tabpanels {
+      border-radius: var(--zenfx-content-radius) !important;
+      overflow: clip !important;
+    }
+    .browserSidebarContainer {
+      border-radius: var(--zenfx-content-radius) !important;
+      overflow: clip !important;
+    }
+    #sidebar-box { border: 0 !important; }
+  }
+}
+
+/* 14–15. Never frame fullscreen video. Native macOS/browser fullscreen retains
+ * Firefox's toolbar handling: compact rules are intentionally suspended there.
+ * Customization and popup windows are outside the styling gate above. */
+:root:is([inDOMFullscreen], [sizemode="fullscreen"]):has(#tabbrowser-tabs[orient="vertical"]):not([chromehidden]):not([customizing]) :is(#tabbrowser-tabbox, #tabbrowser-tabpanels, .browserSidebarContainer) {
+  margin: 0 !important;
+  border-radius: 0 !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  :root { --zenfx-animation-speed: 0ms; --zenfx-hide-delay: 0ms; }
+}
+@media (forced-colors: active) {
+  :root {
+    --zenfx-background: Canvas; --zenfx-foreground: CanvasText;
+    --zenfx-panel: Canvas; --zenfx-panel-text: CanvasText; --zenfx-search-selected-text: ButtonText; --zenfx-selected: ButtonFace;
+    --zenfx-hover: ButtonFace; --zenfx-field: Field;
+  }
+}
+
+/* Native hover expansion takes the launcher out of flow. Reserve only the rail
+ * while it floats. Compact overrides this reservation in compact.css. */
+@media ((-moz-platform: macos) or (-moz-platform: windows) or (-moz-platform: linux)) and -moz-pref("sidebar.visibility", "expand-on-hover") and (not -moz-pref("zenfx.compact.sidebar")) {
+  :root[sidebar-expand-on-hover]:has(#tabbrowser-tabs[orient="vertical"]):not([chromehidden]):not([customizing]):not([inDOMFullscreen]):not([sizemode="fullscreen"]) {
+    #tabbrowser-tabbox[sidebar-launcher-expanded][sidebar-launcher-hovered]:not([sidebar-panel-open]),
+    #tabbrowser-tabbox[sidebar-ongoing-animations]:not([sidebar-launcher-expanded], [sidebar-panel-open]) {
+      margin-inline-start: var(--zenfx-sidebar-collapsed-width) !important;
+    }
+  }
+}
