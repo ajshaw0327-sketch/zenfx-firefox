@@ -1,12 +1,39 @@
 {
   "manifest_version": 3,
   "name": "ZenFX Tab Cleanup",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Close ordinary web tabs after 24 hours of inactivity; protect pinned and grouped tabs.",
-  "permissions": ["tabs", "storage", "alarms", "sessions"],
-  "background": {"scripts": ["cleanup.js", "background.js"]},
-  "action": {"default_title": "ZenFX Tab Cleanup", "default_popup": "popup.html", "default_icon": "icon.svg"},
-  "icons": {"48": "icon.svg", "96": "icon.svg"},
+  "permissions": [
+    "tabs",
+    "storage",
+    "alarms",
+    "sessions"
+  ],
+  "background": {
+    "scripts": [
+      "cleanup.js",
+      "background.js"
+    ]
+  },
+  "action": {
+    "default_title": "ZenFX Tab Cleanup",
+    "default_popup": "popup.html",
+    "default_icon": "icon.svg"
+  },
+  "icons": {
+    "48": "icon.svg",
+    "96": "icon.svg"
+  },
   "incognito": "not_allowed",
-  "browser_specific_settings": {"gecko": {"id": "zenfx-cleanup@local.invalid", "strict_min_version": "158.0", "data_collection_permissions": {"required": ["none"]}}}
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "zenfx-cleanup@local.invalid",
+      "strict_min_version": "158.0",
+      "data_collection_permissions": {
+        "required": [
+          "none"
+        ]
+      }
+    }
+  }
 }

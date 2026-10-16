@@ -20,7 +20,7 @@ Permissions: `tabs` reads tab metadata; `sessions` stores activity and accesses 
 
 ## Install and signing status
 
-The supplied `packages/ZenFX-Tab-Cleanup-1.0.1-unsigned.zip` in the main package is an **unsigned source package**, not a permanently installable stable-Firefox add-on. It has not been submitted to Mozilla or published. Stable Firefox requires Mozilla signing for permanent installation. Signing an unlisted self-distributed add-on is a separate Mozilla account step; this project has not accessed an account or bypassed signature checks.
+The supplied `packages/ZenFX-Tab-Cleanup-1.0.2-unsigned.zip` in the main package is an **unsigned source package**, not a permanently installable stable-Firefox add-on. It has not been submitted to Mozilla or published. Stable Firefox requires Mozilla signing for permanent installation. Signing an unlisted self-distributed add-on is a separate Mozilla account step; this project has not accessed an account or bypassed signature checks.
 
 For temporary testing in the **test profile only**, open `about:debugging#/runtime/this-firefox`, choose **Load Temporary Add-on**, and select this folder's `manifest.json`. This installation is removed when Firefox restarts. Do not install it in another profile without deciding to enable the stated close policy there.
 
@@ -30,4 +30,4 @@ References: [Mozilla signing overview](https://extensionworkshop.com/documentati
 
 ## Validation
 
-20 automated policy, recovery, event-page, and popup tests pass. Live Firefox 158 testing used disposable localhost tabs with test-only aged session timestamps: the stale ordinary tab closed; pinned, grouped, selected and recent tabs stayed; Undo restored the closed page. The production popup was rendered and inspected with both toolbars hidden. A real 24-hour unattended run, crash/restart recovery and every possible browser-event race have not been certified. Test-only fixtures and age injection are not shipped in the add-on package.
+22 automated policy, recovery, event-page, and popup tests pass. Live Firefox 158 testing used disposable localhost tabs with test-only aged session timestamps: the stale ordinary tab closed; pinned, grouped, selected and recent tabs stayed; Undo restored the closed page. The production popup was rendered and inspected with both toolbars hidden. A real 24-hour unattended run, crash/restart recovery and every possible browser-event race have not been certified. Test-only fixtures and age injection are not shipped in the add-on package.

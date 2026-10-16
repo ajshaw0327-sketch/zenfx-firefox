@@ -53,11 +53,15 @@
       const now = clock(), closed = [];
       try {
         for (const snapshot of await api.tabs.query({})) {
-          let initial = decision(snapshot, await activity(snapshot.id), now);
+          let initial = decision(snapshot, undefined, now);
           // Preserve 24 hours after a protected tab is made ordinary.
           if (["selected", "pinned", "grouped", "hidden", "media", "loading"].includes(initial)) {
             await stamp(snapshot.id); continue;
           }
+          if (!["eligible", "recent", "age-unknown"].includes(initial)) continue;
+          // Protected tabs need no activity read. Only ordinary candidates
+          // require their session timestamp; closing still rechecks fresh state.
+          initial = decision(snapshot, await activity(snapshot.id), now);
           if (initial !== "eligible") continue;
           // Re-read immediately before closing: never act on a stale pin/group/selection.
           let fresh;

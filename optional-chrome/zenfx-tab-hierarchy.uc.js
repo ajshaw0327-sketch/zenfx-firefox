@@ -13,7 +13,11 @@
   const favoriteKey = "zenfxFavorite", columnsProperty = "--zenfx-favorite-columns";
   const priorColumns = [pins.style.getPropertyValue(columnsProperty), pins.style.getPropertyPriority(columnsProperty)];
   const slots = new Map(), removers = [];
-  let queued = false, updating = false, stopped = false, visibilityFrame = 0;
+  let queuedFrame = 0, updating = false, stopped = false, visibilityFrame = 0;
+  let favoriteCount = 0, pinWidth = pins.getBoundingClientRect().width, clearCount = -1;
+  const flag = (element, name, value) => {
+    if (element.hasAttribute(name) !== value) element.toggleAttribute(name, value);
+  };
   const html = tag => document.createElementNS("http://www.w3.org/1999/xhtml", tag);
   const listen = (target, type, fn) => {
     target.addEventListener(type, fn);
@@ -83,28 +87,32 @@
   pins.shadowRoot.append(pinStyle);
   function sizeFavorites() {
     if (stopped) return;
-    const count = Array.from(gBrowser.tabs).filter(tab => tab.pinned && tab.hasAttribute("zenfx-favorite") && !tab.closing).length;
-    const available = Math.max(1, Math.floor((pins.getBoundingClientRect().width - 16) / 44));
-    pins.style.setProperty(columnsProperty, Math.min(Math.max(count, 1), 4, available));
+    const available = Math.max(1, Math.floor((pinWidth - 16) / 44));
+    const columns = String(Math.min(Math.max(favoriteCount, 1), 4, available));
+    if (pins.style.getPropertyValue(columnsProperty) !== columns) pins.style.setProperty(columnsProperty, columns);
   }
-  function syncExpansion() {
+  function syncExpansion(folders = groups()) {
     const vertical = strip.getAttribute("orient") === "vertical", expanded = vertical && strip.hasAttribute("expanded");
     for (const container of [pins, normal]) {
-      container.toggleAttribute("zenfx-hierarchy-vertical", vertical);
-      container.toggleAttribute("zenfx-hierarchy-expanded", expanded);
+      flag(container, "zenfx-hierarchy-vertical", vertical);
+      flag(container, "zenfx-hierarchy-expanded", expanded);
     }
     if (vertical) {
       assignSlot(periphery, "zenfx-newtab-row");
-      for (const group of groups()) assignSlot(group, "zenfx-protected-folders");
+      for (const group of folders) assignSlot(group, "zenfx-protected-folders");
     } else restoreSlots();
     sizeFavorites();
   }
   function refresh() {
     if (stopped || updating || strip.hasAttribute("movingtab") || strip.hasAttribute("movingtabgroup")) return;
+    cancelAnimationFrame(queuedFrame); queuedFrame = 0;
     updating = true;
     try {
-      const pinned = Array.from(gBrowser.tabs).filter(tab => tab.pinned && !tab.closing);
-      const ordered = [...pinned.filter(favorite), ...pinned.filter(tab => !favorite(tab))];
+      const tabs = Array.from(gBrowser.tabs);
+      const pinned = tabs.filter(tab => tab.pinned && !tab.closing);
+      const favorites = new Set(pinned.filter(favorite));
+      favoriteCount = favorites.size;
+      const ordered = [...favorites, ...pinned.filter(tab => !favorites.has(tab))];
       ordered.forEach((tab, tabIndex) => { if (tab.index !== tabIndex) gBrowser.moveTabTo(tab, { tabIndex }); });
       // Match native tab/keyboard order to the protected folders above Clear.
       let index = pinned.length;
@@ -114,10 +122,10 @@
         if (tabs[0]?.index !== index) gBrowser.moveTabTo(group, { tabIndex: index, forceUngrouped: true });
         index += tabs.length;
       }
-      for (const tab of gBrowser.tabs) tab.toggleAttribute("zenfx-favorite", favorite(tab));
-      root.toggleAttribute("zenfx-has-favorites", pinned.some(favorite));
-      root.toggleAttribute("zenfx-has-pins", pinned.some(tab => !favorite(tab)));
-      root.toggleAttribute("zenfx-has-folders", folders.length > 0);
+      for (const tab of tabs) flag(tab, "zenfx-favorite", favorites.has(tab));
+      flag(root, "zenfx-has-favorites", favoriteCount > 0);
+      flag(root, "zenfx-has-pins", pinned.length > favoriteCount);
+      flag(root, "zenfx-has-folders", folders.length > 0);
       // Closed groups must not keep their DOM trees alive for this window.
       for (const [element, value] of slots) if (!element.isConnected || !normal.contains(element)) {
         if (element.ownerDocument === document && !element.isConnected) {
@@ -125,7 +133,7 @@
         }
         slots.delete(element);
       }
-      syncExpansion();
+      syncExpansion(folders);
       // Reordering protected folders and assigning slots changes scroll geometry
       // after Firefox has already revealed the selected tab.
       cancelAnimationFrame(visibilityFrame);
@@ -136,15 +144,17 @@
           (selected.pinned ? pins : normal).ensureElementIsVisible(selected, false);
         }
       });
-      const count = Array.from(gBrowser.tabs).filter(clearable).length;
-      clearButton.disabled = count === 0;
-      clearButton.title = `Close ${count} ordinary tab${count === 1 ? "" : "s"}. Favorites, pinned tabs, folders, and hidden tabs stay. Use Firefox's Reopen Closed Tab to undo.`;
-    } finally { updating = false; }
+      const count = tabs.filter(clearable).length;
+      if (count !== clearCount) {
+        clearCount = count;
+        clearButton.disabled = count === 0;
+        clearButton.title = `Close ${count} ordinary tab${count === 1 ? "" : "s"}. Favorites, pinned tabs, folders, and hidden tabs stay. Use Firefox's Reopen Closed Tab to undo.`;
+      }
+    } finally { groupObserver.takeRecords(); updating = false; }
   }
   function schedule() {
-    if (queued || updating || stopped) return;
-    queued = true;
-    queueMicrotask(() => { queued = false; refresh(); });
+    if (queuedFrame || updating || stopped) return;
+    queuedFrame = requestAnimationFrame(() => { queuedFrame = 0; refresh(); });
   }
   function setTier(tab, tier) {
     if (!tab?.isConnected || tab.ownerDocument !== document || tab.closing || tab.splitview || !["favorite", "pinned", "today"].includes(tier)) return false;
@@ -194,7 +204,7 @@
   }
   for (const type of ["TabOpen", "TabClose", "TabShow", "TabHide", "TabPinned", "TabMove", "TabGroupCreate", "TabGroupRemoved", "TabGrouped", "TabUngrouped", "SSTabRestoring", "SSTabRestored"]) listen(strip, type, schedule);
   listen(strip, "TabUnpinned", event => { store.deleteCustomTabValue(event.target, favoriteKey); event.target.removeAttribute("zenfx-favorite"); schedule(); });
-  const expansionObserver = new MutationObserver(syncExpansion);
+  const expansionObserver = new MutationObserver(() => syncExpansion());
   expansionObserver.observe(strip, { attributes: true, attributeFilter: ["expanded", "orient"] });
   const dragObserver = new MutationObserver(schedule);
   dragObserver.observe(strip, { attributes: true, attributeFilter: ["movingtab", "movingtabgroup"] });
@@ -202,14 +212,17 @@
     if (records.some(record => record.target === normal || ["tab-group", "tab-split-view-wrapper"].includes(record.target.localName))) schedule();
   });
   groupObserver.observe(normal, { childList: true, subtree: true });
-  const sizeObserver = new ResizeObserver(sizeFavorites); sizeObserver.observe(pins);
+  const sizeObserver = new ResizeObserver(entries => {
+    pinWidth = entries[0].borderBoxSize?.[0]?.inlineSize ?? pins.getBoundingClientRect().width;
+    sizeFavorites();
+  }); sizeObserver.observe(pins);
   root.setAttribute("zenfx-tab-hierarchy", "true"); refresh();
   const api = window.ZenfxTabHierarchy = {
     setTier, refresh, clearToday,
     tierOf(tab) { return favorite(tab) ? "favorite" : tab.pinned ? "pinned" : tab.group ? "folder" : "today"; },
     uninstall() {
       stopped = true;
-      cancelAnimationFrame(visibilityFrame);
+      cancelAnimationFrame(visibilityFrame); cancelAnimationFrame(queuedFrame);
       for (const remove of removers.splice(0)) remove();
       expansionObserver.disconnect(); dragObserver.disconnect(); groupObserver.disconnect(); sizeObserver.disconnect(); restoreSlots();
       for (const element of [menu, pinStyle, regularStyle, protectedSlot, clearRow, newTabSlot]) element.remove();

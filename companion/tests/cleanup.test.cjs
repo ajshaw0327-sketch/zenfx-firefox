@@ -113,3 +113,32 @@ test('activation timestamps include the tab being left and survive event-page re
   activeId = 2; stamps = []; events = startPage(); await settle();
   events.activated({ tabId: 3, windowId: 10 }); await settle(); assert.deepEqual(stamps, [2, 3]);
 });
+
+test('sweeps skip timestamp reads for protected tabs and internal pages', async () => {
+  const fields = [{ pinned: true }, { groupId: 2 }, { active: true }, { hidden: true }, { audible: true }, { status: 'loading' }, { incognito: true }, { url: 'about:blank' }, { groupId: undefined }];
+  const f = fixture({ tabs: [ordinary(), ...fields.map((extra, i) => ordinary({ id: i + 2, ...extra }))] });
+  const reads = [], get = f.api.sessions.getTabValue;
+  f.api.sessions.getTabValue = async (...args) => { reads.push(args[0]); return get(...args); };
+  await f.controller.sweep();
+  assert.deepEqual(f.removed, [1]);
+  assert.ok(reads.length > 0); assert.ok(reads.every(id => id === 1));
+  assert.equal(f.values.get(2), NOW); assert.equal(f.values.get(5), NOW);
+});
+test('event-page resume reuses activity state and filters irrelevant tab updates', async () => {
+  let queries = 0, writes = 0, reads = 0, stamps = [], filter;
+  const memory = { zenfxActiveByWindow: { 10: 1 } }, events = {};
+  const event = name => ({ addListener: (callback, options) => { events[name] = callback; if (name === 'updated') filter = options; } });
+  const browser = {
+    runtime: { id:'test', onInstalled:event('installed'), onStartup:event('startup'), onMessage:event('message') },
+    alarms: { onAlarm:event('alarm') },
+    tabs: { onCreated:event('created'), onActivated:event('activated'), onUpdated:event('updated'), query: async()=>{ queries++; return []; } },
+    storage: { session: { get:async()=>{ reads++; return structuredClone(memory); }, set:async value=>{ writes++; Object.assign(memory, structuredClone(value)); } } }
+  };
+  vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../background.js'),'utf8'), { browser, ZenfxCleanup:{ createController:()=>({stamp:async id=>stamps.push(id)}) }, console });
+  const settle=()=>new Promise(resolve=>setImmediate(resolve)); await settle();
+  assert.equal(queries,0); assert.equal(writes,0);
+  assert.deepEqual(Array.from(filter.properties),['url','pinned','groupId','hidden']);
+  events.activated({tabId:2,windowId:10}); await settle();
+  events.activated({tabId:3,windowId:10}); await settle();
+  assert.deepEqual(stamps,[1,2,2,3]); assert.equal(reads,1); assert.equal(queries,0); assert.equal(writes,2);
+});

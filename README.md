@@ -76,7 +76,7 @@ To change the shortcut, right-click the Compact Mode button → record your comb
 
 ## Cleanup add-on
 
-The [cleanup companion](companion/README.md) is optional and independent. Its [download](https://github.com/ajshaw0327-sketch/zenfx-firefox/raw/refs/heads/main/dist/ZenFX-Tab-Cleanup-1.0.1-unsigned.zip) is unsigned source. It needs Mozilla signing before permanent installation in ordinary Firefox. It is not installed automatically, and renaming the ZIP to XPI does not sign it.
+The [cleanup companion](companion/README.md) is optional and independent. Its [download](https://github.com/ajshaw0327-sketch/zenfx-firefox/raw/refs/heads/main/dist/ZenFX-Tab-Cleanup-1.0.2-unsigned.zip) is unsigned source. It needs Mozilla signing before permanent installation in ordinary Firefox. It is not installed automatically, and renaming the ZIP to XPI does not sign it.
 
 ## Source and verification
 
@@ -84,6 +84,7 @@ The [cleanup companion](companion/README.md) is optional and independent. Its [d
 - [Scripts and their installation limits](optional-chrome/README.md)
 - [Installer, backup, and removal instructions](START-HERE.md)
 - [Native theme colors and group-colored folders](docs/THEMES.md)
+- [Performance optimizations and measured work counts](docs/PERFORMANCE.md)
 - [Browser validation and remaining limitations](docs/VALIDATION.md)
 - [Build and test instructions](docs/DEVELOPMENT.md)
 

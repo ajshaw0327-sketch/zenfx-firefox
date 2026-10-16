@@ -73,6 +73,8 @@
     if (!zone) return;
     event.preventDefault(); event.stopImmediatePropagation();
     event.dataTransfer.dropEffect = "move";
+    // Dragover fires repeatedly while the pointer stays on the same half.
+    if (state.side === zone.dataset.zenfxSplitSide) return;
     state.side = zone.dataset.zenfxSplitSide;
     for (const child of state.overlay.children) {
       const active = child === zone;

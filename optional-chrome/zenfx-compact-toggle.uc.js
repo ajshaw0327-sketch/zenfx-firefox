@@ -221,7 +221,9 @@
   const toolbox = document.getElementById("navigator-toolbox");
   const measureTop = () => {
     const height = toolbox.getBoundingClientRect().height;
-    if (height > 0) root.style.setProperty(heightProperty, `${height}px`);
+    if (height > 0 && root.style.getPropertyValue(heightProperty) !== `${height}px`) {
+      root.style.setProperty(heightProperty, `${height}px`);
+    }
   };
   const heightObserver = new ResizeObserver(measureTop);
   heightObserver.observe(toolbox);

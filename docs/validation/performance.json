@@ -1,0 +1,54 @@
+{
+  "before": {
+    "steadyRefresh": {
+      "refreshes": 100,
+      "favoriteChecks": 14200,
+      "sizing": 100,
+      "attributeWrites": 0
+    },
+    "syncMilliseconds": 51.70937499999991,
+    "notificationBurst": {
+      "refreshes": 100,
+      "favoriteChecks": 14200,
+      "sizing": 100
+    },
+    "idle": {
+      "refreshes": 0,
+      "favoriteChecks": 0,
+      "sizing": 0
+    }
+  },
+  "after": {
+    "steadyRefresh": {
+      "refreshes": 100,
+      "favoriteChecks": 1600,
+      "sizing": 100,
+      "attributeWrites": 0
+    },
+    "syncMilliseconds": 30.643458333333,
+    "notificationBurst": {
+      "refreshes": 1,
+      "favoriteChecks": 16,
+      "sizing": 1
+    },
+    "idle": {
+      "refreshes": 0,
+      "favoriteChecks": 0,
+      "sizing": 0
+    }
+  },
+  "dragPreview": {
+    "before": 200,
+    "after": 2
+  },
+  "fixture": {
+    "tabs": 100,
+    "pinned": 16,
+    "favorites": 8,
+    "explicitRefreshes": 100,
+    "notificationCount": 100,
+    "notificationType": "TabMove notifications across microtasks (controlled synthetic burst)",
+    "idleSeconds": 1.5
+  },
+  "limits": "Operation counters and synchronous timing in an isolated fixture; not a battery benchmark or a total RAM measurement."
+}

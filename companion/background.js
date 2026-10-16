@@ -9,8 +9,13 @@ browser.tabs.onCreated.addListener(tab => cleanup.stamp(tab.id));
 // storage.session survives event-page suspension. Stamp the tab being left,
 // so a long reading session receives the full 24 hours after switching away.
 const activeKey = "zenfxActiveByWindow";
+let active;
 let activationQueue = (async () => {
-  const active = (await browser.storage.session.get(activeKey))[activeKey] || {};
+  active = (await browser.storage.session.get(activeKey))[activeKey];
+  // Event-page restarts retain this session map. Avoid querying every tab and
+  // rewriting the map each time an unrelated event wakes the page.
+  if (active) return;
+  active = {};
   for (const tab of await browser.tabs.query({ active: true })) {
     if (active[tab.windowId] === undefined) active[tab.windowId] = tab.id;
   }
@@ -18,7 +23,7 @@ let activationQueue = (async () => {
 })().catch(reportError);
 browser.tabs.onActivated.addListener(info => {
   activationQueue = activationQueue.then(async () => {
-    const active = (await browser.storage.session.get(activeKey))[activeKey] || {};
+    active ||= {};
     const previous = info.previousTabId ?? active[info.windowId];
     if (Number.isInteger(previous) && previous !== info.tabId) await cleanup.stamp(previous);
     await cleanup.stamp(info.tabId);
@@ -28,7 +33,7 @@ browser.tabs.onActivated.addListener(info => {
 });
 browser.tabs.onUpdated.addListener((id, change) => {
   if (change.url !== undefined || change.pinned !== undefined || change.groupId !== undefined || change.hidden !== undefined) cleanup.stamp(id);
-});
+}, { properties: ["url", "pinned", "groupId", "hidden"] });
 browser.runtime.onMessage.addListener((message, sender) => {
   if (sender.id !== browser.runtime.id) return undefined;
   if (message?.type === "preview") return cleanup.preview();
