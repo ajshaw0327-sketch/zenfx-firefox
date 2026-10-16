@@ -22,18 +22,45 @@
     const previous = state;
     state = null;
     document.documentElement.removeAttribute("zenfx-newtab-overlay");
-    previous.browser.userTypedValue = previous.userTypedValue;
-    if (refresh) {
-      input.view.close();
-      input.searchMode = null;
-      input.setURI({ dueToTabSwitch: true });
+    if (refresh && gBrowser.selectedTab === previous.tab) input.view.close();
+    if (previous.tab.isConnected && !previous.tab.closing) {
+      previous.browser.userTypedValue = previous.userTypedValue;
+      if (gBrowser.selectedTab === previous.tab) {
+        if (refresh) input.setURI({ dueToTabSwitch: true });
+        input.searchMode = previous.searchMode;
+      } else {
+        // Native TabSelect has restored the destination input. Restore only the
+        // origin browser's saved mode, without resetting the destination's URI.
+        const destination = gBrowser.selectedBrowser;
+        const saved = previous.otherSearchModes.get(destination);
+        // Native tab switching can finish query teardown after focus changes.
+        // Restore a pre-existing destination mode after that synchronous work.
+        queueMicrotask(() => {
+          if (previous.tab.isConnected && !previous.tab.closing && state?.browser !== previous.browser) {
+            input.setSearchMode(previous.searchMode, previous.browser).catch(error => console.error("ZenFX search-mode restore:", error));
+            previous.browser.userTypedValue = previous.userTypedValue;
+          }
+          if (!saved) return;
+          if (state || gBrowser.selectedBrowser !== destination || !destination.isConnected || input.searchMode) return;
+          destination.userTypedValue = saved.value;
+          input.setURI({ dueToTabSwitch: true });
+          input.searchMode = saved.mode;
+        });
+      }
+      previous.browser.userTypedValue = previous.userTypedValue;
     }
     if (focus) gBrowser.selectedBrowser.focus();
   }
   function open() {
     if (!state) {
+      const otherSearchModes = new Map();
+      for (const tab of gBrowser.tabs) if (tab.linkedPanel && tab !== gBrowser.selectedTab) {
+        const browser = tab.linkedBrowser, mode = input.getSearchMode(browser);
+        if (mode) otherSearchModes.set(browser, { mode, value: browser.userTypedValue });
+      }
       state = { tab: gBrowser.selectedTab, browser: gBrowser.selectedBrowser,
-        userTypedValue: gBrowser.selectedBrowser.userTypedValue, submitting: false };
+        userTypedValue: gBrowser.selectedBrowser.userTypedValue,
+        searchMode: input.searchMode ? { ...input.searchMode } : null, otherSearchModes, submitting: false };
       document.documentElement.setAttribute("zenfx-newtab-overlay", "true");
       input.searchMode = null;
       input.search("");
@@ -57,6 +84,8 @@
       return;
     }
     if (!commands.has(event.target.id)) return;
+    // Native New Tab owns exiting content fullscreen and creating its new tab.
+    if (document.documentElement.hasAttribute("inDOMFullscreen")) return;
     // Middle-click paste/new-tab and special modifier commands retain Firefox behavior.
     const source = event.sourceEvent;
     if (source?.button === 1 || source?.shiftKey || source?.altKey) return;

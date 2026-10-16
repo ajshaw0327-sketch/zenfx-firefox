@@ -13,7 +13,7 @@
   const favoriteKey = "zenfxFavorite", columnsProperty = "--zenfx-favorite-columns";
   const priorColumns = [pins.style.getPropertyValue(columnsProperty), pins.style.getPropertyPriority(columnsProperty)];
   const slots = new Map(), removers = [];
-  let queued = false, updating = false, stopped = false;
+  let queued = false, updating = false, stopped = false, visibilityFrame = 0;
   const html = tag => document.createElementNS("http://www.w3.org/1999/xhtml", tag);
   const listen = (target, type, fn) => {
     target.addEventListener(type, fn);
@@ -100,7 +100,7 @@
     sizeFavorites();
   }
   function refresh() {
-    if (stopped || updating) return;
+    if (stopped || updating || strip.hasAttribute("movingtab") || strip.hasAttribute("movingtabgroup")) return;
     updating = true;
     try {
       const pinned = Array.from(gBrowser.tabs).filter(tab => tab.pinned && !tab.closing);
@@ -109,7 +109,7 @@
       // Match native tab/keyboard order to the protected folders above Clear.
       let index = pinned.length;
       const folders = groups();
-      for (const group of folders) {
+      for (const group of strip.getAttribute("orient") === "vertical" ? folders : []) {
         const tabs = group.tabs.filter(tab => !tab.closing);
         if (tabs[0]?.index !== index) gBrowser.moveTabTo(group, { tabIndex: index, forceUngrouped: true });
         index += tabs.length;
@@ -118,7 +118,24 @@
       root.toggleAttribute("zenfx-has-favorites", pinned.some(favorite));
       root.toggleAttribute("zenfx-has-pins", pinned.some(tab => !favorite(tab)));
       root.toggleAttribute("zenfx-has-folders", folders.length > 0);
+      // Closed groups must not keep their DOM trees alive for this window.
+      for (const [element, value] of slots) if (!element.isConnected || !normal.contains(element)) {
+        if (element.ownerDocument === document && !element.isConnected) {
+          if (value === null) element.removeAttribute("slot"); else element.setAttribute("slot", value);
+        }
+        slots.delete(element);
+      }
       syncExpansion();
+      // Reordering protected folders and assigning slots changes scroll geometry
+      // after Firefox has already revealed the selected tab.
+      cancelAnimationFrame(visibilityFrame);
+      visibilityFrame = requestAnimationFrame(() => {
+        visibilityFrame = 0;
+        const selected = gBrowser.selectedTab;
+        if (!stopped && !strip.hasAttribute("movingtab") && !strip.hasAttribute("movingtabgroup") && selected?.isConnected) {
+          (selected.pinned ? pins : normal).ensureElementIsVisible(selected, false);
+        }
+      });
       const count = Array.from(gBrowser.tabs).filter(clearable).length;
       clearButton.disabled = count === 0;
       clearButton.title = `Close ${count} ordinary tab${count === 1 ? "" : "s"}. Favorites, pinned tabs, folders, and hidden tabs stay. Use Firefox's Reopen Closed Tab to undo.`;
@@ -134,6 +151,7 @@
     if (tier === "favorite") { store.setCustomTabValue(tab, favoriteKey, "true"); gBrowser.pinTab(tab); }
     else {
       store.deleteCustomTabValue(tab, favoriteKey);
+      if (tier === "today" && tab.group) gBrowser.ungroupTab(tab);
       if (tier === "pinned") gBrowser.pinTab(tab); else gBrowser.unpinTab(tab);
     }
     refresh(); return true;
@@ -149,6 +167,11 @@
   listen(clearButton, "click", clearToday);
   const menu = document.createXULElement("menu"); menu.id = "zenfx-tab-priority-menu"; menu.setAttribute("label", "Tab priority");
   const popup = document.createXULElement("menupopup"); menu.append(popup);
+  const folderItem = document.createXULElement("menuitem");
+  folderItem.id = "zenfx-tab-priority-folder";
+  folderItem.setAttribute("label", "Folder (protected)");
+  folderItem.setAttribute("type", "radio"); folderItem.setAttribute("name", "zenfx-tab-priority");
+  folderItem.disabled = true; popup.append(folderItem);
   const items = new Map();
   for (const [tier, label] of [["favorite", "Favorites"], ["pinned", "Pinned tabs"], ["today", "Today tabs"]]) {
     const item = document.createXULElement("menuitem"); item.id = "zenfx-tab-priority-" + tier;
@@ -162,24 +185,33 @@
       const tab = window.TabContextMenu?.contextTab, valid = !!tab && !tab.closing && !tab.splitview;
       menu.disabled = !valid;
       if (!valid) menu.setAttribute("tooltiptext", "Separate Split View before changing a tab's priority."); else menu.removeAttribute("tooltiptext");
-      const tier = valid ? favorite(tab) ? "favorite" : tab.pinned ? "pinned" : "today" : null;
-      for (const [name, item] of items) item.setAttribute("checked", String(name === tier));
+      const tier = valid ? favorite(tab) ? "favorite" : tab.pinned ? "pinned" : tab.group ? "folder" : "today" : null;
+      folderItem.hidden = tier !== "folder";
+      for (const item of [folderItem, ...items.values()]) item.removeAttribute("checked");
+      const checked = tier === "folder" ? folderItem : items.get(tier);
+      checked?.setAttribute("checked", "true");
     });
   }
   for (const type of ["TabOpen", "TabClose", "TabShow", "TabHide", "TabPinned", "TabMove", "TabGroupCreate", "TabGroupRemoved", "TabGrouped", "TabUngrouped", "SSTabRestoring", "SSTabRestored"]) listen(strip, type, schedule);
   listen(strip, "TabUnpinned", event => { store.deleteCustomTabValue(event.target, favoriteKey); event.target.removeAttribute("zenfx-favorite"); schedule(); });
   const expansionObserver = new MutationObserver(syncExpansion);
   expansionObserver.observe(strip, { attributes: true, attributeFilter: ["expanded", "orient"] });
-  const groupObserver = new MutationObserver(schedule); groupObserver.observe(normal, { childList: true, subtree: true });
+  const dragObserver = new MutationObserver(schedule);
+  dragObserver.observe(strip, { attributes: true, attributeFilter: ["movingtab", "movingtabgroup"] });
+  const groupObserver = new MutationObserver(records => {
+    if (records.some(record => record.target === normal || ["tab-group", "tab-split-view-wrapper"].includes(record.target.localName))) schedule();
+  });
+  groupObserver.observe(normal, { childList: true, subtree: true });
   const sizeObserver = new ResizeObserver(sizeFavorites); sizeObserver.observe(pins);
   root.setAttribute("zenfx-tab-hierarchy", "true"); refresh();
   const api = window.ZenfxTabHierarchy = {
     setTier, refresh, clearToday,
-    tierOf(tab) { return favorite(tab) ? "favorite" : tab.pinned || tab.group ? "pinned" : "today"; },
+    tierOf(tab) { return favorite(tab) ? "favorite" : tab.pinned ? "pinned" : tab.group ? "folder" : "today"; },
     uninstall() {
       stopped = true;
+      cancelAnimationFrame(visibilityFrame);
       for (const remove of removers.splice(0)) remove();
-      expansionObserver.disconnect(); groupObserver.disconnect(); sizeObserver.disconnect(); restoreSlots();
+      expansionObserver.disconnect(); dragObserver.disconnect(); groupObserver.disconnect(); sizeObserver.disconnect(); restoreSlots();
       for (const element of [menu, pinStyle, regularStyle, protectedSlot, clearRow, newTabSlot]) element.remove();
       if (priorColumns[0]) pins.style.setProperty(columnsProperty, ...priorColumns); else pins.style.removeProperty(columnsProperty);
       for (const container of [pins, normal]) for (const name of ["zenfx-hierarchy-expanded", "zenfx-hierarchy-vertical"]) container.removeAttribute(name);

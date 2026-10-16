@@ -61,7 +61,7 @@ To change the shortcut, right-click the Compact Mode button → record your comb
 
 ## Cleanup add-on
 
-The [cleanup companion](companion/README.md) is optional and independent. Its [download](https://github.com/ajshaw0327-sketch/zenfx-firefox/raw/refs/heads/main/dist/ZenFX-Tab-Cleanup-1.0.0-unsigned.zip) is unsigned source. It needs Mozilla signing before permanent installation in ordinary Firefox. It is not installed automatically, and renaming the ZIP to XPI does not sign it.
+The [cleanup companion](companion/README.md) is optional and independent. Its [download](https://github.com/ajshaw0327-sketch/zenfx-firefox/raw/refs/heads/main/dist/ZenFX-Tab-Cleanup-1.0.1-unsigned.zip) is unsigned source. It needs Mozilla signing before permanent installation in ordinary Firefox. It is not installed automatically, and renaming the ZIP to XPI does not sign it.
 
 ## Source and verification
 
@@ -73,3 +73,5 @@ The [cleanup companion](companion/README.md) is optional and independent. Its [d
 - [Build and test instructions](docs/DEVELOPMENT.md)
 
 Firefox profiles, browsing history, local recovery data, credentials, and browsing screenshots are excluded from this repository. The preview above contains only disposable local test tabs.
+
+The Compact Mode settings dialog also has separate **Hide top toolbar** and **Hide sidebar** controls. **Reveal both bars together** keeps the default shared hover area; turn it off for independent edge reveals. CSS-only users can set `zenfx.compact.independent-reveal` to `true` for independent reveals.

@@ -27,7 +27,7 @@ browser.tabs.onActivated.addListener(info => {
   }).catch(reportError);
 });
 browser.tabs.onUpdated.addListener((id, change) => {
-  if (change.url !== undefined || change.pinned !== undefined || change.groupId !== undefined) cleanup.stamp(id);
+  if (change.url !== undefined || change.pinned !== undefined || change.groupId !== undefined || change.hidden !== undefined) cleanup.stamp(id);
 });
 browser.runtime.onMessage.addListener((message, sender) => {
   if (sender.id !== browser.runtime.id) return undefined;

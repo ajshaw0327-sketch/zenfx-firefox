@@ -21,6 +21,16 @@ ENTRY = '/* ZenFX installer entry. Original saved in zenfx-backups. */\n@import 
 def digest(data):
     return hashlib.sha256(data).hexdigest()
 
+def atomic_write(path, data):
+    temporary = path.with_name(path.name + '.zenfx-' + uuid.uuid4().hex + '.tmp')
+    try:
+        with temporary.open('xb') as stream:
+            stream.write(data)
+        if path.exists(): temporary.chmod(path.stat().st_mode & 0o777)
+        temporary.replace(path)
+    finally:
+        temporary.unlink(missing_ok=True)
+
 def safe_target(path):
     # Refuse symlinks in destination paths to keep writes in the selected folders.
     for item in [path, *path.parents]:
@@ -97,6 +107,7 @@ def install(profile, application=None, closed=False, dry_run=False):
     backup = profile / 'zenfx-backups' / ('install-' + uuid.uuid4().hex[:12])
     backup.mkdir(parents=True)
     state = {'format': 1, 'backup': str(backup), 'managed': str(managed), 'application': str(app_resources(application)) if application else None, 'files': []}
+    created_dirs = set()
     try:
         # Save the whole change set before the first destination write.
         for i, (target, data) in enumerate(files.items()):
@@ -108,17 +119,23 @@ def install(profile, application=None, closed=False, dry_run=False):
         changed_paths = {r['path'] for r in state['files'] if r['changed']}
         for target, data in files.items():
             if str(target) not in changed_paths: continue
+            parent = target.parent
+            while not parent.exists():
+                created_dirs.add(parent); parent = parent.parent
             target.parent.mkdir(parents=True, exist_ok=True)
-            target.write_bytes(data)
-        (profile / 'zenfx-install-state.json').write_text(json.dumps(state, indent=2) + '\n')
+            atomic_write(target, data)
+        atomic_write(profile / 'zenfx-install-state.json', (json.dumps(state, indent=2) + '\n').encode())
     except Exception:
         for record in reversed(state['files']):
             if record['changed']:
                 target = Path(record['path'])
                 if record['existed']:
-                    target.write_bytes(Path(record['backup']).read_bytes())
+                    atomic_write(target, Path(record['backup']).read_bytes())
                 elif target.exists():
                     target.unlink()
+        for folder in sorted(created_dirs, key=lambda p: len(p.parts), reverse=True):
+            try: folder.rmdir()
+            except OSError: pass  # Never remove user data or a pre-existing folder.
         raise
     return {'action': 'installed', 'profile': str(profile), 'backup': str(backup), 'startup_loader': bool(application), 'addon': 'Cleanup still requires a separately signed XPI; it was not installed.'}
 
@@ -135,14 +152,21 @@ def uninstall(profile, closed=False, dry_run=False):
             raise ValueError('A file was edited after installation; it was preserved. Review: ' + str(target))
     if dry_run:
         return {'action': 'uninstall-preview', 'files': [r['path'] for r in changes]}
-    for record in reversed(changes):
-        target = Path(record['path'])
-        if record['existed']:
-            target.write_bytes(Path(record['backup']).read_bytes())
-        else:
-            target.unlink()
-    # Installed preferences are not reset in prefs.js. Clear them in Firefox if desired.
-    state_path.unlink()
+    installed = {r['path']: Path(r['path']).read_bytes() for r in changes}
+    restored = []
+    try:
+        for record in reversed(changes):
+            target = Path(record['path'])
+            if record['existed']:
+                atomic_write(target, Path(record['backup']).read_bytes())
+            else:
+                target.unlink()
+            restored.append(record['path'])
+        # Installed preferences are not reset in prefs.js. Clear them in Firefox if desired.
+        state_path.unlink()
+    except Exception:
+        for name in reversed(restored): atomic_write(Path(name), installed[name])
+        raise
     managed = Path(state['managed'])
     if managed.exists() and not any(managed.iterdir()): managed.rmdir()
     return {'action': 'uninstalled', 'backup_preserved': state['backup'], 'note': 'Native vertical tabs remain enabled. Shared application loader files are retained for other opted-in profiles; remove them separately after all profiles are uninstalled. Reset zenfx preferences/about:config if desired.'}

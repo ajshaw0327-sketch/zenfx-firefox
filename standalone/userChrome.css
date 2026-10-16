@@ -355,12 +355,14 @@
     #sidebar-container:not([hidden]) { inset-block-start: var(--zenfx-floating-top-height) !important; }
     /* Keep the left-edge trigger reachable above the sidebar's stable inset. */
     #sidebar-container::after { inset-block-start: calc(-1 * var(--zenfx-floating-top-height)) !important; }
-    &:has(#navigator-toolbox:is(:hover, :focus-within, :has([open="true"], #urlbar[focused]))),
-    &:has(#sidebar-container:is(:hover, :focus-within, [sidebar-ongoing-animations])),
-    &:has(panel[panelopen="true"], menupopup[open="true"], #tabbrowser-tabs[movingtab]) {
-      #navigator-toolbox { transform: translateY(0) !important; transition-delay: 0ms !important; }
-      #navigator-toolbox > toolbar { opacity: 1 !important; pointer-events: auto !important; transition-delay: 0ms !important; }
-      #sidebar-container { transform: translateX(0) !important; transition-delay: 0ms !important; }
+    @media not -moz-pref("zenfx.compact.independent-reveal") {
+      &:has(#navigator-toolbox:is(:hover, :focus-within, :has([open="true"], #urlbar[focused]))),
+      &:has(#sidebar-container:is(:hover, :focus-within, [sidebar-ongoing-animations])),
+      &:has(panel[panelopen="true"], menupopup[open="true"], #tabbrowser-tabs[movingtab]) {
+        #navigator-toolbox { transform: translateY(0) !important; transition-delay: 0ms !important; }
+        #navigator-toolbox > toolbar { opacity: 1 !important; pointer-events: auto !important; transition-delay: 0ms !important; }
+        #sidebar-container { transform: translateX(0) !important; transition-delay: 0ms !important; }
+      }
     }
   }
 }

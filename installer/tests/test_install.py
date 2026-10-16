@@ -77,13 +77,52 @@ class InstallerTests(unittest.TestCase):
         with self.assertRaises(ValueError):setup.install(self.profile,closed=True)
         self.assertEqual(outside.read_text(),'keep')
     def test_failure_rolls_back_originals(self):
-        original=(self.profile/'user.js').read_bytes();write=Path.write_bytes
+        original=(self.profile/'user.js').read_bytes();write=setup.atomic_write
         def fail(path,data):
             if path.name=='enabled.json':raise OSError('simulated failure')
             return write(path,data)
-        with patch.object(Path,'write_bytes',fail),self.assertRaises(OSError):setup.install(self.profile,closed=True)
+        with patch.object(setup,'atomic_write',fail),self.assertRaises(OSError):setup.install(self.profile,closed=True)
         self.assertEqual((self.profile/'user.js').read_bytes(),original)
         self.assertEqual((self.profile/'chrome/userChrome.css').read_text(),'/* original theme */\n')
         self.assertFalse((self.profile/'zenfx-install-state.json').exists())
+    def test_failed_install_can_be_retried(self):
+        write = setup.atomic_write
+        def fail(path, data):
+            if path.name == 'enabled.json': raise OSError('simulated failure')
+            return write(path, data)
+        with patch.object(setup, 'atomic_write', fail), self.assertRaises(OSError):
+            setup.install(self.profile, closed=True)
+        setup.install(self.profile, closed=True)
+        setup.uninstall(self.profile, closed=True)
+        self.assertEqual((self.profile/'chrome/userChrome.css').read_text(), '/* original theme */\n')
+    def test_failed_restore_can_be_retried(self):
+        setup.install(self.profile, closed=True)
+        installed = (self.profile/'user.js').read_bytes()
+        write = setup.atomic_write
+        def fail(path, data):
+            if path == self.profile/'user.js': raise OSError('restore failure')
+            return write(path, data)
+        with patch.object(setup, 'atomic_write', fail), self.assertRaises(OSError):
+            setup.uninstall(self.profile, closed=True)
+        self.assertEqual((self.profile/'user.js').read_bytes(), installed)
+        self.assertTrue((self.profile/'chrome/zenfx-installed/enabled.json').exists())
+        setup.uninstall(self.profile, closed=True)
+        self.assertEqual((self.profile/'user.js').read_text(), 'user_pref("keep.me", true);\n')
+    def test_failed_state_commit_leaves_no_half_install(self):
+        write = setup.atomic_write
+        def fail(path, data):
+            if path.name == 'zenfx-install-state.json': raise OSError('state failure')
+            return write(path, data)
+        with patch.object(setup, 'atomic_write', fail), self.assertRaises(OSError):
+            setup.install(self.profile, closed=True)
+        self.assertFalse((self.profile/'zenfx-install-state.json').exists())
+        self.assertFalse((self.profile/'chrome/zenfx-installed').exists())
+        setup.install(self.profile, closed=True)
+    def test_atomic_write_preserves_original_if_replace_fails(self):
+        target = self.profile/'user.js'; before = target.read_bytes()
+        with patch.object(Path, 'replace', side_effect=OSError('replace failed')), self.assertRaises(OSError):
+            setup.atomic_write(target, b'new data')
+        self.assertEqual(target.read_bytes(), before)
+        self.assertEqual(list(self.profile.glob('*.tmp')), [])
 
 if __name__=='__main__':unittest.main()

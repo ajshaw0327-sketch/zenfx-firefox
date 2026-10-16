@@ -22,3 +22,5 @@ The scripts and actual new-window loading were browser-tested in an isolated pro
 Remove the scripts from your chosen loader and restart, or use the [installer's restore flow](../START-HERE.md#restore--uninstall). To unload them temporarily from the current browser window, their browser-chrome APIs are `window.ZenfxNewTabOverlay.uninstall()`, `window.ZenfxDragToSplit.uninstall()`, `window.ZenfxCompactToggle.uninstall()`, and `window.ZenfxTabHierarchy.uninstall()`. Do not run these expressions in an ordinary webpage console.
 
 See the [validation report](../docs/VALIDATION.md) for tested behavior and remaining limits. The appearance CSS works independently; tab cleanup is a [separate add-on](../companion/README.md).
+
+The Compact Mode settings dialog also has separate **Hide top toolbar** and **Hide sidebar** controls. **Reveal both bars together** keeps the default shared hover area; turn it off for independent edge reveals. CSS-only users can set `zenfx.compact.independent-reveal` to `true` for independent reveals.

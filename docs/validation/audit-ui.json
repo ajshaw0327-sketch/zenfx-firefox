@@ -1,0 +1,93 @@
+{
+  "savedDestinationMode": {
+    "source": 2,
+    "isPreview": false,
+    "entry": "typed"
+  },
+  "originBeforeOverlay": null,
+  "destinationModeBeforeOverlay": {
+    "source": 2,
+    "isPreview": false,
+    "entry": "typed"
+  },
+  "destinationSearchMode": {
+    "source": 2,
+    "isPreview": false,
+    "entry": "typed"
+  },
+  "originSearchMode": null,
+  "modeSettings": [
+    {
+      "top": false,
+      "side": false,
+      "pressed": "false"
+    },
+    {
+      "top": true,
+      "side": false,
+      "pressed": "mixed"
+    },
+    {
+      "top": false,
+      "side": true,
+      "pressed": "mixed"
+    },
+    {
+      "top": true,
+      "side": true,
+      "pressed": "true"
+    }
+  ],
+  "settingsEscapeCancels": true,
+  "independentTop": {
+    "top": 0,
+    "side": -203
+  },
+  "independentSide": {
+    "top": -40,
+    "side": 0,
+    "y": 44
+  },
+  "newTabSubmission": {
+    "newTab": true,
+    "originIntact": true,
+    "submitted": true,
+    "inactive": true
+  },
+  "closedFolderSlotReleased": true,
+  "largeTabScroll": {
+    "tabCount": 104,
+    "overflow": true,
+    "lastVisible": true,
+    "pinned": 12
+  },
+  "deferredDuringDrag": true,
+  "normalizedAfterDrag": true,
+  "dropSides": [
+    {
+      "side": "left",
+      "split": true,
+      "sourceSide": 0,
+      "aligned": true,
+      "clean": true,
+      "transforms": [
+        "",
+        ""
+      ]
+    },
+    {
+      "side": "right",
+      "split": true,
+      "sourceSide": 1,
+      "aligned": true,
+      "clean": true,
+      "transforms": [
+        "",
+        ""
+      ]
+    }
+  ],
+  "dragTabSwitchCancels": true,
+  "errors": [],
+  "pass": true
+}

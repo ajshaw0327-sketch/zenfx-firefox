@@ -20,8 +20,10 @@
   button.setAttribute("label", "Compact Mode");
   button.setAttribute("aria-label", "Toggle Compact Mode");
   button.setAttribute("type", "checkbox");
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><g fill="none" stroke="#7c8877" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="1.5" y="1.5" width="13" height="13" rx="2.5"/><path d="M2 5h12M5 5v9"/></g></svg>`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><g fill="none" stroke="context-fill" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="1.5" y="1.5" width="13" height="13" rx="2.5"/><path d="M2 5h12M5 5v9"/></g></svg>`;
   button.style.listStyleImage = `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
+  button.style.setProperty("-moz-context-properties", "fill");
+  button.style.fill = "currentColor";
   const keyset = document.createXULElement("keyset");
   keyset.id = "zenfx-compact-keyset";
   const commandset = document.createXULElement("commandset");
@@ -92,15 +94,17 @@
   keyset.append(key);
   const sync = () => {
     const on = enabled();
+    const top = Services.prefs.getBoolPref(prefs[0], false), side = Services.prefs.getBoolPref(prefs[1], false);
+    const mode = on ? "Both bars hidden" : top ? "Top bar hidden" : side ? "Sidebar hidden" : "Both bars visible";
     button.setAttribute("checked", String(on));
-    button.setAttribute("aria-pressed", String(on));
-    button.setAttribute("tooltiptext", `Compact Mode: ${on ? "On" : "Off"} (${labelFor(shortcut)}). Right-click to change shortcut.`);
+    button.setAttribute("aria-pressed", top !== side ? "mixed" : String(on));
+    button.setAttribute("tooltiptext", `Compact Mode: ${mode} (${labelFor(shortcut)}). Right-click for visibility and shortcut settings.`);
   };
   const panel = document.createElementNS("http://www.w3.org/1999/xhtml", "dialog");
   panel.id = "zenfx-compact-settings";
   panel.style.cssText = "padding:0;border:1px solid var(--zenfx-search-border);border-radius:11px;background:var(--zenfx-panel);color:var(--zenfx-foreground);box-shadow:var(--zenfx-shadow);max-width:calc(100vw - 32px);";
   panel.setAttribute("role", "dialog");
-  panel.setAttribute("aria-label", "ZenFX shortcut settings");
+  panel.setAttribute("aria-label", "ZenFX Compact Mode settings");
   const html = (tag, text) => {
     const e = document.createElementNS("http://www.w3.org/1999/xhtml", tag);
     if (text) e.textContent = text;
@@ -108,8 +112,16 @@
   };
   const box = html("div");
   box.style.cssText = "padding:18px;width:320px;font:13px/1.5 system-ui;color:var(--zenfx-foreground);background:var(--zenfx-panel);border-radius:10px;";
-  const heading = html("h2", "Compact Mode shortcut");
+  const heading = html("h2", "Compact Mode");
   heading.style.cssText = "font-size:17px;margin:0 0 8px;";
+  const visibility = html("fieldset"); visibility.style.cssText = "border:0;padding:0;margin:0 0 14px;display:grid;gap:8px;";
+  visibility.append(html("legend", "Visibility"));
+  const modeInputs = [];
+  for (const [id, label] of [["zenfx-hide-top", "Hide the top toolbar"], ["zenfx-hide-sidebar", "Hide the sidebar"], ["zenfx-reveal-together", "Reveal both bars together"]]) {
+    const row = html("label"), input = html("input"); input.type = "checkbox"; input.id = id;
+    input.style.accentColor = "var(--zenfx-accent)"; row.style.cssText = "display:flex;align-items:center;gap:8px;";
+    row.append(input, html("span", label)); visibility.append(row); modeInputs.push(input);
+  }
   const hint = html("p", "Click the field, then press your preferred key combination.");
   const field = html("input");
   field.id = "zenfx-shortcut-recorder"; field.readOnly = true;
@@ -120,7 +132,7 @@
   const save = html("button", "Save"), reset = html("button", "Use default"), clearKey = html("button", "No shortcut");
   for (const b of [save, reset, clearKey]) b.style.cssText = "font:inherit;padding:7px 10px;border:1px solid currentColor;border-radius:6px;background:transparent;color:inherit;cursor:pointer;";
   actions.append(save, reset, clearKey);
-  box.append(heading, hint, field, status, actions, html("p", "Some system shortcuts are reserved. Escape cancels."));
+  box.append(heading, visibility, html("strong", "Keyboard shortcut"), hint, field, status, actions, html("p", "Some system shortcuts are reserved. Escape cancels unsaved changes."));
   panel.append(box);
   document.documentElement.append(panel);
   let pendingShortcut;
@@ -142,6 +154,9 @@
     event?.preventDefault();
     event?.stopPropagation();
     choose(shortcut);
+    modeInputs[0].checked = Services.prefs.getBoolPref(prefs[0], false);
+    modeInputs[1].checked = Services.prefs.getBoolPref(prefs[1], false);
+    modeInputs[2].checked = !Services.prefs.getBoolPref("zenfx.compact.independent-reveal", false);
     if (!panel.open) panel.showModal();
     field.focus();
   }
@@ -172,6 +187,9 @@
   function saveShortcut() {
     if (save.disabled) return;
     Services.prefs.setStringPref(shortcutPref, JSON.stringify(pendingShortcut));
+    Services.prefs.setBoolPref(prefs[0], modeInputs[0].checked);
+    Services.prefs.setBoolPref(prefs[1], modeInputs[1].checked);
+    Services.prefs.setBoolPref("zenfx.compact.independent-reveal", !modeInputs[2].checked);
     panel.close();
   }
   field.addEventListener("keydown", record);

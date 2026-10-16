@@ -23,8 +23,16 @@ The browser target is Firefox 158.0 on macOS. Browser checks were performed only
 
 Temporary themes/tabs were removed and user settings restored after focused checks. Browser evidence containing local paths or browsing details is not distributed. The included split-header preview contains only two disposable local fixture tabs.
 
+## Final bug audit
+
+37 automated tests pass: 17 installer tests and 20 cleanup/popup tests. The final isolated-profile browser run passed all four Compact Mode layouts, saved/canceled controls, independent edge reveals, search-mode restoration, URL submission, folder teardown, scrolling with 104 tabs, deferred reordering during a drag, and both split-drop directions with aligned headers and no stale overlay. No window errors were captured. See [browser results](validation/audit-ui.json) and [focused edge cases](validation/audit-edges.json).
+
+Fixed grouped tabs remaining grouped after choosing Today, repeated hierarchy work on title changes, closed-folder references, selected tabs falling outside the scroller after folder reordering, canceled search losing its mode, stale split targets, hidden-tab cleanup, misleading recovery after a blocked close, repeated popup actions, and failed-install/uninstall retry handling. Compact settings now expose each visibility mode and independent/shared reveals.
+
+Application AutoConfig cold-start, physical macOS window dragging, other Firefox versions/platforms, and a real unattended 24-hour cleanup run remain unverified. The cleanup download remains unsigned.
+
 ## Automated checks
 
-The repository includes 14 cleanup policy/recovery tests and 13 installer tests. Installer cases use temporary filesystem fixtures and cover backup/restore, explicit closed-browser confirmation, previews without writes, conflicts, version checking, symlink rejection, edited-file preservation, shared loader retention, write-failure rollback, an exact previous-loader upgrade with backup, and rejection of a modified loader.
+The repository includes 20 cleanup policy, recovery, event-page, and popup tests and 17 installer tests. Installer cases use temporary filesystem fixtures and cover backup/restore, explicit closed-browser confirmation, previews without writes, conflicts, version checking, symlink rejection, edited-file preservation, shared loader retention, write-failure rollback, an exact previous-loader upgrade with backup, rejection of a modified loader, atomic writes, failed-install retries, and recoverable uninstall failures.
 
 See [DEVELOPMENT.md](DEVELOPMENT.md) to run these checks and rebuild downloads. No real profile or application installation occurs during the automated tests.

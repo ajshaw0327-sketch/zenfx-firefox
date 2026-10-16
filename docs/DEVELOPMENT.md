@@ -7,7 +7,7 @@ From the repository root:
 ```sh
 python3 build.py
 python3 -m unittest discover -s installer/tests -v
-node --test companion/tests/cleanup.test.cjs
+node --test companion/tests/*.test.cjs
 ```
 
 The build generates `standalone/userChrome.css`, `SHA256.json`, and three archives under `dist/`. The appearance archive contains exactly `README.md` and `chrome/userChrome.css`. The cleanup archive contains only its runtime files; it remains unsigned. The full archive uses an explicit allowlist, excluding `.git`, browser profiles, caches, and local test evidence.

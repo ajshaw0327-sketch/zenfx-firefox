@@ -22,6 +22,7 @@
   }
   function show(source, target) {
     if (!ordinary(source) || !ordinary(target) || source === target) return;
+    clear();
     const box = document.getElementById("tabbrowser-tabpanels").getBoundingClientRect();
     const overlay = document.createElementNS("http://www.w3.org/1999/xhtml", "div");
     overlay.id = "zenfx-split-drop-overlay";
@@ -36,7 +37,7 @@
       zone.append(label); overlay.append(zone);
     }
     document.documentElement.append(overlay);
-    state = { source, target, overlay, side: null, dropped: false };
+    state = { source, target, overlay, side: null, dropping: false };
     gBrowser.selectedTab = target;
   }
   function zoneFor(event) {
@@ -87,25 +88,36 @@
     event.preventDefault(); event.stopImmediatePropagation();
     event.dataTransfer.dropEffect = "move";
     const { source, target } = state;
+    state.dropping = true;
     const side = zone.dataset.zenfxSplitSide;
     // Finish the native strip animation BEFORE reparenting either tab. Once
     // inside a split wrapper, Firefox's cleanup walks the wrapper instead of
     // its children, leaving the dragged tab's inline translation behind.
-    const nativeDrag = gBrowser.tabContainer.tabDragAndDrop;
-    nativeDrag.finishMoveTogetherSelectedTabs(source);
-    nativeDrag.finishAnimateTabMove();
-    nativeDrag._resetTabsAfterDrop(source);
-    nativeDrag._tabDropIndicator.hidden = true;
-    source.style.removeProperty("transform");
-    target.style.removeProperty("transform");
-    const wrapper = gBrowser.addTabSplitView([target, source], { insertBefore: target });
-    if (wrapper) {
-      if (wrapper.tabs.indexOf(source) !== (side === "left" ? 0 : 1)) wrapper.reverseTabs();
-      gBrowser.selectedTab = target;
-      state.dropped = true;
-    }
-    state.overlay.remove();
+    try {
+      const nativeDrag = gBrowser.tabContainer.tabDragAndDrop;
+      nativeDrag.finishMoveTogetherSelectedTabs(source);
+      nativeDrag.finishAnimateTabMove();
+      nativeDrag._resetTabsAfterDrop(source);
+      nativeDrag._tabDropIndicator.hidden = true;
+      source.style.removeProperty("transform");
+      target.style.removeProperty("transform");
+      const wrapper = gBrowser.addTabSplitView([target, source], { insertBefore: target });
+      if (wrapper) {
+        if (wrapper.tabs.indexOf(source) !== (side === "left" ? 0 : 1)) wrapper.reverseTabs();
+        gBrowser.selectedTab = target;
+      }
+    } catch (error) {
+      console.error("ZenFX could not create Split View:", error);
+    } finally { clear(); }
   });
+  listen(gBrowser.tabContainer, "TabClose", event => {
+    if (state && (event.target === state.source || event.target === state.target)) clear();
+  });
+  listen(gBrowser.tabContainer, "TabSelect", () => {
+    if (state && !state.dropping && gBrowser.selectedTab !== state.target) clear();
+  });
+  listen(window, "resize", clear);
+  listen(document, "fullscreenchange", clear);
   listen(document, "dragend", () => clear());
   listen(document, "keydown", event => { if (event.key === "Escape") clear(); });
   const api = window.ZenfxDragToSplit = {

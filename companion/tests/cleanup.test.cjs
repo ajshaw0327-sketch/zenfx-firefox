@@ -39,6 +39,24 @@ test('sweep closes eligible tab and preserves pin/group protections', async () =
   const f = fixture({ tabs: [ordinary(), ordinary({ id: 2, pinned: true }), ordinary({ id: 3, groupId: 2 })] });
   const result = await f.controller.sweep(); assert.equal(result.closed.length, 1); assert.deepEqual(f.removed, [1]); assert.equal(f.records.size, 2); assert.equal(f.state().history[0].closed, true);
 });
+test('hidden tabs are protected and receive a fresh activity stamp', async () => {
+  const f = fixture({ tabs: [ordinary({ hidden: true })] });
+  await f.controller.sweep();
+  assert.deepEqual(f.removed, []);
+  assert.equal(f.values.get(1), NOW);
+});
+test('a tab becoming hidden during recovery backup is not closed', async () => {
+  const f = fixture({ duringBackup: records => { records.get(1).hidden = true; } });
+  await f.controller.sweep();
+  assert.deepEqual(f.removed, []);
+});
+test('a protected tab removed by the user later is not mistaken for an automatic close', async () => {
+  const f = fixture({ duringBackup: records => { records.get(1).pinned = true; } });
+  await f.controller.sweep();
+  f.records.delete(1);
+  assert.equal(await f.controller.undo(), false);
+  assert.deepEqual(f.created, []);
+});
 test('pin/group/active changes between initial scan and fresh read prevent closing', async () => {
   for (const fresh of [{ pinned: true }, { groupId: 7 }, { active: true }]) { const f = fixture({ fresh }); await f.controller.sweep(); assert.equal(f.removed.length, 0); }
 });

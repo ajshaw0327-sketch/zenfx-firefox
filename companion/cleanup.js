@@ -9,6 +9,7 @@
     if (tab.incognito) return "private";
     if (tab.active || tab.highlighted) return "selected";
     if (tab.pinned) return "pinned";
+    if (tab.hidden) return "hidden";
     // Fail closed if this Firefox/API cannot establish group membership.
     if (!Number.isInteger(tab.groupId)) return "group-status-unknown";
     if (tab.groupId >= 0) return "grouped";
@@ -54,7 +55,7 @@
         for (const snapshot of await api.tabs.query({})) {
           let initial = decision(snapshot, await activity(snapshot.id), now);
           // Preserve 24 hours after a protected tab is made ordinary.
-          if (["selected", "pinned", "grouped", "media", "loading"].includes(initial)) {
+          if (["selected", "pinned", "grouped", "hidden", "media", "loading"].includes(initial)) {
             await stamp(snapshot.id); continue;
           }
           if (initial !== "eligible") continue;
@@ -69,8 +70,12 @@
           s.history = [entry, ...s.history].slice(0, 200); await write(s);
           // The backup write may yield; recheck protections one final time.
           try { fresh = await api.tabs.get(fresh.id); } catch { continue; }
-          if (decision(fresh, await activity(fresh.id), clock()) !== "eligible") continue;
-          if (enabledOverride === false || !(await state()).enabled) break;
+          if (decision(fresh, await activity(fresh.id), clock()) !== "eligible") {
+            s.history = s.history.filter(h => h.token !== entry.token); await write(s); continue;
+          }
+          if (enabledOverride === false || !(await state()).enabled) {
+            s.history = s.history.filter(h => h.token !== entry.token); await write(s); break;
+          }
           await api.tabs.remove(fresh.id);
           entry.closed = true; entry.pending = false;
           const candidates = (await api.sessions.getRecentlyClosed({ maxResults: 25 })).filter(e => e.tab && !before.has(e.tab.sessionId) && e.tab.url === entry.url);

@@ -30,7 +30,7 @@ For an existing managed installation, keep its backups and use the documented un
 
 The optional **tab cleanup companion** is a normal Firefox extension. It preserves pinned/grouped tabs and closes ordinary web tabs after 24 hours of inactivity, with additional activity/media protections. Its settings and Undo remain in its own popup. It is not required for the appearance or Compact Mode controls.
 
-`packages/ZenFX-Tab-Cleanup-1.0.0-unsigned.zip` is **unsigned source**. It must receive Mozilla signing before a normal permanent installation. It has not been published or submitted. Temporary loading in `about:debugging` is for testing and disappears at restart. Renaming the ZIP to XPI does not sign it.
+`packages/ZenFX-Tab-Cleanup-1.0.1-unsigned.zip` is **unsigned source**. It must receive Mozilla signing before a normal permanent installation. It has not been published or submitted. Temporary loading in `about:debugging` is for testing and disappears at restart. Renaming the ZIP to XPI does not sign it.
 
 A normal extension cannot install `userChrome.css`, replace the native Firefox interface, or run these privileged hooks. The full product therefore uses the explicit setup above, rather than claiming to be a one-click universal XPI. No standard extension was added for Compact Mode and no native messaging service is installed.
 
@@ -56,3 +56,5 @@ On Windows, replace `python3` with `py -3`. GUI setup needs Tk; the command-line
 [Full feature and installation notes](README.md) · [What was tested](docs/VALIDATION.md)
 
 References: [Mozilla CSS customization](https://support.mozilla.org/en-US/kb/contributors-guide-firefox-advanced-customization), [Mozilla AutoConfig](https://support.mozilla.org/en-US/kb/customizing-firefox-using-autoconfig), [Mozilla extension signing](https://extensionworkshop.com/documentation/publish/signing-and-distribution-overview/). The small startup bootstrap follows the documented AutoConfig entry and the public [fx-autoconfig chrome-registration pattern](https://github.com/MrOtherGuy/fx-autoconfig/blob/master/program/config.js); no third-party runtime is downloaded or installed.
+
+The Compact Mode settings dialog also has separate **Hide top toolbar** and **Hide sidebar** controls. **Reveal both bars together** keeps the default shared hover area; turn it off for independent edge reveals. CSS-only users can set `zenfx.compact.independent-reveal` to `true` for independent reveals.

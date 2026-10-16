@@ -1,0 +1,27 @@
+{
+  "groupToToday": {
+    "ungrouped": true,
+    "tier": "today"
+  },
+  "refreshesForTitleOnly": 0,
+  "modeBefore": {
+    "source": 1,
+    "isPreview": false,
+    "entry": "oneoff"
+  },
+  "modeAfterCancel": {
+    "source": 1,
+    "isPreview": false,
+    "entry": "oneoff"
+  },
+  "dragAfterTargetClose": {
+    "active": false,
+    "overlay": false
+  },
+  "folderMenu": {
+    "groupPreserved": true,
+    "correctTab": true,
+    "today": null,
+    "folder": "true"
+  }
+}
