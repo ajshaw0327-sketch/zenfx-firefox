@@ -1,0 +1,14 @@
+{
+  "existingWindow": {
+    "allHooks": true,
+    "buttons": 1,
+    "settingsNodes": 0
+  },
+  "newWindow": {
+    "allHooks": true,
+    "buttons": 1,
+    "settingsNodes": 0
+  },
+  "coldStartVerified": false,
+  "pass": true
+}

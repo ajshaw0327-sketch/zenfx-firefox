@@ -31,6 +31,14 @@
       try { await api.sessions.setTabValue(id, ACTIVITY_KEY, clock()); } catch { /* The tab may already be closed. */ }
     }
     async function activity(id) { try { return await api.sessions.getTabValue(id, ACTIVITY_KEY); } catch { return undefined; } }
+    async function schedule(enabled) {
+      if (enabled) await api.alarms.create("zenfx-cleanup", { periodInMinutes: 5, delayInMinutes: 5 });
+      else await api.alarms.clear("zenfx-cleanup");
+    }
+    async function reasonFor(tab, now) {
+      const reason = decision(tab, undefined, now);
+      return ["eligible", "recent", "age-unknown"].includes(reason) ? decision(tab, await activity(tab.id), now) : reason;
+    }
     async function initialize() {
       const s = await state();
       await write(s);
@@ -38,12 +46,12 @@
         // First installation grants existing tabs a full 24-hour grace period.
         if (!Number.isFinite(await activity(t.id))) await stamp(t.id);
       }
-      await api.alarms.create("zenfx-cleanup", { periodInMinutes: 5, delayInMinutes: 5 });
+      await schedule(s.enabled);
     }
     async function preview() {
       const s = await state(), now = clock(), rows = [];
       for (const t of await api.tabs.query({})) {
-        rows.push({ id: t.id, title: t.title || t.url || "Untitled", reason: decision(t, await activity(t.id), now) });
+        rows.push({ id: t.id, title: t.title || t.url || "Untitled", reason: await reasonFor(t, now) });
       }
       return { enabled: s.enabled, rows, lastRun: s.lastRun, error: s.error, canUndo: s.history.some(h => h.closed || h.pending) };
     }
@@ -93,7 +101,7 @@
         return { closed, error: s.error };
       }
     }); }
-    function setEnabled(enabled) { enabledOverride = !!enabled; return serial(async () => { const s = await state(); s.enabled = !!enabled; await write(s); return preview(); }); }
+    function setEnabled(enabled) { enabledOverride = !!enabled; return serial(async () => { const s = await state(); s.enabled = !!enabled; await write(s); await schedule(s.enabled); return preview(); }); }
     function undo() { return serial(async () => {
       const s = await state();
       // A crash/storage failure after remove() may leave the pre-close backup.

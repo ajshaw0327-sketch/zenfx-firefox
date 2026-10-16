@@ -1,0 +1,40 @@
+{
+  "scope": "Firefox 158/macOS, isolated test profile only; disposable windows and local fixtures",
+  "automated": {
+    "installer": 23,
+    "cleanupAndPopup": 25,
+    "total": 48
+  },
+  "runtimeSourceSHA256": {
+    "optional-chrome/zenfx-compact-toggle.uc.js": "a9e8a368c810aac512257f42773ff5c2e9f5017762596dbeea98071e8db610f7",
+    "optional-chrome/zenfx-drag-to-split.uc.js": "928c38d4e228fb33ca3ae795ee519378ba5cb0ae775180fd55a8ed3601b1b60f",
+    "optional-chrome/zenfx-newtab-overlay.uc.js": "f6117c7e4ac311cd324e3c6946ffc1698402101a31642ef692ca8d618e751bea",
+    "optional-chrome/zenfx-tab-hierarchy.uc.js": "f6ad5b4634bd384dd43ae925beb71b7d73b77be94e7581ab23d4dbc3da7ed1a1",
+    "companion/background.js": "ac8ef2fec83b9e8e0534ba2ccfb0938d0ed86c7ef25b56eb113fb0b3adf95dd6",
+    "companion/cleanup.js": "e148a38688f97f5b928bfad7ae0c7fa2fe40fe43c415386ab2f7ea6f4ccbdb71",
+    "installer/install.py": "b473bd57b62d6249dce95e2fabdf992b3c1945f156f4c680c73c6e456dfff221"
+  },
+  "recheckedReports": [
+    "minimal-lifecycle.json",
+    "performance-regression.json",
+    "compact-interaction.json",
+    "native-theme-colors.json",
+    "opaque-sidebar.json",
+    "clear-layout.json",
+    "shortcut-editor-recheck.json",
+    "sidebar-resize-recheck.json",
+    "native-feature-audit.json",
+    "startup-lifecycle-recheck.json",
+    "cleanup-filter.json",
+    "performance.json",
+    "audit-edges.json"
+  ],
+  "results": "All listed checks passed; lifecycle counts returned to baseline after repeated open/close cycles.",
+  "unverified": [
+    "Application AutoConfig cold-start",
+    "Physical macOS empty-sidebar window dragging",
+    "Other Firefox versions/platforms",
+    "Real unattended 24-hour cleanup",
+    "Controlled battery/energy comparison and total retained-RAM comparison"
+  ]
+}

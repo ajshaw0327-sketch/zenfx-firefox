@@ -6,7 +6,7 @@
       "sizing": 100,
       "attributeWrites": 0
     },
-    "syncMilliseconds": 51.70937499999991,
+    "syncMilliseconds": 55.471874999999955,
     "notificationBurst": {
       "refreshes": 100,
       "favoriteChecks": 14200,
@@ -25,7 +25,7 @@
       "sizing": 100,
       "attributeWrites": 0
     },
-    "syncMilliseconds": 30.643458333333,
+    "syncMilliseconds": 31.2938750000003,
     "notificationBurst": {
       "refreshes": 1,
       "favoriteChecks": 16,

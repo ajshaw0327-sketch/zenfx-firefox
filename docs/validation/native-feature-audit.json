@@ -1,0 +1,63 @@
+{
+  "videoPlayback": {
+    "playing": true,
+    "ready": 4,
+    "width": 320
+  },
+  "pipMenu": [
+    {
+      "id": "context-video-pictureinpicture",
+      "hidden": false,
+      "disabled": false
+    }
+  ],
+  "pictureInPicture": [
+    {
+      "type": "Toolkit:PictureInPicture",
+      "w": 320,
+      "h": 180,
+      "zenfx": false
+    }
+  ],
+  "videoFullscreen": true,
+  "fullscreenChrome": {
+    "active": true,
+    "radius": "0px"
+  },
+  "fullscreenNewTab": {
+    "count": 2,
+    "overlay": false,
+    "fullscreen": false
+  },
+  "restoredRadius": "10px",
+  "findBar": {
+    "visible": true,
+    "radius": "10px"
+  },
+  "download": {
+    "savedInTestProfile": true,
+    "contents": "ZenFX test download",
+    "cleaned": true
+  },
+  "addon": {
+    "active": true,
+    "version": "1.0.2"
+  },
+  "extensionPopup": {
+    "browsers": [
+      {
+        "uri": "moz-extension://<test-addon>/popup.html",
+        "w": 342,
+        "h": 373
+      }
+    ],
+    "top": 0,
+    "side": 0
+  },
+  "reducedMotion": {
+    "matches": true,
+    "speed": "0ms",
+    "delay": "0ms"
+  },
+  "pass": true
+}

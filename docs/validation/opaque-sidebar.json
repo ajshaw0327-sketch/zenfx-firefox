@@ -64,7 +64,7 @@
         "opacity": "1",
         "x": 0,
         "y": 44,
-        "width": 208
+        "width": 165
       },
       "toolbar": {
         "color": "rgba(0, 0, 0, 0)",
@@ -142,7 +142,7 @@
         "opacity": "1",
         "x": 0,
         "y": 44,
-        "width": 208
+        "width": 165
       },
       "toolbar": {
         "color": "rgb(37, 36, 40)",
@@ -161,7 +161,7 @@
     {
       "body": {
         "color": "rgb(220, 195, 168)",
-        "image": "url(\"moz-extension://1ee16ac9-4ee8-4f89-8532-0747e37ee13a/header.svg\"), none",
+        "image": "url(\"moz-extension://6ec7716c-f5f5-4200-a358-65350cf114d4/header.svg\"), none",
         "opacity": "1",
         "x": 0,
         "y": 0,
@@ -169,7 +169,7 @@
       },
       "parent": {
         "color": "rgb(220, 195, 168)",
-        "image": "url(\"moz-extension://1ee16ac9-4ee8-4f89-8532-0747e37ee13a/header.svg\"), none",
+        "image": "url(\"moz-extension://6ec7716c-f5f5-4200-a358-65350cf114d4/header.svg\"), none",
         "opacity": "1",
         "x": 0,
         "y": 44,
@@ -177,7 +177,7 @@
       },
       "sidebar": {
         "color": "rgb(220, 195, 168)",
-        "image": "url(\"moz-extension://1ee16ac9-4ee8-4f89-8532-0747e37ee13a/header.svg\"), none",
+        "image": "url(\"moz-extension://6ec7716c-f5f5-4200-a358-65350cf114d4/header.svg\"), none",
         "opacity": "1",
         "x": 0,
         "y": 44,
@@ -200,7 +200,7 @@
     {
       "body": {
         "color": "rgb(220, 195, 168)",
-        "image": "url(\"moz-extension://1ee16ac9-4ee8-4f89-8532-0747e37ee13a/header.svg\"), none",
+        "image": "url(\"moz-extension://6ec7716c-f5f5-4200-a358-65350cf114d4/header.svg\"), none",
         "opacity": "1",
         "x": 0,
         "y": 0,
@@ -208,7 +208,7 @@
       },
       "parent": {
         "color": "rgb(220, 195, 168)",
-        "image": "url(\"moz-extension://1ee16ac9-4ee8-4f89-8532-0747e37ee13a/header.svg\"), none",
+        "image": "url(\"moz-extension://6ec7716c-f5f5-4200-a358-65350cf114d4/header.svg\"), none",
         "opacity": "1",
         "x": 0,
         "y": 44,
@@ -216,11 +216,11 @@
       },
       "sidebar": {
         "color": "rgb(220, 195, 168)",
-        "image": "url(\"moz-extension://1ee16ac9-4ee8-4f89-8532-0747e37ee13a/header.svg\"), none",
+        "image": "url(\"moz-extension://6ec7716c-f5f5-4200-a358-65350cf114d4/header.svg\"), none",
         "opacity": "1",
         "x": 0,
         "y": 44,
-        "width": 208
+        "width": 165
       },
       "toolbar": {
         "color": "rgba(0, 0, 0, 0)",
@@ -239,7 +239,7 @@
     {
       "body": {
         "color": "rgb(220, 195, 168)",
-        "image": "url(\"moz-extension://1ee16ac9-4ee8-4f89-8532-0747e37ee13a/header.svg\"), none",
+        "image": "url(\"moz-extension://6ec7716c-f5f5-4200-a358-65350cf114d4/header.svg\"), none",
         "opacity": "1",
         "x": 0,
         "y": 0,
@@ -247,7 +247,7 @@
       },
       "parent": {
         "color": "rgb(220, 195, 168)",
-        "image": "url(\"moz-extension://1ee16ac9-4ee8-4f89-8532-0747e37ee13a/header.svg\"), none",
+        "image": "url(\"moz-extension://6ec7716c-f5f5-4200-a358-65350cf114d4/header.svg\"), none",
         "opacity": "1",
         "x": 0,
         "y": 0,
@@ -255,7 +255,7 @@
       },
       "sidebar": {
         "color": "rgb(220, 195, 168)",
-        "image": "url(\"moz-extension://1ee16ac9-4ee8-4f89-8532-0747e37ee13a/header.svg\"), none",
+        "image": "url(\"moz-extension://6ec7716c-f5f5-4200-a358-65350cf114d4/header.svg\"), none",
         "opacity": "1",
         "x": 0,
         "y": 44,
@@ -263,7 +263,7 @@
       },
       "toolbar": {
         "color": "rgb(220, 195, 168)",
-        "image": "url(\"moz-extension://1ee16ac9-4ee8-4f89-8532-0747e37ee13a/header.svg\"), none",
+        "image": "url(\"moz-extension://6ec7716c-f5f5-4200-a358-65350cf114d4/header.svg\"), none",
         "opacity": "1",
         "x": 0,
         "y": 0,
@@ -278,7 +278,7 @@
     {
       "body": {
         "color": "rgb(220, 195, 168)",
-        "image": "url(\"moz-extension://1ee16ac9-4ee8-4f89-8532-0747e37ee13a/header.svg\"), none",
+        "image": "url(\"moz-extension://6ec7716c-f5f5-4200-a358-65350cf114d4/header.svg\"), none",
         "opacity": "1",
         "x": 0,
         "y": 0,
@@ -286,7 +286,7 @@
       },
       "parent": {
         "color": "rgb(220, 195, 168)",
-        "image": "url(\"moz-extension://1ee16ac9-4ee8-4f89-8532-0747e37ee13a/header.svg\"), none",
+        "image": "url(\"moz-extension://6ec7716c-f5f5-4200-a358-65350cf114d4/header.svg\"), none",
         "opacity": "1",
         "x": 0,
         "y": 0,
@@ -294,15 +294,15 @@
       },
       "sidebar": {
         "color": "rgb(220, 195, 168)",
-        "image": "url(\"moz-extension://1ee16ac9-4ee8-4f89-8532-0747e37ee13a/header.svg\"), none",
+        "image": "url(\"moz-extension://6ec7716c-f5f5-4200-a358-65350cf114d4/header.svg\"), none",
         "opacity": "1",
         "x": 0,
         "y": 44,
-        "width": 208
+        "width": 165
       },
       "toolbar": {
         "color": "rgb(220, 195, 168)",
-        "image": "url(\"moz-extension://1ee16ac9-4ee8-4f89-8532-0747e37ee13a/header.svg\"), none",
+        "image": "url(\"moz-extension://6ec7716c-f5f5-4200-a358-65350cf114d4/header.svg\"), none",
         "opacity": "1",
         "x": 0,
         "y": 0,
@@ -317,7 +317,7 @@
     {
       "body": {
         "color": "rgb(24, 38, 59)",
-        "image": "url(\"moz-extension://440e50c3-c6b0-4ef0-84f8-7efd9392896a/header.svg\"), none",
+        "image": "url(\"moz-extension://4a7165c8-5ead-421e-ac9a-3c244884d1b8/header.svg\"), none",
         "opacity": "1",
         "x": 0,
         "y": 0,
@@ -325,7 +325,7 @@
       },
       "parent": {
         "color": "rgb(24, 38, 59)",
-        "image": "url(\"moz-extension://440e50c3-c6b0-4ef0-84f8-7efd9392896a/header.svg\"), none",
+        "image": "url(\"moz-extension://4a7165c8-5ead-421e-ac9a-3c244884d1b8/header.svg\"), none",
         "opacity": "1",
         "x": 0,
         "y": 44,
@@ -333,7 +333,7 @@
       },
       "sidebar": {
         "color": "rgb(24, 38, 59)",
-        "image": "url(\"moz-extension://440e50c3-c6b0-4ef0-84f8-7efd9392896a/header.svg\"), none",
+        "image": "url(\"moz-extension://4a7165c8-5ead-421e-ac9a-3c244884d1b8/header.svg\"), none",
         "opacity": "1",
         "x": 0,
         "y": 44,
@@ -356,7 +356,7 @@
     {
       "body": {
         "color": "rgb(24, 38, 59)",
-        "image": "url(\"moz-extension://440e50c3-c6b0-4ef0-84f8-7efd9392896a/header.svg\"), none",
+        "image": "url(\"moz-extension://4a7165c8-5ead-421e-ac9a-3c244884d1b8/header.svg\"), none",
         "opacity": "1",
         "x": 0,
         "y": 0,
@@ -364,7 +364,7 @@
       },
       "parent": {
         "color": "rgb(24, 38, 59)",
-        "image": "url(\"moz-extension://440e50c3-c6b0-4ef0-84f8-7efd9392896a/header.svg\"), none",
+        "image": "url(\"moz-extension://4a7165c8-5ead-421e-ac9a-3c244884d1b8/header.svg\"), none",
         "opacity": "1",
         "x": 0,
         "y": 44,
@@ -372,11 +372,11 @@
       },
       "sidebar": {
         "color": "rgb(24, 38, 59)",
-        "image": "url(\"moz-extension://440e50c3-c6b0-4ef0-84f8-7efd9392896a/header.svg\"), none",
+        "image": "url(\"moz-extension://4a7165c8-5ead-421e-ac9a-3c244884d1b8/header.svg\"), none",
         "opacity": "1",
         "x": 0,
         "y": 44,
-        "width": 208
+        "width": 165
       },
       "toolbar": {
         "color": "rgba(0, 0, 0, 0)",
@@ -395,7 +395,7 @@
     {
       "body": {
         "color": "rgb(24, 38, 59)",
-        "image": "url(\"moz-extension://440e50c3-c6b0-4ef0-84f8-7efd9392896a/header.svg\"), none",
+        "image": "url(\"moz-extension://4a7165c8-5ead-421e-ac9a-3c244884d1b8/header.svg\"), none",
         "opacity": "1",
         "x": 0,
         "y": 0,
@@ -403,7 +403,7 @@
       },
       "parent": {
         "color": "rgb(24, 38, 59)",
-        "image": "url(\"moz-extension://440e50c3-c6b0-4ef0-84f8-7efd9392896a/header.svg\"), none",
+        "image": "url(\"moz-extension://4a7165c8-5ead-421e-ac9a-3c244884d1b8/header.svg\"), none",
         "opacity": "1",
         "x": 0,
         "y": 0,
@@ -411,7 +411,7 @@
       },
       "sidebar": {
         "color": "rgb(24, 38, 59)",
-        "image": "url(\"moz-extension://440e50c3-c6b0-4ef0-84f8-7efd9392896a/header.svg\"), none",
+        "image": "url(\"moz-extension://4a7165c8-5ead-421e-ac9a-3c244884d1b8/header.svg\"), none",
         "opacity": "1",
         "x": 0,
         "y": 44,
@@ -419,7 +419,7 @@
       },
       "toolbar": {
         "color": "rgb(24, 38, 59)",
-        "image": "url(\"moz-extension://440e50c3-c6b0-4ef0-84f8-7efd9392896a/header.svg\"), none",
+        "image": "url(\"moz-extension://4a7165c8-5ead-421e-ac9a-3c244884d1b8/header.svg\"), none",
         "opacity": "1",
         "x": 0,
         "y": 0,
@@ -434,7 +434,7 @@
     {
       "body": {
         "color": "rgb(24, 38, 59)",
-        "image": "url(\"moz-extension://440e50c3-c6b0-4ef0-84f8-7efd9392896a/header.svg\"), none",
+        "image": "url(\"moz-extension://4a7165c8-5ead-421e-ac9a-3c244884d1b8/header.svg\"), none",
         "opacity": "1",
         "x": 0,
         "y": 0,
@@ -442,7 +442,7 @@
       },
       "parent": {
         "color": "rgb(24, 38, 59)",
-        "image": "url(\"moz-extension://440e50c3-c6b0-4ef0-84f8-7efd9392896a/header.svg\"), none",
+        "image": "url(\"moz-extension://4a7165c8-5ead-421e-ac9a-3c244884d1b8/header.svg\"), none",
         "opacity": "1",
         "x": 0,
         "y": 0,
@@ -450,15 +450,15 @@
       },
       "sidebar": {
         "color": "rgb(24, 38, 59)",
-        "image": "url(\"moz-extension://440e50c3-c6b0-4ef0-84f8-7efd9392896a/header.svg\"), none",
+        "image": "url(\"moz-extension://4a7165c8-5ead-421e-ac9a-3c244884d1b8/header.svg\"), none",
         "opacity": "1",
         "x": 0,
         "y": 44,
-        "width": 208
+        "width": 165
       },
       "toolbar": {
         "color": "rgb(24, 38, 59)",
-        "image": "url(\"moz-extension://440e50c3-c6b0-4ef0-84f8-7efd9392896a/header.svg\"), none",
+        "image": "url(\"moz-extension://4a7165c8-5ead-421e-ac9a-3c244884d1b8/header.svg\"), none",
         "opacity": "1",
         "x": 0,
         "y": 0,
@@ -473,7 +473,7 @@
     {
       "body": {
         "color": "rgb(24, 38, 59)",
-        "image": "url(\"moz-extension://0cee31da-3587-4665-b3af-cb33ef413d3f/header.svg\"), none",
+        "image": "url(\"moz-extension://b18a47d9-a630-4fd7-9cd8-142ae59ecca1/header.svg\"), none",
         "opacity": "1",
         "x": 0,
         "y": 0,
@@ -481,7 +481,7 @@
       },
       "parent": {
         "color": "rgb(24, 38, 59)",
-        "image": "url(\"moz-extension://0cee31da-3587-4665-b3af-cb33ef413d3f/header.svg\"), none",
+        "image": "url(\"moz-extension://b18a47d9-a630-4fd7-9cd8-142ae59ecca1/header.svg\"), none",
         "opacity": "1",
         "x": 0,
         "y": 44,
@@ -489,7 +489,7 @@
       },
       "sidebar": {
         "color": "rgb(24, 38, 59)",
-        "image": "url(\"moz-extension://0cee31da-3587-4665-b3af-cb33ef413d3f/header.svg\"), none",
+        "image": "url(\"moz-extension://b18a47d9-a630-4fd7-9cd8-142ae59ecca1/header.svg\"), none",
         "opacity": "1",
         "x": 0,
         "y": 44,
@@ -512,7 +512,7 @@
     {
       "body": {
         "color": "rgb(24, 38, 59)",
-        "image": "url(\"moz-extension://0cee31da-3587-4665-b3af-cb33ef413d3f/header.svg\"), none",
+        "image": "url(\"moz-extension://b18a47d9-a630-4fd7-9cd8-142ae59ecca1/header.svg\"), none",
         "opacity": "1",
         "x": 0,
         "y": 0,
@@ -520,7 +520,7 @@
       },
       "parent": {
         "color": "rgb(24, 38, 59)",
-        "image": "url(\"moz-extension://0cee31da-3587-4665-b3af-cb33ef413d3f/header.svg\"), none",
+        "image": "url(\"moz-extension://b18a47d9-a630-4fd7-9cd8-142ae59ecca1/header.svg\"), none",
         "opacity": "1",
         "x": 0,
         "y": 44,
@@ -528,11 +528,11 @@
       },
       "sidebar": {
         "color": "rgb(24, 38, 59)",
-        "image": "url(\"moz-extension://0cee31da-3587-4665-b3af-cb33ef413d3f/header.svg\"), none",
+        "image": "url(\"moz-extension://b18a47d9-a630-4fd7-9cd8-142ae59ecca1/header.svg\"), none",
         "opacity": "1",
         "x": 0,
         "y": 44,
-        "width": 208
+        "width": 165
       },
       "toolbar": {
         "color": "rgba(0, 0, 0, 0)",
@@ -551,7 +551,7 @@
     {
       "body": {
         "color": "rgb(24, 38, 59)",
-        "image": "url(\"moz-extension://0cee31da-3587-4665-b3af-cb33ef413d3f/header.svg\"), none",
+        "image": "url(\"moz-extension://b18a47d9-a630-4fd7-9cd8-142ae59ecca1/header.svg\"), none",
         "opacity": "1",
         "x": 0,
         "y": 0,
@@ -559,7 +559,7 @@
       },
       "parent": {
         "color": "rgb(24, 38, 59)",
-        "image": "url(\"moz-extension://0cee31da-3587-4665-b3af-cb33ef413d3f/header.svg\"), none",
+        "image": "url(\"moz-extension://b18a47d9-a630-4fd7-9cd8-142ae59ecca1/header.svg\"), none",
         "opacity": "1",
         "x": 0,
         "y": 0,
@@ -567,7 +567,7 @@
       },
       "sidebar": {
         "color": "rgb(24, 38, 59)",
-        "image": "url(\"moz-extension://0cee31da-3587-4665-b3af-cb33ef413d3f/header.svg\"), none",
+        "image": "url(\"moz-extension://b18a47d9-a630-4fd7-9cd8-142ae59ecca1/header.svg\"), none",
         "opacity": "1",
         "x": 0,
         "y": 44,
@@ -575,7 +575,7 @@
       },
       "toolbar": {
         "color": "rgb(24, 38, 59)",
-        "image": "url(\"moz-extension://0cee31da-3587-4665-b3af-cb33ef413d3f/header.svg\"), none",
+        "image": "url(\"moz-extension://b18a47d9-a630-4fd7-9cd8-142ae59ecca1/header.svg\"), none",
         "opacity": "1",
         "x": 0,
         "y": 0,
@@ -590,7 +590,7 @@
     {
       "body": {
         "color": "rgb(24, 38, 59)",
-        "image": "url(\"moz-extension://0cee31da-3587-4665-b3af-cb33ef413d3f/header.svg\"), none",
+        "image": "url(\"moz-extension://b18a47d9-a630-4fd7-9cd8-142ae59ecca1/header.svg\"), none",
         "opacity": "1",
         "x": 0,
         "y": 0,
@@ -598,7 +598,7 @@
       },
       "parent": {
         "color": "rgb(24, 38, 59)",
-        "image": "url(\"moz-extension://0cee31da-3587-4665-b3af-cb33ef413d3f/header.svg\"), none",
+        "image": "url(\"moz-extension://b18a47d9-a630-4fd7-9cd8-142ae59ecca1/header.svg\"), none",
         "opacity": "1",
         "x": 0,
         "y": 0,
@@ -606,15 +606,15 @@
       },
       "sidebar": {
         "color": "rgb(24, 38, 59)",
-        "image": "url(\"moz-extension://0cee31da-3587-4665-b3af-cb33ef413d3f/header.svg\"), none",
+        "image": "url(\"moz-extension://b18a47d9-a630-4fd7-9cd8-142ae59ecca1/header.svg\"), none",
         "opacity": "1",
         "x": 0,
         "y": 44,
-        "width": 208
+        "width": 165
       },
       "toolbar": {
         "color": "rgb(24, 38, 59)",
-        "image": "url(\"moz-extension://0cee31da-3587-4665-b3af-cb33ef413d3f/header.svg\"), none",
+        "image": "url(\"moz-extension://b18a47d9-a630-4fd7-9cd8-142ae59ecca1/header.svg\"), none",
         "opacity": "1",
         "x": 0,
         "y": 0,

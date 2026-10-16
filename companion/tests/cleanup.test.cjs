@@ -15,7 +15,7 @@ function fixture({ tabs = [ordinary()], fresh = {}, failBackup = false, duringBa
     tabs: { query: async () => [...records.values()].map(t => ({ ...t })), get: async id => { if (!records.has(id)) throw Error('closed'); return { ...records.get(id), ...fresh }; }, remove: async id => { removed.push(id); records.delete(id); }, create: async opts => { created.push(opts); return {}; } },
     sessions: { getTabValue: async id => values.get(id), setTabValue: async (id, key, value) => { assert.equal(key, ACTIVITY_KEY); values.set(id, value); }, getRecentlyClosed: async () => [], restore: async () => { throw Error('expired'); } },
     storage: { local: { get: async () => structuredClone(storage), set: async data => { if (data[STATE_KEY]?.history?.length) { if (failBackup) throw Error('quota'); if (!mutated && duringBackup) { mutated = true; duringBackup(records); } } storage = structuredClone(data); } } },
-    alarms: { create: async (...args) => alarms.push(args) }
+    alarms: { create: async (...args) => alarms.push(args), clear: async name => alarms.push([name, { cleared: true }]) }
   };
   return { api, controller: createController(api, { clock: () => NOW }), records, values, removed, created, alarms, state: () => storage[STATE_KEY] };
 }
@@ -101,6 +101,7 @@ test('activation timestamps include the tab being left and survive event-page re
     const browser = {
       runtime: { id: 'test', onInstalled: event('installed'), onStartup: event('startup'), onMessage: event('message') },
       alarms: { onAlarm: event('alarm') },
+      windows: { onRemoved: event('windowRemoved') },
       tabs: { onCreated: event('created'), onActivated: event('activated'), onUpdated: event('updated'), query: async () => [{ id: activeId, windowId: 10 }] },
       storage: { session: { get: async () => structuredClone(memory), set: async value => { memory = structuredClone(value); } } }
     };
@@ -131,6 +132,7 @@ test('event-page resume reuses activity state and filters irrelevant tab updates
   const browser = {
     runtime: { id:'test', onInstalled:event('installed'), onStartup:event('startup'), onMessage:event('message') },
     alarms: { onAlarm:event('alarm') },
+    windows: { onRemoved:event('windowRemoved') },
     tabs: { onCreated:event('created'), onActivated:event('activated'), onUpdated:event('updated'), query: async()=>{ queries++; return []; } },
     storage: { session: { get:async()=>{ reads++; return structuredClone(memory); }, set:async value=>{ writes++; Object.assign(memory, structuredClone(value)); } } }
   };
@@ -141,4 +143,33 @@ test('event-page resume reuses activity state and filters irrelevant tab updates
   events.activated({tabId:2,windowId:10}); await settle();
   events.activated({tabId:3,windowId:10}); await settle();
   assert.deepEqual(stamps,[1,2,2,3]); assert.equal(reads,1); assert.equal(queries,0); assert.equal(writes,2);
+});
+test('pausing clears the cleanup alarm and startup keeps it cleared until resumed', async () => {
+  const f = fixture();
+  await f.controller.initialize();
+  await f.controller.setEnabled(false);
+  assert.deepEqual(f.alarms.at(-1), ['zenfx-cleanup', { cleared:true }]);
+  const resumedPage = createController(f.api, {clock:()=>NOW});
+  await resumedPage.initialize();
+  assert.deepEqual(f.alarms.at(-1), ['zenfx-cleanup', { cleared:true }]);
+  assert.equal((await resumedPage.sweep()).paused,true);
+  await resumedPage.setEnabled(true);
+  assert.equal(f.alarms.at(-1)[1].periodInMinutes,5);
+});
+test('popup preview reads timestamps only for ordinary candidate tabs', async () => {
+  const f=fixture({tabs:[ordinary(),ordinary({id:2,pinned:true}),ordinary({id:3,url:'about:blank'}),ordinary({id:4,hidden:true})]});
+  const get=f.api.sessions.getTabValue,reads=[];
+  f.api.sessions.getTabValue=async(...args)=>{reads.push(args[0]);return get(...args);};
+  const result=await f.controller.preview();
+  assert.deepEqual(reads,[1]);
+  assert.deepEqual(Array.from(result.rows,row=>row.reason),['eligible','pinned','non-web','hidden']);
+});
+test('closed windows release cached activity entries without rewriting for unknown windows', async () => {
+  const events={},memory={zenfxActiveByWindow:{10:1,20:2}};let writes=0;
+  const event=name=>({addListener:cb=>{events[name]=cb;}});
+  const browser={runtime:{id:'test',onInstalled:event('installed'),onStartup:event('startup'),onMessage:event('message')},alarms:{onAlarm:event('alarm')},windows:{onRemoved:event('removed')},tabs:{onCreated:event('created'),onActivated:event('activated'),onUpdated:event('updated'),query:async()=>[]},storage:{session:{get:async()=>structuredClone(memory),set:async value=>{writes++;Object.assign(memory,structuredClone(value));}}}};
+  vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../background.js'),'utf8'),{browser,ZenfxCleanup:{createController:()=>({stamp:async()=>{}})},console});
+  const settle=()=>new Promise(resolve=>setImmediate(resolve));await settle();
+  events.removed(10);await settle();assert.deepEqual(memory.zenfxActiveByWindow,{20:2});
+  events.removed(99);await settle();assert.equal(writes,1);
 });

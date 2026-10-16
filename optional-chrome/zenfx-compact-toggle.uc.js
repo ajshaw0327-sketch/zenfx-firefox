@@ -100,102 +100,116 @@
     button.setAttribute("aria-pressed", top !== side ? "mixed" : String(on));
     button.setAttribute("tooltiptext", `Compact Mode: ${mode} (${labelFor(shortcut)}). Right-click for visibility and shortcut settings.`);
   };
-  const panel = document.createElementNS("http://www.w3.org/1999/xhtml", "dialog");
-  panel.id = "zenfx-compact-settings";
-  panel.style.cssText = "padding:0;border:1px solid var(--zenfx-search-border);border-radius:11px;background:var(--zenfx-panel);color:var(--zenfx-foreground);box-shadow:var(--zenfx-shadow);max-width:calc(100vw - 32px);";
-  panel.setAttribute("role", "dialog");
-  panel.setAttribute("aria-label", "ZenFX Compact Mode settings");
-  const html = (tag, text) => {
-    const e = document.createElementNS("http://www.w3.org/1999/xhtml", tag);
-    if (text) e.textContent = text;
-    return e;
-  };
-  const box = html("div");
-  box.style.cssText = "padding:18px;width:320px;font:13px/1.5 system-ui;color:var(--zenfx-foreground);background:var(--zenfx-panel);border-radius:10px;";
-  const heading = html("h2", "Compact Mode");
-  heading.style.cssText = "font-size:17px;margin:0 0 8px;";
-  const visibility = html("fieldset"); visibility.style.cssText = "border:0;padding:0;margin:0 0 14px;display:grid;gap:8px;";
-  visibility.append(html("legend", "Visibility"));
-  const modeInputs = [];
-  for (const [id, label] of [["zenfx-hide-top", "Hide the top toolbar"], ["zenfx-hide-sidebar", "Hide the sidebar"], ["zenfx-reveal-together", "Reveal both bars together"]]) {
-    const row = html("label"), input = html("input"); input.type = "checkbox"; input.id = id;
-    input.style.accentColor = "var(--zenfx-accent)"; row.style.cssText = "display:flex;align-items:center;gap:8px;";
-    row.append(input, html("span", label)); visibility.append(row); modeInputs.push(input);
-  }
-  const hint = html("p", "Click the field, then press your preferred key combination.");
-  const field = html("input");
-  field.id = "zenfx-shortcut-recorder"; field.readOnly = true;
-  field.setAttribute("aria-label", "Record a new Compact Mode shortcut");
-  field.style.cssText = "box-sizing:border-box;width:100%;padding:10px;border:1px solid currentColor;border-radius:7px;background:transparent;color:inherit;font:inherit;";
-  const status = html("p"); status.id = "zenfx-shortcut-status"; status.setAttribute("role", "status");
-  const actions = html("div"); actions.style.cssText = "display:flex;gap:7px;flex-wrap:wrap;";
-  const save = html("button", "Save"), reset = html("button", "Use default"), clearKey = html("button", "No shortcut");
-  for (const b of [save, reset, clearKey]) b.style.cssText = "font:inherit;padding:7px 10px;border:1px solid currentColor;border-radius:6px;background:transparent;color:inherit;cursor:pointer;";
-  actions.append(save, reset, clearKey);
-  box.append(heading, visibility, html("strong", "Keyboard shortcut"), hint, field, status, actions, html("p", "Some system shortcuts are reserved. Escape cancels unsaved changes."));
-  panel.append(box);
-  document.documentElement.append(panel);
-  let pendingShortcut;
-  function conflict(value) {
-    if (!value) return null;
-    const modifiers = normalizedModifiers(value.modifiers);
-    return Array.from(document.querySelectorAll("key")).find(other => other !== key && other !== sidebarKey && other.getAttribute("disabled") !== "true" &&
-      normalizedModifiers(other.getAttribute("modifiers") || "") === modifiers &&
-      (value.key ? other.getAttribute("key")?.toUpperCase() === value.key : other.getAttribute("keycode") === value.keycode));
-  }
-  function choose(value) {
-    pendingShortcut = value;
-    field.value = labelFor(value);
-    const taken = conflict(value);
-    save.disabled = !!taken;
-    status.textContent = taken ? "Firefox or another shortcut already uses this combination." : "Ready to save.";
-  }
+  let settings = null;
   function openSettings(event) {
-    event?.preventDefault();
-    event?.stopPropagation();
-    choose(shortcut);
-    modeInputs[0].checked = Services.prefs.getBoolPref(prefs[0], false);
-    modeInputs[1].checked = Services.prefs.getBoolPref(prefs[1], false);
-    modeInputs[2].checked = !Services.prefs.getBoolPref("zenfx.compact.independent-reveal", false);
-    if (!panel.open) panel.showModal();
-    field.focus();
+    (settings ||= createSettings()).open(event);
   }
-  function record(event) {
-    if (event.key === "Escape" || event.key === "Tab") return;
-    event.preventDefault(); event.stopImmediatePropagation();
-    if (["Meta", "Control", "Alt", "Shift"].includes(event.key) || event.repeat || event.isComposing) return;
-    const modifiers = [];
-    if (mac ? event.metaKey : event.ctrlKey) modifiers.push("accel");
-    if (mac && event.ctrlKey) modifiers.push("control");
-    if (!mac && event.metaKey) modifiers.push("meta");
-    if (event.altKey) modifiers.push("alt");
-    if (event.shiftKey) modifiers.push("shift");
-    const code = event.code;
-    let value;
-    if (/^Key[A-Z]$/.test(code)) value = { key: code.slice(3) };
-    else if (/^Digit[0-9]$/.test(code)) value = { key: code.slice(5) };
-    else if (/^F(?:[1-9]|1[0-9]|2[0-4])$/.test(code)) value = { keycode: "VK_" + code };
-    else {
-      const codes = { Space: "VK_SPACE", Period: "VK_PERIOD", Comma: "VK_COMMA", Home: "VK_HOME", End: "VK_END", PageUp: "VK_PAGE_UP", PageDown: "VK_PAGE_DOWN", Insert: "VK_INSERT", Delete: "VK_DELETE", ArrowUp: "VK_UP", ArrowDown: "VK_DOWN", ArrowLeft: "VK_LEFT", ArrowRight: "VK_RIGHT" };
-      if (codes[code]) value = { keycode: codes[code] };
+  // Build the editor only while it is in use; closed windows keep no dialog tree.
+  function createSettings() {
+    const panel = document.createElementNS("http://www.w3.org/1999/xhtml", "dialog");
+    panel.id = "zenfx-compact-settings";
+    panel.style.cssText = "padding:0;border:1px solid var(--zenfx-search-border);border-radius:11px;background:var(--zenfx-panel);color:var(--zenfx-foreground);box-shadow:var(--zenfx-shadow);max-width:calc(100vw - 32px);";
+    panel.setAttribute("role", "dialog");
+    panel.setAttribute("aria-label", "ZenFX Compact Mode settings");
+    const html = (tag, text) => {
+      const e = document.createElementNS("http://www.w3.org/1999/xhtml", tag);
+      if (text) e.textContent = text;
+      return e;
+    };
+    const box = html("div");
+    box.style.cssText = "padding:18px;width:320px;font:13px/1.5 system-ui;color:var(--zenfx-foreground);background:var(--zenfx-panel);border-radius:10px;";
+    const heading = html("h2", "Compact Mode");
+    heading.style.cssText = "font-size:17px;margin:0 0 8px;";
+    const visibility = html("fieldset"); visibility.style.cssText = "border:0;padding:0;margin:0 0 14px;display:grid;gap:8px;";
+    visibility.append(html("legend", "Visibility"));
+    const modeInputs = [];
+    for (const [id, label] of [["zenfx-hide-top", "Hide the top toolbar"], ["zenfx-hide-sidebar", "Hide the sidebar"], ["zenfx-reveal-together", "Reveal both bars together"]]) {
+      const row = html("label"), input = html("input"); input.type = "checkbox"; input.id = id;
+      input.style.accentColor = "var(--zenfx-accent)"; row.style.cssText = "display:flex;align-items:center;gap:8px;";
+      row.append(input, html("span", label)); visibility.append(row); modeInputs.push(input);
     }
-    if (!value || (!modifiers.some(m => m !== "shift") && !code.startsWith("F"))) {
-      save.disabled = true; status.textContent = "Use Command/Ctrl/Option with a key, or a function key."; return;
+    const hint = html("p", "Click the field, then press your preferred key combination.");
+    const field = html("input");
+    field.id = "zenfx-shortcut-recorder"; field.readOnly = true;
+    field.setAttribute("aria-label", "Record a new Compact Mode shortcut");
+    field.style.cssText = "box-sizing:border-box;width:100%;padding:10px;border:1px solid currentColor;border-radius:7px;background:transparent;color:inherit;font:inherit;";
+    const status = html("p"); status.id = "zenfx-shortcut-status"; status.setAttribute("role", "status");
+    const actions = html("div"); actions.style.cssText = "display:flex;gap:7px;flex-wrap:wrap;";
+    const save = html("button", "Save"), reset = html("button", "Use default"), clearKey = html("button", "No shortcut");
+    for (const b of [save, reset, clearKey]) b.style.cssText = "font:inherit;padding:7px 10px;border:1px solid currentColor;border-radius:6px;background:transparent;color:inherit;cursor:pointer;";
+    actions.append(save, reset, clearKey);
+    box.append(heading, visibility, html("strong", "Keyboard shortcut"), hint, field, status, actions, html("p", "Some system shortcuts are reserved. Escape cancels unsaved changes."));
+    panel.append(box);
+    document.documentElement.append(panel);
+    panel.addEventListener("close", () => {
+      // A queued close event can arrive after an immediate reopen.
+      if (panel.open) return;
+      panel.remove();
+      if (settings?.panel === panel) settings = null;
+    });
+    let pendingShortcut;
+    function conflict(value) {
+      if (!value) return null;
+      const modifiers = normalizedModifiers(value.modifiers);
+      return Array.from(document.querySelectorAll("key")).find(other => other !== key && other !== sidebarKey && other.getAttribute("disabled") !== "true" &&
+        normalizedModifiers(other.getAttribute("modifiers") || "") === modifiers &&
+        (value.key ? other.getAttribute("key")?.toUpperCase() === value.key : other.getAttribute("keycode") === value.keycode));
     }
-    choose({ ...value, modifiers: modifiers.join(",") });
+    function choose(value) {
+      pendingShortcut = value;
+      field.value = labelFor(value);
+      const taken = conflict(value);
+      save.disabled = !!taken;
+      status.textContent = taken ? "Firefox or another shortcut already uses this combination." : "Ready to save.";
+    }
+    function openSettings(event) {
+      event?.preventDefault();
+      event?.stopPropagation();
+      choose(shortcut);
+      modeInputs[0].checked = Services.prefs.getBoolPref(prefs[0], false);
+      modeInputs[1].checked = Services.prefs.getBoolPref(prefs[1], false);
+      modeInputs[2].checked = !Services.prefs.getBoolPref("zenfx.compact.independent-reveal", false);
+      if (!panel.open) panel.showModal();
+      field.focus();
+    }
+    function record(event) {
+      if (event.key === "Escape" || event.key === "Tab") return;
+      event.preventDefault(); event.stopImmediatePropagation();
+      if (["Meta", "Control", "Alt", "Shift"].includes(event.key) || event.repeat || event.isComposing) return;
+      const modifiers = [];
+      if (mac ? event.metaKey : event.ctrlKey) modifiers.push("accel");
+      if (mac && event.ctrlKey) modifiers.push("control");
+      if (!mac && event.metaKey) modifiers.push("meta");
+      if (event.altKey) modifiers.push("alt");
+      if (event.shiftKey) modifiers.push("shift");
+      const code = event.code;
+      let value;
+      if (/^Key[A-Z]$/.test(code)) value = { key: code.slice(3) };
+      else if (/^Digit[0-9]$/.test(code)) value = { key: code.slice(5) };
+      else if (/^F(?:[1-9]|1[0-9]|2[0-4])$/.test(code)) value = { keycode: "VK_" + code };
+      else {
+        const codes = { Space: "VK_SPACE", Period: "VK_PERIOD", Comma: "VK_COMMA", Home: "VK_HOME", End: "VK_END", PageUp: "VK_PAGE_UP", PageDown: "VK_PAGE_DOWN", Insert: "VK_INSERT", Delete: "VK_DELETE", ArrowUp: "VK_UP", ArrowDown: "VK_DOWN", ArrowLeft: "VK_LEFT", ArrowRight: "VK_RIGHT" };
+        if (codes[code]) value = { keycode: codes[code] };
+      }
+      if (!value || (!modifiers.some(m => m !== "shift") && !code.startsWith("F"))) {
+        save.disabled = true; status.textContent = "Use Command/Ctrl/Option with a key, or a function key."; return;
+      }
+      choose({ ...value, modifiers: modifiers.join(",") });
+    }
+    function saveShortcut() {
+      if (save.disabled) return;
+      Services.prefs.setStringPref(shortcutPref, JSON.stringify(pendingShortcut));
+      Services.prefs.setBoolPref(prefs[0], modeInputs[0].checked);
+      Services.prefs.setBoolPref(prefs[1], modeInputs[1].checked);
+      Services.prefs.setBoolPref("zenfx.compact.independent-reveal", !modeInputs[2].checked);
+      panel.close();
+    }
+    field.addEventListener("keydown", record);
+    save.addEventListener("click", saveShortcut);
+    reset.addEventListener("click", () => choose(defaultShortcut));
+    clearKey.addEventListener("click", () => choose(null));
+    return { panel, open: openSettings };
   }
-  function saveShortcut() {
-    if (save.disabled) return;
-    Services.prefs.setStringPref(shortcutPref, JSON.stringify(pendingShortcut));
-    Services.prefs.setBoolPref(prefs[0], modeInputs[0].checked);
-    Services.prefs.setBoolPref(prefs[1], modeInputs[1].checked);
-    Services.prefs.setBoolPref("zenfx.compact.independent-reveal", !modeInputs[2].checked);
-    panel.close();
-  }
-  field.addEventListener("keydown", record);
-  save.addEventListener("click", saveShortcut);
-  reset.addEventListener("click", () => choose(defaultShortcut));
-  clearKey.addEventListener("click", () => choose(null));
   button.addEventListener("contextmenu", openSettings);
   const tools = document.getElementById("menu_ToolsPopup");
   const settingsMenu = document.createXULElement("menuitem");
@@ -240,7 +254,8 @@
       Services.prefs.removeObserver(shortcutPref, shortcutObserver);
       restoreSidebarKey();
       button.removeEventListener("contextmenu", openSettings);
-      panel.close(); panel.remove(); settingsMenu.remove();
+      const current = settings; settings = null;
+      current?.panel.close(); current?.panel.remove(); settingsMenu.remove();
       button.removeEventListener("command", toggle);
       command.removeEventListener("command", toggle);
       window.removeEventListener("unload", onUnload);

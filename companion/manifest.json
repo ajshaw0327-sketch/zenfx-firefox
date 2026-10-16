@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "ZenFX Tab Cleanup",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Close ordinary web tabs after 24 hours of inactivity; protect pinned and grouped tabs.",
   "permissions": [
     "tabs",

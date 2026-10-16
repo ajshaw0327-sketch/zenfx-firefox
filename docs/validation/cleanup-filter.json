@@ -2,5 +2,12 @@
   "nativeTitleEvents": 21,
   "filteredTitleEvents": 0,
   "pinEventsKept": 2,
+  "pausedAlarms": [],
+  "resumedAlarms": [
+    {
+      "name": "zenfx-cleanup",
+      "period": 5
+    }
+  ],
   "pass": true
 }

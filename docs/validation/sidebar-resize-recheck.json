@@ -1,0 +1,106 @@
+{
+  "method": "Trusted WebDriver pointer drag of the real native sidebar splitter after normal Firefox startup.",
+  "before": {
+    "width": 165,
+    "inlineWidth": "165px",
+    "expanded": true,
+    "savedWidth": 165,
+    "splitter": {
+      "x": 161,
+      "y": 44,
+      "width": 4,
+      "height": 830,
+      "top": 44,
+      "right": 165,
+      "bottom": 874,
+      "left": 161
+    },
+    "pageWidth": 1012
+  },
+  "wider": {
+    "width": 255,
+    "inlineWidth": "255px",
+    "expanded": true,
+    "savedWidth": 255,
+    "splitter": {
+      "x": 251,
+      "y": 44,
+      "width": 4,
+      "height": 830,
+      "top": 44,
+      "right": 255,
+      "bottom": 874,
+      "left": 251
+    },
+    "pageWidth": 922
+  },
+  "narrower": {
+    "width": 195,
+    "inlineWidth": "195px",
+    "expanded": true,
+    "savedWidth": 195,
+    "splitter": {
+      "x": 191,
+      "y": 44,
+      "width": 4,
+      "height": 830,
+      "top": 44,
+      "right": 195,
+      "bottom": 874,
+      "left": 191
+    },
+    "pageWidth": 982
+  },
+  "collapsed": {
+    "width": 52,
+    "inlineWidth": "",
+    "expanded": false,
+    "savedWidth": 195,
+    "splitter": {
+      "x": 48,
+      "y": 44,
+      "width": 4,
+      "height": 830,
+      "top": 44,
+      "right": 52,
+      "bottom": 874,
+      "left": 48
+    },
+    "pageWidth": 1125
+  },
+  "reexpanded": {
+    "width": 195,
+    "inlineWidth": "195px",
+    "expanded": true,
+    "savedWidth": 195,
+    "splitter": {
+      "x": 191,
+      "y": 44,
+      "width": 4,
+      "height": 830,
+      "top": 44,
+      "right": 195,
+      "bottom": 874,
+      "left": 191
+    },
+    "pageWidth": 982
+  },
+  "pass": true,
+  "restored": {
+    "width": 165,
+    "inlineWidth": "165px",
+    "expanded": true,
+    "savedWidth": 165,
+    "splitter": {
+      "x": 161,
+      "y": 44,
+      "width": 4,
+      "height": 830,
+      "top": 44,
+      "right": 165,
+      "bottom": 874,
+      "left": 161
+    },
+    "pageWidth": 1012
+  }
+}

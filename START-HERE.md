@@ -76,7 +76,7 @@ For an existing managed installation, keep its backups and use the documented un
 
 The optional **tab cleanup companion** is a normal Firefox extension. It preserves pinned/grouped tabs and closes ordinary web tabs after 24 hours of inactivity, with additional activity/media protections. Its settings and Undo remain in its own popup. It is not required for the appearance or Compact Mode controls.
 
-`packages/ZenFX-Tab-Cleanup-1.0.2-unsigned.zip` is **unsigned source**. It must receive Mozilla signing before a normal permanent installation. It has not been published or submitted. Temporary loading in `about:debugging` is for testing and disappears at restart. Renaming the ZIP to XPI does not sign it.
+`packages/ZenFX-Tab-Cleanup-1.0.3-unsigned.zip` is **unsigned source**. It must receive Mozilla signing before a normal permanent installation. It has not been published or submitted. Temporary loading in `about:debugging` is for testing and disappears at restart. Renaming the ZIP to XPI does not sign it.
 
 A normal extension cannot install `userChrome.css`, replace the native Firefox interface, or run these privileged hooks. The full product therefore uses the explicit setup above, rather than claiming to be a one-click universal XPI. No standard extension was added for Compact Mode and no native messaging service is installed.
 

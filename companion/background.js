@@ -31,6 +31,14 @@ browser.tabs.onActivated.addListener(info => {
     await browser.storage.session.set({ [activeKey]: active });
   }).catch(reportError);
 });
+// Closed windows must not accumulate entries throughout a long browser session.
+browser.windows.onRemoved.addListener(windowId => {
+  activationQueue = activationQueue.then(async () => {
+    if (!active || !(windowId in active)) return;
+    delete active[windowId];
+    await browser.storage.session.set({ [activeKey]: active });
+  }).catch(reportError);
+});
 browser.tabs.onUpdated.addListener((id, change) => {
   if (change.url !== undefined || change.pinned !== undefined || change.groupId !== undefined || change.hidden !== undefined) cleanup.stamp(id);
 }, { properties: ["url", "pinned", "groupId", "hidden"] });

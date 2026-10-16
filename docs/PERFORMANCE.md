@@ -9,7 +9,7 @@ ZenFX keeps native tabs and Split View rather than embedding a second browser in
 - **Compact Mode:** the measured toolbar-height value is written only when it changes.
 - **Cleanup:** Firefox filters out title/favicon/loading updates before delivering the extension’s listener. Existing session activity state avoids tab queries and storage rewrites when the event page resumes. Protected and internal/private tabs skip unnecessary timestamp reads. Relevant pin/group/hide/navigation events and activity tracking remain active.
 
-All requested interface features remain available. Closing rules and the five-minute cleanup interval are unchanged.
+All requested interface features remain available. Closing rules and the five-minute interval while enabled are unchanged. Pausing cleanup now removes its alarm entirely.
 
 ## Isolated Firefox 158 results
 
@@ -29,6 +29,22 @@ The notification burst and drag-over events are synthetic, controlled tests. The
 A disposable test extension also checked the real Firefox event API: 21 title updates reached an unfiltered reference listener, zero reached the production property-filtered listener, and both pin/unpin events were retained. [Native filter results](validation/cleanup-filter.json). The reference listener existed only in the test extension.
 
 Automated checks cover skipped protected-tab timestamp reads, activity-state reuse across event-page resumes, and retained close/recovery protections. The browser regression check covers Compact Mode settings, independent reveals, search mode/submission, folders, 104-tab scrolling, deferred drag reordering, both native split-drop directions, and script errors.
+
+## Minimal idle footprint
+
+A second pass defers the Compact settings dialog until it is opened, removes its DOM tree after closing, attaches search/split gesture handlers only while those features are active, and uses weak references for saved background search-mode browsers. A pressed-tab reference is released after ordinary clicks and rejected drags. Cleanup prunes records for closed windows and skips protected-tab timestamp reads in its popup as well as sweeps.
+
+| Isolated lifecycle check | Previous optimized build | Minimal build |
+| --- | ---: | ---: |
+| Settings dialog DOM nodes at startup / after closing | 23 | 0 |
+| Floating-search idle hook listeners | 7 | 2 |
+| Drag-to-split idle hook listeners | 11 | 5 |
+
+Twenty dialog open/close cycles and 30 search/split cycles returned to the same minimal counts without accumulating nodes/listeners. Immediate dialog reopen and uninstall while open also passed. The two remaining search listeners handle New Tab commands and window unloading; gesture-specific listeners exist only while needed. The drag hook retains the low-frequency events needed to recognize a tab gesture and clean up a canceled drag. Active gestures temporarily attach their required handlers, then detach them.
+
+The real extension API verified **zero alarms while paused**, with the normal five-minute alarm restored on resume. Pausing still tracks visits so re-enabling does not close a recently used tab. These are measured object/event counts, not retained heap-byte or energy measurements.
+
+[Lifecycle counts](validation/minimal-lifecycle.json) · [Native alarm/filter checks](validation/cleanup-filter.json) · [Complete recheck record](validation/minimal-audit.json)
 
 ## What these results do not establish
 

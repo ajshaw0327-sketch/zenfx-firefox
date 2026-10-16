@@ -8,20 +8,26 @@
   window.ZenfxDragToSplit?.uninstall();
   const TAB_TYPE = "application/x-moz-tabbrowser-tab";
   let pressed = null, state = null, pending = null;
-  const removers = [];
+  const removers = [], activeRemovers = [];
+  const strip = gBrowser.tabContainer;
   const listen = (target, type, callback) => {
     target.addEventListener(type, callback, true);
     removers.push(() => target.removeEventListener(type, callback, true));
+  };
+  const listenActive = (target, type, callback) => {
+    target.addEventListener(type, callback, true);
+    activeRemovers.push(() => target.removeEventListener(type, callback, true));
   };
   const closest = (node, selector) => (node?.nodeType === 1 ? node : node?.parentElement)?.closest(selector);
   const ordinary = tab => tab?.isConnected && tab.ownerDocument === document &&
     tab.matches(".tabbrowser-tab") && !tab.pinned && !tab.splitview && !tab.closing;
   function clear() {
     if (pending !== null) { clearTimeout(pending); pending = null; }
+    for (const remove of activeRemovers.splice(0)) remove();
     state?.overlay.remove(); state = null; pressed = null;
   }
   function show(source, target) {
-    if (!ordinary(source) || !ordinary(target) || source === target) return;
+    if (!ordinary(source) || !ordinary(target) || source === target) { clear(); return; }
     clear();
     const box = document.getElementById("tabbrowser-tabpanels").getBoundingClientRect();
     const overlay = document.createElementNS("http://www.w3.org/1999/xhtml", "div");
@@ -38,6 +44,7 @@
     }
     document.documentElement.append(overlay);
     state = { source, target, overlay, side: null, dropping: false };
+    watchDrag();
     gBrowser.selectedTab = target;
   }
   function zoneFor(event) {
@@ -52,76 +59,79 @@
     } catch { return null; }
     return zone;
   }
-  listen(document, "pointerdown", event => {
+  listen(strip, "pointerdown", event => {
     if (!event.isTrusted || event.button !== 0) return;
     const source = closest(event.target, ".tabbrowser-tab");
     pressed = source ? { source, target: gBrowser.selectedTab } : null;
   });
-  listen(document, "dragstart", event => {
+  listen(strip, "dragstart", event => {
     if (!event.isTrusted) return;
     const source = closest(event.target, ".tabbrowser-tab");
     const target = pressed?.source === source ? pressed.target : null;
     // Native tab code populates DataTransfer and stops bubbling after capture.
     pending = setTimeout(() => {
       pending = null;
-      if (event.defaultPrevented || !source?._dragData || source._dragData.movingTabs.length !== 1) return;
+      if (event.defaultPrevented || !source?._dragData || source._dragData.movingTabs.length !== 1) { pressed = null; return; }
       show(source, target);
     }, 0);
   });
-  listen(document, "dragover", event => {
-    const zone = zoneFor(event);
-    if (!zone) return;
-    event.preventDefault(); event.stopImmediatePropagation();
-    event.dataTransfer.dropEffect = "move";
-    // Dragover fires repeatedly while the pointer stays on the same half.
-    if (state.side === zone.dataset.zenfxSplitSide) return;
-    state.side = zone.dataset.zenfxSplitSide;
-    for (const child of state.overlay.children) {
-      const active = child === zone;
-      child.style.background = active ? "color-mix(in srgb,var(--zenfx-accent,AccentColor) 18%,transparent)" : "transparent";
-      child.style.boxShadow = active ? "inset 0 0 0 2px var(--zenfx-accent,AccentColor)" : "none";
-      child.style.color = active ? "var(--zenfx-foreground,CanvasText)" : "transparent";
-      child.firstElementChild.style.background = active ? "var(--zenfx-panel,Canvas)" : "transparent";
-    }
-  });
-  listen(document, "drop", event => {
-    const zone = zoneFor(event);
-    if (!zone) return;
-    event.preventDefault(); event.stopImmediatePropagation();
-    event.dataTransfer.dropEffect = "move";
-    const { source, target } = state;
-    state.dropping = true;
-    const side = zone.dataset.zenfxSplitSide;
-    // Finish the native strip animation BEFORE reparenting either tab. Once
-    // inside a split wrapper, Firefox's cleanup walks the wrapper instead of
-    // its children, leaving the dragged tab's inline translation behind.
-    try {
-      const nativeDrag = gBrowser.tabContainer.tabDragAndDrop;
-      nativeDrag.finishMoveTogetherSelectedTabs(source);
-      nativeDrag.finishAnimateTabMove();
-      nativeDrag._resetTabsAfterDrop(source);
-      nativeDrag._tabDropIndicator.hidden = true;
-      source.style.removeProperty("transform");
-      target.style.removeProperty("transform");
-      const wrapper = gBrowser.addTabSplitView([target, source], { insertBefore: target });
-      if (wrapper) {
-        if (wrapper.tabs.indexOf(source) !== (side === "left" ? 0 : 1)) wrapper.reverseTabs();
-        gBrowser.selectedTab = target;
+  function watchDrag() {
+    listenActive(document, "dragover", event => {
+      const zone = zoneFor(event);
+      if (!zone) return;
+      event.preventDefault(); event.stopImmediatePropagation();
+      event.dataTransfer.dropEffect = "move";
+      // Dragover fires repeatedly while the pointer stays on the same half.
+      if (state.side === zone.dataset.zenfxSplitSide) return;
+      state.side = zone.dataset.zenfxSplitSide;
+      for (const child of state.overlay.children) {
+        const active = child === zone;
+        child.style.background = active ? "color-mix(in srgb,var(--zenfx-accent,AccentColor) 18%,transparent)" : "transparent";
+        child.style.boxShadow = active ? "inset 0 0 0 2px var(--zenfx-accent,AccentColor)" : "none";
+        child.style.color = active ? "var(--zenfx-foreground,CanvasText)" : "transparent";
+        child.firstElementChild.style.background = active ? "var(--zenfx-panel,Canvas)" : "transparent";
       }
-    } catch (error) {
-      console.error("ZenFX could not create Split View:", error);
-    } finally { clear(); }
-  });
-  listen(gBrowser.tabContainer, "TabClose", event => {
-    if (state && (event.target === state.source || event.target === state.target)) clear();
-  });
-  listen(gBrowser.tabContainer, "TabSelect", () => {
-    if (state && !state.dropping && gBrowser.selectedTab !== state.target) clear();
-  });
-  listen(window, "resize", clear);
-  listen(document, "fullscreenchange", clear);
+    });
+    listenActive(document, "drop", event => {
+      const zone = zoneFor(event);
+      if (!zone) return;
+      event.preventDefault(); event.stopImmediatePropagation();
+      event.dataTransfer.dropEffect = "move";
+      const { source, target } = state;
+      state.dropping = true;
+      const side = zone.dataset.zenfxSplitSide;
+      // Finish the native strip animation BEFORE reparenting either tab. Once
+      // inside a split wrapper, Firefox's cleanup walks the wrapper instead of
+      // its children, leaving the dragged tab's inline translation behind.
+      try {
+        const nativeDrag = gBrowser.tabContainer.tabDragAndDrop;
+        nativeDrag.finishMoveTogetherSelectedTabs(source);
+        nativeDrag.finishAnimateTabMove();
+        nativeDrag._resetTabsAfterDrop(source);
+        nativeDrag._tabDropIndicator.hidden = true;
+        source.style.removeProperty("transform");
+        target.style.removeProperty("transform");
+        const wrapper = gBrowser.addTabSplitView([target, source], { insertBefore: target });
+        if (wrapper) {
+          if (wrapper.tabs.indexOf(source) !== (side === "left" ? 0 : 1)) wrapper.reverseTabs();
+          gBrowser.selectedTab = target;
+        }
+      } catch (error) {
+        console.error("ZenFX could not create Split View:", error);
+      } finally { clear(); }
+    });
+    listenActive(gBrowser.tabContainer, "TabClose", event => {
+      if (state && (event.target === state.source || event.target === state.target)) clear();
+    });
+    listenActive(gBrowser.tabContainer, "TabSelect", () => {
+      if (state && !state.dropping && gBrowser.selectedTab !== state.target) clear();
+    });
+    listenActive(window, "resize", clear);
+    listenActive(document, "fullscreenchange", clear);
+    listenActive(document, "keydown", event => { if (event.key === "Escape") clear(); });
+  }
   listen(document, "dragend", () => clear());
-  listen(document, "keydown", event => { if (event.key === "Escape") clear(); });
+  listen(strip, "pointerup", () => { if (!state && pending === null) pressed = null; });
   const api = window.ZenfxDragToSplit = {
     get active() { return !!state; },
     uninstall() { clear(); for (const remove of removers.splice(0)) remove(); if (window.ZenfxDragToSplit === api) delete window.ZenfxDragToSplit; },

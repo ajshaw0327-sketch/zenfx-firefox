@@ -1,0 +1,17 @@
+{
+  "record": {
+    "value": "\u2318\u2325V",
+    "status": "Ready to save.",
+    "disabled": false
+  },
+  "saved": {
+    "key": "V",
+    "modifiers": "accel,alt"
+  },
+  "conflict": {
+    "status": "Firefox or another shortcut already uses this combination.",
+    "disabled": true
+  },
+  "cleared": "null",
+  "pass": true
+}

@@ -12,13 +12,18 @@
   const hadOwnLoad = Object.hasOwn(controller, "loadURL");
   const commands = new Set(["cmd_newNavigatorTab", "cmd_newNavigatorTabNoEvent"]);
   let state = null;
-  const listeners = [];
+  const listeners = [], activeListeners = [];
   const listen = (target, name, callback, capture = true) => {
     target.addEventListener(name, callback, capture);
     listeners.push(() => target.removeEventListener(name, callback, capture));
   };
+  const onActive = (target, name, callback) => {
+    target.addEventListener(name, callback, true);
+    activeListeners.push(() => target.removeEventListener(name, callback, true));
+  };
   function finish({ focus = false, refresh = true } = {}) {
     if (!state) return;
+    for (const remove of activeListeners.splice(0)) remove();
     const previous = state;
     state = null;
     document.documentElement.removeAttribute("zenfx-newtab-overlay");
@@ -53,7 +58,7 @@
   }
   function open() {
     if (!state) {
-      const otherSearchModes = new Map();
+      const otherSearchModes = new WeakMap();
       for (const tab of gBrowser.tabs) if (tab.linkedPanel && tab !== gBrowser.selectedTab) {
         const browser = tab.linkedBrowser, mode = input.getSearchMode(browser);
         if (mode) otherSearchModes.set(browser, { mode, value: browser.userTypedValue });
@@ -62,6 +67,7 @@
         userTypedValue: gBrowser.selectedBrowser.userTypedValue,
         searchMode: input.searchMode ? { ...input.searchMode } : null, otherSearchModes, submitting: false };
       document.documentElement.setAttribute("zenfx-newtab-overlay", "true");
+      watchActive();
       input.searchMode = null;
       input.search("");
     } else {
@@ -91,25 +97,27 @@
     if (source?.button === 1 || source?.shiftKey || source?.altKey) return;
     event.preventDefault(); event.stopImmediatePropagation(); open();
   });
-  listen(window, "keydown", event => {
-    if (!state || event.key !== "Escape" || event.isComposing) return;
-    event.preventDefault(); event.stopImmediatePropagation(); finish({ focus: true });
-  });
-  listen(document, "pointerdown", event => {
-    if (!state || state.submitting || input.contains(event.target)) return;
-    // Native results are in the input's top-layer popover subtree.
-    if (event.composedPath().includes(input)) return;
-    finish();
-  });
-  listen(gBrowser.tabContainer, "TabSelect", () => {
-    if (state && !state.submitting && state.tab !== gBrowser.selectedTab) finish();
-  });
-  listen(gBrowser.tabContainer, "TabClose", event => {
-    if (state?.tab === event.target) finish({ refresh: false });
-  });
-  listen(document, "focusin", event => {
-    if (state && !state.submitting && event.target === gBrowser.selectedBrowser) finish();
-  });
+  function watchActive() {
+    onActive(window, "keydown", event => {
+      if (!state || event.key !== "Escape" || event.isComposing) return;
+      event.preventDefault(); event.stopImmediatePropagation(); finish({ focus: true });
+    });
+    onActive(document, "pointerdown", event => {
+      if (!state || state.submitting || input.contains(event.target)) return;
+      // Native results are in the input's top-layer popover subtree.
+      if (event.composedPath().includes(input)) return;
+      finish();
+    });
+    onActive(gBrowser.tabContainer, "TabSelect", () => {
+      if (state && !state.submitting && state.tab !== gBrowser.selectedTab) finish();
+    });
+    onActive(gBrowser.tabContainer, "TabClose", event => {
+      if (state?.tab === event.target) finish({ refresh: false });
+    });
+    onActive(document, "focusin", event => {
+      if (state && !state.submitting && event.target === gBrowser.selectedBrowser) finish();
+    });
+  }
   const api = window.ZenfxNewTabOverlay = {
     open,
     cancel: () => finish({ focus: true }),

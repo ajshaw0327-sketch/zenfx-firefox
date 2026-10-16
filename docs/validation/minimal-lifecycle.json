@@ -1,0 +1,34 @@
+{
+  "before": {
+    "settingsNodesAtStartup": 23,
+    "settingsNodesAfter20Cycles": 23,
+    "ZenfxNewTabOverlay": {
+      "idleListeners": 7,
+      "activeListeners": 7,
+      "after30Cycles": 7
+    },
+    "ZenfxDragToSplit": {
+      "idleListeners": 11,
+      "activeListeners": 11,
+      "after30Cycles": 11
+    }
+  },
+  "after": {
+    "settingsNodesAtStartup": 0,
+    "settingsNodesAfter20Cycles": 0,
+    "immediateReopen": true,
+    "ZenfxNewTabOverlay": {
+      "idleListeners": 2,
+      "activeListeners": 7,
+      "after30Cycles": 2
+    },
+    "ZenfxDragToSplit": {
+      "idleListeners": 5,
+      "activeListeners": 12,
+      "after30Cycles": 5
+    }
+  },
+  "errors": [],
+  "limits": "DOM-node and hook-listener counts in a disposable native window; not retained heap bytes or battery consumption.",
+  "pass": true
+}
