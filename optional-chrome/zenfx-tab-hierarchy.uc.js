@@ -14,22 +14,37 @@
   const context = document.getElementById("tabContextMenu");
   const removers = [];
   let queued = false, updating = false, stopped = false;
+  const columnsProperty = "--zenfx-favorite-columns";
+  const priorColumns = [pinsContainer.style.getPropertyValue(columnsProperty), pinsContainer.style.getPropertyPriority(columnsProperty)];
+  function sizeFavorites() {
+    const count = Array.from(gBrowser.tabs).filter(tab => tab.pinned && tab.hasAttribute("zenfx-favorite") && !tab.closing).length;
+    const available = Math.max(1, Math.floor((pinsContainer.getBoundingClientRect().width - 16) / 44));
+    pinsContainer.style.setProperty(columnsProperty, Math.min(Math.max(count, 1), 4, available));
+  }
+  const sizeObserver = new ResizeObserver(sizeFavorites);
+  sizeObserver.observe(pinsContainer);
   // Firefox does not expose slot pseudo-elements through ::part(). Style only
   // the headings inside its shadow tree; real tabs remain native light children.
   const headings = document.createElementNS("http://www.w3.org/1999/xhtml", "style");
   headings.textContent = `
-    :host([zenfx-hierarchy-expanded]) [part="items-wrapper"]::before,
-    :host([zenfx-hierarchy-expanded]) [part="items-wrapper"]::after {
-      display: block; grid-column: 1 / -1; padding: 10px 10px 6px;
-      font: 600 11px/1.4 system-ui;
-      color: color-mix(in srgb, currentColor 76%, transparent);
-      text-align: start; pointer-events: none; -moz-window-dragging: drag;
+    :host([zenfx-hierarchy-expanded]) [part="items-wrapper"] {
+      display: grid !important;
+      grid-template-columns: repeat(var(--zenfx-favorite-columns, 1), minmax(0, 1fr)) !important;
+      grid-auto-rows: auto !important; align-content: start !important;
+      column-gap: 4px; padding: 4px 4px 0 !important;
     }
-    :host([zenfx-hierarchy-expanded][zenfx-has-favorites]) [part="items-wrapper"]::before {
-      content: "Favorites"; order: -2;
+    :host([zenfx-hierarchy-expanded]) [part="items-wrapper"]::before { content: none; }
+    :host([zenfx-hierarchy-expanded][zenfx-has-favorites][zenfx-has-pins]) [part="items-wrapper"]::after {
+      content: "Pinned tabs"; order: 0; grid-column: 1 / -1; display: block;
+      box-sizing: border-box; height: 18px; margin: 3px 6px 1px;
+      font: 500 10px/18px system-ui; color: transparent; pointer-events: none;
+      background: linear-gradient(var(--zenfx-hierarchy-line), var(--zenfx-hierarchy-line)) center / 100% 1px no-repeat;
+      -moz-window-dragging: drag;
     }
-    :host([zenfx-hierarchy-expanded][zenfx-has-pins]) [part="items-wrapper"]::after {
-      content: "Pinned tabs"; order: 0;
+    :host([zenfx-hierarchy-expanded]:hover) [part="items-wrapper"]::after {
+      color: var(--zenfx-hierarchy-label);
+      background-position: right center;
+      background-size: calc(100% - 64px) 1px;
     }
   `;
   pinsContainer.shadowRoot.append(headings);
@@ -60,6 +75,7 @@
       root.toggleAttribute("zenfx-has-pins", pins.some(tab => !favorite(tab)));
       pinsContainer.toggleAttribute("zenfx-has-favorites", pins.some(favorite));
       pinsContainer.toggleAttribute("zenfx-has-pins", pins.some(tab => !favorite(tab)));
+      sizeFavorites();
     } finally {
       updating = false;
     }
@@ -129,6 +145,9 @@
       for (const remove of removers.splice(0)) remove();
       menu.remove();
       expansionObserver.disconnect();
+      sizeObserver.disconnect();
+      if (priorColumns[0]) pinsContainer.style.setProperty(columnsProperty, ...priorColumns);
+      else pinsContainer.style.removeProperty(columnsProperty);
       headings.remove();
       for (const name of ["zenfx-hierarchy-expanded", "zenfx-has-favorites", "zenfx-has-pins"]) pinsContainer.removeAttribute(name);
       for (const name of ["zenfx-tab-hierarchy", "zenfx-has-favorites", "zenfx-has-pins"]) root.removeAttribute(name);

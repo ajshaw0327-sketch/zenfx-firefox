@@ -1,9 +1,9 @@
 {
   "layout": {
     "root": true,
-    "columns": "42px 42px 42px 42px 42px 42px",
+    "columns": "124px 124px",
     "headings": [
-      "\"Favorites\"",
+      "none",
       "\"Pinned tabs\"",
       "\"Today tabs\""
     ],
@@ -16,12 +16,12 @@
         "index": 0,
         "rect": {
           "x": 4,
-          "y": 85,
-          "width": 42,
-          "height": 39,
-          "top": 85,
-          "right": 46,
-          "bottom": 124,
+          "y": 50,
+          "width": 124,
+          "height": 42,
+          "top": 50,
+          "right": 128,
+          "bottom": 92,
           "left": 4
         },
         "labelDisplay": "none"
@@ -33,14 +33,14 @@
         "marker": true,
         "index": 1,
         "rect": {
-          "x": 46,
-          "y": 85,
-          "width": 42,
-          "height": 39,
-          "top": 85,
-          "right": 88,
-          "bottom": 124,
-          "left": 46
+          "x": 132,
+          "y": 50,
+          "width": 124,
+          "height": 42,
+          "top": 50,
+          "right": 256,
+          "bottom": 92,
+          "left": 132
         },
         "labelDisplay": "none"
       },
@@ -52,12 +52,12 @@
         "index": 2,
         "rect": {
           "x": 4,
-          "y": 163,
+          "y": 114,
           "width": 252,
-          "height": 39,
-          "top": 163,
+          "height": 36,
+          "top": 114,
           "right": 256,
-          "bottom": 202,
+          "bottom": 150,
           "left": 4
         },
         "labelDisplay": "flex"
@@ -70,12 +70,12 @@
         "index": 3,
         "rect": {
           "x": 0,
-          "y": 248.39999389648438,
+          "y": 187,
           "width": 260,
-          "height": 39.75,
-          "top": 248.39999389648438,
+          "height": 36,
+          "top": 187,
           "right": 260,
-          "bottom": 288.1499938964844,
+          "bottom": 223,
           "left": 0
         },
         "labelDisplay": "flex"
@@ -84,15 +84,21 @@
     "lightChildren": 3,
     "pinnedCount": 3
   },
+  "selectedPaint": {
+    "image": "none",
+    "outline": "none",
+    "fill": "color(srgb 0.267451 0.261176 0.27451)"
+  },
+  "divider": "linear-gradient(color(srgb 0.976471 0.976471 0.980392 / 0.14), color(srgb 0.976471 0.976471 0.980392 / 0.14))",
   "serialized": {
     "favorite": "true",
     "pinned": true
   },
   "reload": {
     "root": true,
-    "columns": "42px 42px 42px 42px 42px 42px",
+    "columns": "124px 124px",
     "headings": [
-      "\"Favorites\"",
+      "none",
       "\"Pinned tabs\"",
       "\"Today tabs\""
     ],
@@ -105,12 +111,12 @@
         "index": 0,
         "rect": {
           "x": 4,
-          "y": 85,
-          "width": 42,
-          "height": 39,
-          "top": 85,
-          "right": 46,
-          "bottom": 124,
+          "y": 50,
+          "width": 124,
+          "height": 42,
+          "top": 50,
+          "right": 128,
+          "bottom": 92,
           "left": 4
         },
         "labelDisplay": "none"
@@ -122,14 +128,14 @@
         "marker": true,
         "index": 1,
         "rect": {
-          "x": 46,
-          "y": 85,
-          "width": 42,
-          "height": 39,
-          "top": 85,
-          "right": 88,
-          "bottom": 124,
-          "left": 46
+          "x": 132,
+          "y": 50,
+          "width": 124,
+          "height": 42,
+          "top": 50,
+          "right": 256,
+          "bottom": 92,
+          "left": 132
         },
         "labelDisplay": "none"
       },
@@ -141,12 +147,12 @@
         "index": 2,
         "rect": {
           "x": 4,
-          "y": 163,
+          "y": 114,
           "width": 252,
-          "height": 39,
-          "top": 163,
+          "height": 36,
+          "top": 114,
           "right": 256,
-          "bottom": 202,
+          "bottom": 150,
           "left": 4
         },
         "labelDisplay": "flex"
@@ -159,12 +165,12 @@
         "index": 3,
         "rect": {
           "x": 0,
-          "y": 248.39999389648438,
+          "y": 187,
           "width": 260,
-          "height": 39.75,
-          "top": 248.39999389648438,
+          "height": 36,
+          "top": 187,
           "right": 260,
-          "bottom": 288.1499938964844,
+          "bottom": 223,
           "left": 0
         },
         "labelDisplay": "flex"
@@ -201,5 +207,27 @@
     "tier": "today",
     "aligned": true
   },
+  "themes": [
+    {
+      "theme": "light",
+      "sidebar": "rgb(234, 214, 191)",
+      "ink": "rgb(82, 55, 41)",
+      "selected": "color(srgb 0.757647 0.648627 0.540392)",
+      "selectedImage": "none",
+      "outline": "none",
+      "pin": "rgba(0, 0, 0, 0)",
+      "frame": "Temporary theme fixture header.svg (native image retained)"
+    },
+    {
+      "theme": "dark",
+      "sidebar": "rgb(32, 50, 74)",
+      "ink": "rgb(200, 226, 255)",
+      "selected": "color(srgb 0.335686 0.459608 0.560784)",
+      "selectedImage": "none",
+      "outline": "none",
+      "pin": "rgba(0, 0, 0, 0)",
+      "frame": "Temporary theme fixture header.svg (native image retained)"
+    }
+  ],
   "pass": true
 }

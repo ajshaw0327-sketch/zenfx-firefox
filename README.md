@@ -31,7 +31,7 @@ Right-click a tab → **Tab priority** → **Favorites**, **Pinned tabs**, or **
 - **Pinned tabs:** native pinned tabs shown as full rows with their titles; also protected from cleanup.
 - **Today tabs:** ordinary unpinned tabs and groups. Eligible ungrouped web tabs use the optional cleanup add-on's 24-hour inactivity rule. The label does not delete tabs at midnight or change Firefox's session-restore setting.
 
-Empty Favorites/Pinned sections hide their headings. The collapsed sidebar retains the native icon rail. Separate a native Split View before changing one of its tabs to Favorites or Pinned tabs. [Details and validation](docs/TAB-HIERARCHY.md).
+The sidebar follows Zen’s quieter visual hierarchy: Favorites fill a compact icon grid, pinned rows stay transparent at rest, and thin dividers reveal their section labels on hover. The collapsed sidebar retains the native icon rail. Separate a native Split View before changing one of its tabs to Favorites or Pinned tabs. [Details and validation](docs/TAB-HIERARCHY.md). [Public Zen styling reference](https://github.com/zen-browser/desktop/blob/dev/src/zen/tabs/zen-tabs/vertical-tabs.css).
 
 This feature requires the **fourth optional script plus the updated CSS and loader**; appearance-only CSS cannot save Favorites or add the priority menu. Existing installations must update the loader's script list as well as the stylesheet/scripts.
 

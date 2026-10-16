@@ -287,29 +287,37 @@ sidebar-main,
   -moz-window-dragging: no-drag !important;
 }
 
-/* Optional hierarchy hook: retain native tab nodes, focus and drag behavior.
- * Favorites are icon tiles; other native pinned tabs get readable full rows.
- * Decorative headings live on pseudo-elements, never among real tab children. */
+/* Optional hierarchy: Zen-inspired essentials grid and quiet row sections.
+ * Native tab nodes, sidebar resizing, pin protection and theme colors stay in use. */
 @media ((-moz-platform: macos) or (-moz-platform: windows) or (-moz-platform: linux)) {
   :root[zenfx-tab-hierarchy]:not([chromehidden]):not([customizing]) {
-    #tabbrowser-tabs[orient="vertical"][expanded] #pinned-tabs-container::part(items-wrapper) {
-      display: grid !important;
-      grid-template-columns: repeat(auto-fit, minmax(var(--zenfx-pin-size), 1fr)) !important;
-      grid-auto-rows: auto !important;
-      align-content: start !important;
+    #sidebar-container {
+      --zenfx-hierarchy-line: color-mix(in srgb, var(--zenfx-foreground) 14%, transparent);
+      --zenfx-hierarchy-label: color-mix(in srgb, var(--zenfx-foreground) 60%, transparent);
     }
-    #tabbrowser-tabs[orient="vertical"][expanded] #tabbrowser-arrowscrollbox::before {
-      display: block;
-      grid-column: 1 / -1;
-      padding: 10px 10px 6px;
-      font: 600 11px/1.4 system-ui;
-      color: color-mix(in srgb, currentColor 76%, transparent);
-      text-align: start;
-      pointer-events: none;
-      -moz-window-dragging: drag;
+    #tabbrowser-tabs[orient="vertical"][expanded] {
+      --tab-height-with-margin-padding: 36px;
+      --tab-min-height: 32px !important;
+    }
+    #tabbrowser-tabs[orient="vertical"][expanded] .tabbrowser-tab {
+      min-height: 36px !important;
+      padding-block: 2px !important;
+      box-sizing: border-box;
+    }
+    #tabbrowser-tabs[orient="vertical"][expanded] .tab-background {
+      min-height: 32px !important;
+      border-radius: 7px !important;
     }
     #tabbrowser-tabs[orient="vertical"][expanded] #pinned-tabs-container .tabbrowser-tab[zenfx-favorite] {
       order: -1;
+      min-width: 0 !important;
+      min-height: 42px !important;
+      padding-block: 2px 4px !important;
+    }
+    #tabbrowser-tabs[orient="vertical"][expanded] #pinned-tabs-container .tabbrowser-tab[zenfx-favorite] .tab-background {
+      margin-inline: 0 !important;
+      min-height: 36px !important;
+      border-radius: 9px !important;
     }
     #tabbrowser-tabs[orient="vertical"][expanded] #pinned-tabs-container .tabbrowser-tab:not([zenfx-favorite]) {
       order: 1;
@@ -319,13 +327,59 @@ sidebar-main,
     #tabbrowser-tabs[orient="vertical"][expanded] #pinned-tabs-container .tabbrowser-tab:not([zenfx-favorite]) .tab-label-container {
       display: flex !important;
     }
+    #tabbrowser-tabs[orient="vertical"][expanded] #pinned-tabs-container .tabbrowser-tab:not([zenfx-favorite]) .tab-background {
+      margin-inline: 0 !important;
+    }
     #tabbrowser-tabs[orient="vertical"][expanded] #pinned-tabs-container .tabbrowser-tab:not([zenfx-favorite]) .tab-content {
       justify-content: start !important;
       column-gap: 8px !important;
-      padding-inline: 12px !important;
+      padding-inline: 10px !important;
+    }
+    #tabbrowser-tabs[orient="vertical"][expanded] #vertical-pinned-tabs-splitter {
+      height: 4px !important;
+      min-height: 4px !important;
+      margin-block: 0 !important;
+      background: transparent !important;
     }
     #tabbrowser-tabs[orient="vertical"][expanded] #tabbrowser-arrowscrollbox::before {
+      content: none;
+    }
+    &:is([zenfx-has-pins], [zenfx-has-favorites]) #tabbrowser-tabs[orient="vertical"][expanded] #tabbrowser-arrowscrollbox::before {
       content: "Today tabs";
+      display: block;
+      box-sizing: border-box;
+      height: 18px;
+      margin: 1px 10px 3px;
+      font: 500 10px/18px system-ui;
+      color: transparent;
+      background: linear-gradient(var(--zenfx-hierarchy-line), var(--zenfx-hierarchy-line)) center / 100% 1px no-repeat;
+      pointer-events: none;
+      -moz-window-dragging: drag;
+    }
+    #tabbrowser-tabs[orient="vertical"][expanded] #tabbrowser-arrowscrollbox:hover::before {
+      color: var(--zenfx-hierarchy-label);
+      background-position: right center;
+      background-size: calc(100% - 62px) 1px;
+    }
+    @media not (forced-colors) {
+      #tabbrowser-tabs[orient="vertical"][expanded] #pinned-tabs-container .tabbrowser-tab:not([zenfx-favorite], [selected], [multiselected], :hover) .tab-background {
+        background: transparent !important;
+      }
+      #tabbrowser-tabs[orient="vertical"][expanded] .tabbrowser-tab[zenfx-favorite]:not([selected], [multiselected]) .tab-background {
+        background: var(--zenfx-hover) !important;
+        outline: none !important;
+      }
+      /* Override Nova's painted gradient border with a soft theme-derived fill. */
+      #tabbrowser-tabs[orient="vertical"][expanded] .tabbrowser-tab[selected]:not([multiselected]) .tab-background {
+        background: color-mix(in srgb, var(--tab-background-color-selected, var(--zenfx-selected)) 80%, currentColor 20%) !important;
+        outline: none !important;
+        border-color: transparent !important;
+        box-shadow: 0 1px 2px rgb(0 0 0 / 10%) !important;
+      }
+      #tabbrowser-tabs[orient="vertical"][expanded] .tabbrowser-tab:focus-visible .tab-background {
+        outline: 2px solid var(--zenfx-accent) !important;
+        outline-offset: -2px !important;
+      }
     }
   }
 }
