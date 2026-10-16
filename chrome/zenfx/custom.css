@@ -1,4 +1,5 @@
-/* Your overrides survive updates when you keep this file.
+/* Manual modular install: keep your overrides in this file.
+ * Managed setup: use chrome/zenfx-custom.css in your Firefox profile instead.
  * Examples — uncomment only the values you want:
  * :root {
  *   --zenfx-sidebar-width: 260px;

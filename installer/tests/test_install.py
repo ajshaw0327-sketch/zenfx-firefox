@@ -1,4 +1,5 @@
 import importlib.util
+import json
 from pathlib import Path
 import tempfile
 import unittest
@@ -125,6 +126,131 @@ class InstallerTests(unittest.TestCase):
         self.assertEqual(target.read_bytes(), before)
         self.assertEqual(list(self.profile.glob('*.tmp')), [])
 
+    def age_installation(self, full=False, legacy=False):
+        setup.install(self.profile, self.app if full else None, closed=True)
+        state_path = self.profile/'zenfx-install-state.json'
+        state = json.loads(state_path.read_text())
+        for record in state['files']:
+            path = Path(record['path'])
+            if path.name in ('userChrome.css', 'zenfx-newtab-overlay.uc.js') and path.parent.name == 'zenfx-installed':
+                path.write_bytes(b'/* previous shipped version */\n')
+                record['installed_hash'] = setup.digest(path.read_bytes())
+            if legacy and path == self.profile/'chrome/userChrome.css':
+                path.write_text(setup.OLD_ENTRY)
+                record['installed_hash'] = setup.digest(path.read_bytes())
+        if legacy:
+            (self.profile/'chrome/zenfx-custom.css').unlink()
+            state['files'] = [r for r in state['files'] if not r.get('user_owned')]
+        state_path.write_text(json.dumps(state, indent=2)+'\n')
+        return state
+
+    def snapshot(self):
+        return {str(p.relative_to(self.base)): p.read_bytes() for p in self.base.rglob('*') if p.is_file()}
+
+    def test_update_preserves_settings_custom_css_and_application(self):
+        self.age_installation(full=True)
+        (self.profile/'user.js').write_text('user_pref("zenfx.compact.shortcut", "custom");\n')
+        custom=self.profile/'chrome/zenfx-custom.css';custom.write_text(':root { --zenfx-content-radius: 9px; }')
+        before={p:p.read_bytes() for p in [self.profile/'prefs.js',self.profile/'user.js',custom,self.app/'zenfx.cfg',self.app/'defaults/pref/zenfx-autoconfig.js']}
+        result=setup.update(self.profile,closed=True)
+        self.assertEqual(result['action'],'updated')
+        for p,data in before.items():self.assertEqual(p.read_bytes(),data)
+        self.assertEqual((self.profile/'chrome/zenfx-installed/userChrome.css').read_bytes(),(setup.ROOT/'standalone/userChrome.css').read_bytes())
+        self.assertEqual((self.profile/'chrome/zenfx-installed/zenfx-newtab-overlay.uc.js').read_bytes(),(setup.ROOT/'optional-chrome/zenfx-newtab-overlay.uc.js').read_bytes())
+
+    def test_update_keeps_initial_uninstall_backups(self):
+        originals={p:p.read_bytes() for p in [self.profile/'user.js',self.profile/'chrome/userChrome.css']}
+        initial=self.age_installation()
+        setup.update(self.profile,closed=True)
+        state=json.loads((self.profile/'zenfx-install-state.json').read_text())
+        self.assertEqual(state['backup'],initial['backup'])
+        self.assertNotEqual(state['last_update_backup'],state['backup'])
+        custom=self.profile/'chrome/zenfx-custom.css';custom.write_text('/* keep my CSS */')
+        setup.uninstall(self.profile,closed=True)
+        for p,data in originals.items():self.assertEqual(p.read_bytes(),data)
+        self.assertEqual(custom.read_text(),'/* keep my CSS */')
+
+    def test_update_preview_and_current_version_make_no_writes(self):
+        self.age_installation();before=self.snapshot()
+        self.assertTrue(setup.update(self.profile,closed=True,dry_run=True)['files'])
+        self.assertEqual(self.snapshot(),before)
+        setup.update(self.profile,closed=True);before=self.snapshot()
+        self.assertEqual(setup.update(self.profile,closed=True)['action'],'up-to-date')
+        self.assertEqual(self.snapshot(),before)
+
+    def test_update_requires_closed_confirmation_and_managed_install(self):
+        with self.assertRaises(ValueError):setup.update(self.profile)
+        with self.assertRaisesRegex(ValueError,'No managed'):setup.update(self.profile,closed=True)
+
+    def test_update_migrates_old_entry_and_preserves_original_restore(self):
+        self.age_installation(legacy=True)
+        setup.update(self.profile,closed=True)
+        self.assertEqual((self.profile/'chrome/userChrome.css').read_text(),setup.ENTRY)
+        self.assertTrue((self.profile/'chrome/zenfx-custom.css').exists())
+        setup.uninstall(self.profile,closed=True)
+        self.assertEqual((self.profile/'chrome/userChrome.css').read_text(),'/* original theme */\n')
+
+    def test_update_preserves_edited_entry(self):
+        self.age_installation();p=self.profile/'chrome/userChrome.css'
+        p.write_text(setup.ENTRY+'/* my entry customization */')
+        setup.update(self.profile,closed=True)
+        self.assertEqual(p.read_text(),setup.ENTRY+'/* my entry customization */')
+
+    def test_update_preserves_preexisting_custom_file(self):
+        custom=self.profile/'chrome/zenfx-custom.css';custom.write_text('/* existing overrides */')
+        self.age_installation();setup.update(self.profile,closed=True)
+        self.assertEqual(custom.read_text(),'/* existing overrides */')
+        setup.uninstall(self.profile,closed=True)
+        self.assertEqual(custom.read_text(),'/* existing overrides */')
+
+    def test_update_refuses_edited_managed_file_before_any_writes(self):
+        self.age_installation();p=self.profile/'chrome/zenfx-installed/userChrome.css';p.write_text('/* user edit */')
+        before=self.snapshot()
+        with self.assertRaisesRegex(ValueError,'custom edits'):setup.update(self.profile,closed=True)
+        self.assertEqual(self.snapshot(),before)
+
+    def test_update_repairs_missing_managed_file(self):
+        self.age_installation();p=self.profile/'chrome/zenfx-installed/zenfx-drag-to-split.uc.js';p.unlink()
+        setup.update(self.profile,closed=True)
+        self.assertEqual(p.read_bytes(),(setup.ROOT/'optional-chrome'/p.name).read_bytes())
+
+    def test_update_failure_and_state_failure_roll_back_and_retry(self):
+        self.age_installation(legacy=True)
+        files=[self.profile/'chrome/zenfx-installed/userChrome.css',self.profile/'chrome/zenfx-installed/zenfx-newtab-overlay.uc.js',self.profile/'chrome/userChrome.css',self.profile/'zenfx-install-state.json']
+        before={p:p.read_bytes() for p in files};write=setup.atomic_write
+        for failed in [self.profile/'chrome/zenfx-installed/zenfx-newtab-overlay.uc.js',self.profile/'zenfx-install-state.json']:
+            def fail(path,data):
+                if path==failed:raise OSError('update failure')
+                return write(path,data)
+            with patch.object(setup,'atomic_write',fail),self.assertRaises(OSError):setup.update(self.profile,closed=True)
+            for p,data in before.items():self.assertEqual(p.read_bytes(),data)
+            self.assertFalse((self.profile/'chrome/zenfx-custom.css').exists())
+        setup.update(self.profile,closed=True);setup.uninstall(self.profile,closed=True)
+        self.assertEqual((self.profile/'chrome/userChrome.css').read_text(),'/* original theme */\n')
+
+    def test_update_never_rewrites_or_repairs_application_files(self):
+        self.age_installation(full=True);p=self.app/'zenfx.cfg';p.unlink()
+        setup.update(self.profile,closed=True)
+        self.assertFalse(p.exists())
+
+    def test_update_rejects_untracked_collision_and_symlink(self):
+        self.age_installation();p=self.profile/'chrome/zenfx-installed/zenfx-newtab-overlay.uc.js'
+        state_path=self.profile/'zenfx-install-state.json';state=json.loads(state_path.read_text())
+        state['files']=[r for r in state['files'] if Path(r['path'])!=p];state_path.write_text(json.dumps(state))
+        before=self.snapshot()
+        with self.assertRaises(ValueError):setup.update(self.profile,closed=True)
+        self.assertEqual(self.snapshot(),before)
+        p.unlink();outside=self.base/'outside.js';outside.write_text('keep');p.symlink_to(outside)
+        with self.assertRaisesRegex(ValueError,'symbolic link'):setup.update(self.profile,closed=True)
+        self.assertEqual(outside.read_text(),'keep')
+
+    def test_update_rejects_unexpected_state_paths(self):
+        self.age_installation();p=self.profile/'zenfx-install-state.json';state=json.loads(p.read_text())
+        state['files'][0]['path']=str(self.base/'outside.css');p.write_text(json.dumps(state))
+        before=self.snapshot()
+        with self.assertRaisesRegex(ValueError,'Unexpected path'):setup.update(self.profile,closed=True)
+        self.assertEqual(self.snapshot(),before)
+
     def run_guided(self, answers):
         import io
         with patch('builtins.input', side_effect=answers), patch('sys.stdout', new_callable=io.StringIO):
@@ -149,6 +275,13 @@ class InstallerTests(unittest.TestCase):
     def test_guided_empty_full_target_cannot_silently_install_appearance(self):
         with self.assertRaises(ValueError): self.run_guided(['2', str(self.profile), ''])
         self.assertFalse((self.profile/'zenfx-install-state.json').exists())
+    def test_guided_update_requires_no_application_and_can_cancel(self):
+        self.age_installation(full=True);before=self.snapshot()
+        self.assertIsNone(self.run_guided(['4',str(self.profile),'yes','no']))
+        self.assertEqual(self.snapshot(),before)
+        result=self.run_guided(['4',str(self.profile),'yes','yes'])
+        self.assertEqual(result['action'],'updated')
+        self.assertEqual(self.run_guided(['4',str(self.profile),'yes'])['action'],'up-to-date')
     @unittest.skipIf(setup.os.name == 'nt', 'Finder path syntax is macOS-specific')
     def test_guided_accepts_finder_paths_without_evaluating_shell_text(self):
         folder = self.base / 'Example Profile'; folder.mkdir()

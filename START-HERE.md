@@ -1,5 +1,7 @@
 # ZenFX setup
 
+**Already installed? [Update without uninstalling](docs/UPDATING.md).** Run the latest setup and choose **4 — Update existing ZenFX**. It keeps settings, custom CSS, and original restore backups.
+
 **Desktop Firefox 158. macOS is browser-tested. Windows/Linux launchers and styles are experimental and have not been browser-tested. Mobile Firefox, older Firefox/ESR, and arbitrary future releases are not supported by this build.**
 
 **Easiest on Mac: [Copy the quick setup command](docs/SOURCE-SETUP.md#quick-mac-setup-copy-once).** It downloads the package, checks the checksum, and starts setup. Python 3.10+ is required; no Tk, app signing, or downloaded launcher is needed.
@@ -44,7 +46,7 @@ The last four checks need the optional scripts. If only the appearance changes, 
 | Setup will not open / Python or Tk is missing | Use [guided source setup](docs/SOURCE-SETUP.md), which needs Python but no Tk. Do not run the launcher from inside the ZIP. |
 | A launcher is not executable | From the extracted ZenFX folder, use `python3 installer/install.py --guided` on Mac/Linux or `py -3 installer/install.py --guided` on Windows. |
 | Firefox looks unchanged | Recheck the exact profile in `about:support`. In `about:config`, confirm `toolkit.legacyUserProfileCustomizations.stylesheets` is `true`, then fully quit and reopen Firefox. Enable native Vertical Tabs in the sidebar settings if needed. |
-| Appearance works, but the scripts are missing | Confirm setup included the Firefox application. For an existing managed install, use the [update/restore instructions](#favorites-pinned-tabs-and-today-tabs). Copying scripts into the profile alone does not run them. See the startup limitation below. |
+| Appearance works, but the scripts are missing | Confirm setup included the Firefox application. [Update managed profile files](docs/UPDATING.md) with option 4. If the application loader is missing or outdated, restore/uninstall the managed profile and explicitly repeat full setup with the application selected. Copying scripts into the profile alone does not run them. See the startup limitation below. |
 | Setup says another AutoConfig exists | Keep that configuration. This installer refuses conflicts; use appearance only or integrate the scripts with your existing compatible loader. |
 | Setup cannot write the application folder | Appearance-only setup does not need application writes. The optional loader needs a writable application or a separately authorized administrator installation; setup does not elevate itself. |
 | Cleanup is not running | It is a separate unsigned extension source package, not part of automatic setup. See [cleanup installation limits](#what-is-an-extension). |
@@ -70,7 +72,7 @@ Alternatively, use the native **Tools → ZenFX shortcut settings…** menu. The
 
 With the updated CSS and `zenfx-tab-hierarchy.uc.js` loaded, right-click a tab → **Tab priority** → choose **Favorites**, **Pinned tabs**, or **Today tabs**. Favorites are icon tiles; Pinned tabs show their titles; Today tabs are ordinary unpinned, ungrouped tabs, shown without a heading. Folders stay above the **↓ Clear** divider. **New Tab** sits directly below it; Clear closes visible ordinary tabs and preserves Favorites, pins, folders, and hidden tabs. Firefox’s **Reopen Closed Tab** can undo the closure. Favorites and Pinned tabs both use Firefox's real pinning, so the cleanup extension protects them. Favorite markers are included in Firefox's saved tab session data. Today tabs follow Firefox's ordinary session settings; there is no automatic midnight wipe.
 
-For an existing managed installation, keep its backups and use the documented uninstall/restore process before installing the updated full package. Do not simply add the fourth script without updating the application loader's script list. Setup backs up and updates an exact, unmodified previous ZenFX loader. It still refuses custom, modified, or unrelated AutoConfig files. Shared loader files remain after uninstall so other opted-in profiles keep working. See [hierarchy details](docs/TAB-HIERARCHY.md).
+For an existing managed installation, use **4 — Update existing ZenFX** to replace the profile's managed stylesheet/scripts while keeping settings and custom CSS. No uninstall is needed for normal updates. An old application loader missing the fourth script needs a separate full-setup repair: restore/uninstall the managed profile, then explicitly repeat full setup with the application selected. Setup backs up and upgrades an exact, unmodified previous ZenFX loader; it refuses custom, modified, or unrelated AutoConfig files. Shared loader files remain after uninstall so other opted-in profiles keep working. See [update instructions](docs/UPDATING.md) and [hierarchy details](docs/TAB-HIERARCHY.md).
 
 ## What is an extension?
 
@@ -94,6 +96,7 @@ From the extracted ZenFX folder (paths below are examples, not auto-detected tar
 python3 installer/install.py --profile "/path/to/profile" --closed-confirmed --dry-run
 python3 installer/install.py --profile "/path/to/profile" --closed-confirmed
 python3 installer/install.py --profile "/path/to/profile" --application "/path/to/Firefox.app" --closed-confirmed
+python3 installer/install.py --profile "/path/to/profile" --update --closed-confirmed
 python3 installer/install.py --profile "/path/to/profile" --closed-confirmed --uninstall
 ```
 

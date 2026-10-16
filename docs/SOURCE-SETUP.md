@@ -26,7 +26,7 @@ Requires an installed **Python 3.10+**. Open **Terminal**, paste this entire blo
 
 The checksum checks download integrity against this repository’s checksum file; it is not Apple signing or independent verification. Setup still shows the proposed file changes and asks before writing. Downloaded temporary files are removed when setup exits; installed files and profile backups stay.
 
-Choose **1** for appearance or **2** for the full feature set. When asked for the profile, open `about:support` in Firefox → **Profile Folder → Show in Finder**, then drag that folder into Terminal. Full setup also asks for Firefox.app. Quit Firefox when prompted, review the changes, and type `yes` to install. See the full-setup Mac limitation below.
+Choose **1** for appearance, **2** for the full feature set, or **4 — Update existing ZenFX** if already installed. When asked for the profile, open `about:support` in Firefox → **Profile Folder → Show in Finder**, then drag that folder into Terminal. Full setup also asks for Firefox.app; updates need only the profile. Quit Firefox when prompted, review the changes, and type `yes`. Updates keep settings and custom CSS, without uninstalling or changing application files. [Update details](UPDATING.md).
 
 ## Manual source setup
 
@@ -52,6 +52,7 @@ On Windows, use `py -3` instead of `python3`. On Linux, use `python3`. Quoted pa
 | **1 — Appearance only (default)** | Installs profile CSS/settings, enables vertical tabs, and backs up replaced files. Firefox.app is not changed. No startup scripts are activated. |
 | **2 — Full setup** | Also asks for Firefox.app or its installation folder and installs the optional AutoConfig loader for floating New Tab, drag-to-split, tab priorities/Clear, and Compact controls. |
 | **3 — Uninstall / restore** | Restores the profile’s original files using its saved installation record. Edited files are preserved for review; backups and any shared application loader remain. |
+| **4 — Update existing ZenFX** | Replaces managed profile files with this package's version, keeping settings, `chrome/zenfx-custom.css`, and original uninstall backups. No application writes. Use the quick command above to get the latest package first. |
 
 **Mac limitation for option 2:** adding the loader changes files inside Firefox.app and can affect its code signature. Running this source wizard instead of the launcher does not resolve that separate issue; signing the installer would not resolve it either. Appearance-only avoids application writes. The application loader’s full quit/relaunch path remains unverified. Standard extensions cannot run these browser-interface scripts.
 
@@ -61,7 +62,7 @@ This build targets desktop **Firefox 158**. macOS styling and the scripts were t
 
 - **Python not found:** install Python using the official link above, then open a new Terminal window.
 - **Wrong folder:** choose the actual profile shown by `about:support`, not its `chrome` subfolder. For full setup, choose Firefox.app itself on Mac.
-- **Already installed:** use option 3 to restore originals before reinstalling. Backups remain available.
+- **Already installed:** use **4 — Update existing ZenFX** with the latest package. You do not need to uninstall first. [Update instructions](UPDATING.md).
 - **Permission or AutoConfig conflict:** setup stops rather than elevating itself or overwriting an unrelated loader. Use appearance-only if you do not want application writes.
 
 An explicit **“will damage your computer”** warning is different from an unidentified-developer warning. Do not use this procedure to rerun a copy identified as malicious; follow [Apple’s explanation of those alerts](https://support.apple.com/en-us/102445).

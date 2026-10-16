@@ -1,0 +1,25 @@
+{
+  "pass": true,
+  "sourceInstallation": "Previously shipped setup archive, commit c314b4a",
+  "targets": "Temporary filesystem profile and fake Firefox application; no live profile or real application modified",
+  "checks": {
+    "guidedLegacyInstallToNewPackageUpdate": true,
+    "latestManagedCSSAndSearchHookInstalled": true,
+    "customImportMigrated": true,
+    "preferencesUserSettingsCustomCSSPreserved": true,
+    "applicationFilesUnchanged": true,
+    "secondRunNoWrites": true,
+    "originalUninstallRestoration": true,
+    "customCSSRetainedAfterUninstall": true,
+    "allPackagedSourceHashesVerified": true,
+    "profilesCachesAndGitExcluded": true
+  },
+  "automatedTests": {
+    "installerAndUpdate": 37,
+    "cleanupAndPopup": 25,
+    "searchLifecycle": 14,
+    "total": 76
+  },
+  "installerSHA256": "41b53df3dc3e07a8250eec02c483102cf67f1ee2b38f87400547d39ce3d34b25",
+  "limits": "Source-wizard and CLI tested. Optional Tk update button was not exercised. Actual application AutoConfig cold-start remains unverified."
+}

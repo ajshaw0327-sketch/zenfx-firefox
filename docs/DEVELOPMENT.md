@@ -17,3 +17,5 @@ Edit the modular files under `chrome/zenfx/` and rebuild to update the standalon
 Changing CSS/JavaScript, rebuilding ZIPs, or passing unit tests does not certify cross-version browser compatibility or AutoConfig cold-start persistence. Keep the limitations in the README and validation report accurate.
 
 The floating-search tests simulate focus/power events and frame scheduling to cover draft recovery, cancellation races, background-window focus, and handler cleanup. They complement the isolated native-window checks; they do not put the operating system to sleep.
+
+Installer tests include managed updates from the old entry format, preserved custom CSS/settings/application files, no-op/preview behavior, rollback/retry, and original uninstall restoration after an update. All targets are temporary filesystem fixtures. To test an update manually, use the latest extracted package, a closed disposable Firefox 158 profile, and `--update --dry-run` before making changes. No normal browsing profile or real application bundle is needed for the automated checks.

@@ -8,6 +8,8 @@ A Zen-inspired Firefox interface using native vertical tabs, folder-style tab gr
 
 **[Download ZenFX Setup](https://github.com/ajshaw0327-sketch/zenfx-firefox/raw/refs/heads/main/dist/ZenFX-Setup.zip)** · **[Step-by-step setup guide](START-HERE.md)**
 
+**Already installed? [Update in three steps](docs/UPDATING.md): run the latest setup and choose 4 — Update existing ZenFX.** Your settings and custom CSS stay; no uninstall is needed.
+
 **Mac: [Copy the quick setup command](docs/SOURCE-SETUP.md#quick-mac-setup-copy-once).** It downloads, checks, and starts setup for you. Requires Python 3.10+; no Apple Developer account, Tk, or downloaded app launcher is needed.
 
 No Git, cloning, or build tools are needed. Download the ZIP above and extract it before running setup; GitHub’s **Code → Download ZIP** is the source repository.
@@ -48,7 +50,7 @@ Right-click a tab → **Tab priority** → **Favorites**, **Pinned tabs**, or **
 
 Favorites fill a compact icon grid. Pinned rows and group-colored outline folders sit above one divider with **↓ Clear**; **New Tab** and ordinary tabs sit below it. There is no space name or Today heading. **Clear** closes visible ordinary tabs, including ordinary split pairs, while preserving Favorites, pins, folders, and hidden tabs. Firefox’s **Reopen Closed Tab** recovers closed tabs. The collapsed sidebar retains the native icon rail. Separate a native Split View before changing one of its tabs to Favorites or Pinned tabs. [Details and validation](docs/TAB-HIERARCHY.md). [Public Zen styling reference](https://github.com/zen-browser/desktop/blob/dev/src/zen/tabs/zen-tabs/vertical-tabs.css).
 
-This feature requires the **fourth optional script plus the updated CSS and loader**; appearance-only CSS cannot save Favorites, add the priority menu, or make Clear work. Existing installations must update the loader's script list as well as the stylesheet/scripts.
+This feature requires the **fourth optional script plus the updated CSS and loader**; appearance-only CSS cannot save Favorites, add the priority menu, or make Clear work. [Update managed profile files](docs/UPDATING.md) with option 4. An older application loader missing the fourth script also needs the separate loader setup described there.
 
 ![Favorites, Pinned tabs, and Today tabs](docs/images/tab-hierarchy.png)
 
