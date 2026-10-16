@@ -6,6 +6,8 @@ Firefox 158 Nova treats the vertical-tab launcher as part of the browser frame. 
 
 Outline folder icons use the native `--tab-group-color`, with transparent headers at rest. Changing the group color through Firefox updates the icon immediately. The open/closed folder masks remain opaque; names use the native frame text color. A faint theme-ink edge helps the icon remain identifiable against a similar background. Forced-colors mode follows the system's readable CanvasText instead of forcing a decorative palette.
 
+The folder glyphs use rounded corners, a consistent 1.65px outline on a 24px grid, and a separate slanted front flap when expanded. Both states fit the existing 20px icon slot, so header spacing and collapse targets stay unchanged. These are inline vectors with no additional script or animation. The shape was drawn for ZenFX using Zen’s public [folder component](https://github.com/zen-browser/desktop/blob/dev/src/zen/folders/ZenFolder.mjs) and [folder icon](https://github.com/zen-browser/desktop/blob/dev/src/browser/themes/shared/zen-icons/nucleo/folder.svg) as visual references.
+
 ## Verified on Firefox 158/macOS
 
 In a disposable window, the custom layout was temporarily gated off to measure native colors under the same Firefox theme. With the layout active again, the sidebar container, launcher, body background/image, selected-tab background, and selected text matched that baseline. Cases covered the built-in default theme, explicit light/dark custom themes, and a frame-image theme without sidebar fields. The fixtures explicitly distinguish toolbar, frame, sidebar-panel, and selected-tab colors, so substituting the wrong surface is detectable.
@@ -16,6 +18,6 @@ Three native group colors were checked both open and closed in all four themes (
 
 ![Group colors with a dark theme](images/folder-colors-dark.png)
 
-[Measurements](validation/native-theme-colors.json) · [Mozilla's current Nova theme mapping](https://blog.mozilla.org/addons/2026/09/29/nova-is-here-what-changes-for-your-firefox-theme/) · [Theme manifest reference](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/theme)
+[Native color measurements](validation/native-theme-colors.json) · [Redesigned icon checks](validation/folder-icons.json) · [Mozilla's current Nova theme mapping](https://blog.mozilla.org/addons/2026/09/29/nova-is-here-what-changes-for-your-firefox-theme/) · [Theme manifest reference](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/theme)
 
 In Compact Mode, both floating surfaces paint the window body’s native background color, images, position, size, and repeat settings. The sidebar inherits that surface through its `#browser` parent. This supplies an opaque backing over webpage content without imposing a separate palette. Docked toolbar and sidebar painting stay native.

@@ -1,0 +1,332 @@
+{
+  "firefox": "158.0",
+  "profile": "isolated test profile",
+  "pass": true,
+  "featuresCssSha256": "8b6f55da7829efa232254ac81348b47df00c08a24a1dd5f97373189ce3625e60",
+  "iconSlot": "20px by 20px",
+  "svgViewBox": "0 0 24 24",
+  "strokeWidth": 1.65,
+  "states": [
+    "rounded closed folder",
+    "rounded back with slanted open flap"
+  ],
+  "themeChecks": [
+    {
+      "theme": "default",
+      "folders": [
+        {
+          "color": "blue",
+          "collapsed": false,
+          "fill": "rgb(123, 178, 255)",
+          "expected": "rgb(123, 178, 255)",
+          "opacity": "1",
+          "mask": true,
+          "rounded": true,
+          "width": "20px",
+          "height": "20px",
+          "ink": "rgb(242, 240, 248)"
+        },
+        {
+          "color": "blue",
+          "collapsed": true,
+          "fill": "rgb(123, 178, 255)",
+          "expected": "rgb(123, 178, 255)",
+          "opacity": "1",
+          "mask": true,
+          "rounded": true,
+          "width": "20px",
+          "height": "20px",
+          "ink": "rgb(242, 240, 248)"
+        },
+        {
+          "color": "red",
+          "collapsed": false,
+          "fill": "rgb(255, 137, 152)",
+          "expected": "rgb(255, 137, 152)",
+          "opacity": "1",
+          "mask": true,
+          "rounded": true,
+          "width": "20px",
+          "height": "20px",
+          "ink": "rgb(242, 240, 248)"
+        },
+        {
+          "color": "red",
+          "collapsed": true,
+          "fill": "rgb(255, 137, 152)",
+          "expected": "rgb(255, 137, 152)",
+          "opacity": "1",
+          "mask": true,
+          "rounded": true,
+          "width": "20px",
+          "height": "20px",
+          "ink": "rgb(242, 240, 248)"
+        },
+        {
+          "color": "green",
+          "collapsed": false,
+          "fill": "rgb(74, 204, 166)",
+          "expected": "rgb(74, 204, 166)",
+          "opacity": "1",
+          "mask": true,
+          "rounded": true,
+          "width": "20px",
+          "height": "20px",
+          "ink": "rgb(242, 240, 248)"
+        },
+        {
+          "color": "green",
+          "collapsed": true,
+          "fill": "rgb(74, 204, 166)",
+          "expected": "rgb(74, 204, 166)",
+          "opacity": "1",
+          "mask": true,
+          "rounded": true,
+          "width": "20px",
+          "height": "20px",
+          "ink": "rgb(242, 240, 248)"
+        }
+      ]
+    },
+    {
+      "theme": "light",
+      "folders": [
+        {
+          "color": "blue",
+          "collapsed": false,
+          "fill": "rgb(69, 95, 231)",
+          "expected": "rgb(69, 95, 231)",
+          "opacity": "1",
+          "mask": true,
+          "rounded": true,
+          "width": "20px",
+          "height": "20px",
+          "ink": "rgb(60, 42, 36)"
+        },
+        {
+          "color": "blue",
+          "collapsed": true,
+          "fill": "rgb(69, 95, 231)",
+          "expected": "rgb(69, 95, 231)",
+          "opacity": "1",
+          "mask": true,
+          "rounded": true,
+          "width": "20px",
+          "height": "20px",
+          "ink": "rgb(60, 42, 36)"
+        },
+        {
+          "color": "red",
+          "collapsed": false,
+          "fill": "rgb(197, 45, 79)",
+          "expected": "rgb(197, 45, 79)",
+          "opacity": "1",
+          "mask": true,
+          "rounded": true,
+          "width": "20px",
+          "height": "20px",
+          "ink": "rgb(60, 42, 36)"
+        },
+        {
+          "color": "red",
+          "collapsed": true,
+          "fill": "rgb(197, 45, 79)",
+          "expected": "rgb(197, 45, 79)",
+          "opacity": "1",
+          "mask": true,
+          "rounded": true,
+          "width": "20px",
+          "height": "20px",
+          "ink": "rgb(60, 42, 36)"
+        },
+        {
+          "color": "green",
+          "collapsed": false,
+          "fill": "rgb(0, 136, 101)",
+          "expected": "rgb(0, 136, 101)",
+          "opacity": "1",
+          "mask": true,
+          "rounded": true,
+          "width": "20px",
+          "height": "20px",
+          "ink": "rgb(60, 42, 36)"
+        },
+        {
+          "color": "green",
+          "collapsed": true,
+          "fill": "rgb(0, 136, 101)",
+          "expected": "rgb(0, 136, 101)",
+          "opacity": "1",
+          "mask": true,
+          "rounded": true,
+          "width": "20px",
+          "height": "20px",
+          "ink": "rgb(60, 42, 36)"
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "folders": [
+        {
+          "color": "blue",
+          "collapsed": false,
+          "fill": "rgb(123, 178, 255)",
+          "expected": "rgb(123, 178, 255)",
+          "opacity": "1",
+          "mask": true,
+          "rounded": true,
+          "width": "20px",
+          "height": "20px",
+          "ink": "rgb(232, 242, 251)"
+        },
+        {
+          "color": "blue",
+          "collapsed": true,
+          "fill": "rgb(123, 178, 255)",
+          "expected": "rgb(123, 178, 255)",
+          "opacity": "1",
+          "mask": true,
+          "rounded": true,
+          "width": "20px",
+          "height": "20px",
+          "ink": "rgb(232, 242, 251)"
+        },
+        {
+          "color": "red",
+          "collapsed": false,
+          "fill": "rgb(255, 137, 152)",
+          "expected": "rgb(255, 137, 152)",
+          "opacity": "1",
+          "mask": true,
+          "rounded": true,
+          "width": "20px",
+          "height": "20px",
+          "ink": "rgb(232, 242, 251)"
+        },
+        {
+          "color": "red",
+          "collapsed": true,
+          "fill": "rgb(255, 137, 152)",
+          "expected": "rgb(255, 137, 152)",
+          "opacity": "1",
+          "mask": true,
+          "rounded": true,
+          "width": "20px",
+          "height": "20px",
+          "ink": "rgb(232, 242, 251)"
+        },
+        {
+          "color": "green",
+          "collapsed": false,
+          "fill": "rgb(74, 204, 166)",
+          "expected": "rgb(74, 204, 166)",
+          "opacity": "1",
+          "mask": true,
+          "rounded": true,
+          "width": "20px",
+          "height": "20px",
+          "ink": "rgb(232, 242, 251)"
+        },
+        {
+          "color": "green",
+          "collapsed": true,
+          "fill": "rgb(74, 204, 166)",
+          "expected": "rgb(74, 204, 166)",
+          "opacity": "1",
+          "mask": true,
+          "rounded": true,
+          "width": "20px",
+          "height": "20px",
+          "ink": "rgb(232, 242, 251)"
+        }
+      ]
+    },
+    {
+      "theme": "frame-only",
+      "folders": [
+        {
+          "color": "blue",
+          "collapsed": false,
+          "fill": "rgb(123, 178, 255)",
+          "expected": "rgb(123, 178, 255)",
+          "opacity": "1",
+          "mask": true,
+          "rounded": true,
+          "width": "20px",
+          "height": "20px",
+          "ink": "rgb(232, 242, 251)"
+        },
+        {
+          "color": "blue",
+          "collapsed": true,
+          "fill": "rgb(123, 178, 255)",
+          "expected": "rgb(123, 178, 255)",
+          "opacity": "1",
+          "mask": true,
+          "rounded": true,
+          "width": "20px",
+          "height": "20px",
+          "ink": "rgb(232, 242, 251)"
+        },
+        {
+          "color": "red",
+          "collapsed": false,
+          "fill": "rgb(255, 137, 152)",
+          "expected": "rgb(255, 137, 152)",
+          "opacity": "1",
+          "mask": true,
+          "rounded": true,
+          "width": "20px",
+          "height": "20px",
+          "ink": "rgb(232, 242, 251)"
+        },
+        {
+          "color": "red",
+          "collapsed": true,
+          "fill": "rgb(255, 137, 152)",
+          "expected": "rgb(255, 137, 152)",
+          "opacity": "1",
+          "mask": true,
+          "rounded": true,
+          "width": "20px",
+          "height": "20px",
+          "ink": "rgb(232, 242, 251)"
+        },
+        {
+          "color": "green",
+          "collapsed": false,
+          "fill": "rgb(74, 204, 166)",
+          "expected": "rgb(74, 204, 166)",
+          "opacity": "1",
+          "mask": true,
+          "rounded": true,
+          "width": "20px",
+          "height": "20px",
+          "ink": "rgb(232, 242, 251)"
+        },
+        {
+          "color": "green",
+          "collapsed": true,
+          "fill": "rgb(74, 204, 166)",
+          "expected": "rgb(74, 204, 166)",
+          "opacity": "1",
+          "mask": true,
+          "rounded": true,
+          "width": "20px",
+          "height": "20px",
+          "ink": "rgb(232, 242, 251)"
+        }
+      ]
+    }
+  ],
+  "groupColorChange": {
+    "before": "rgb(123, 178, 255)",
+    "after": "rgb(212, 144, 255)"
+  },
+  "visualInspection": [
+    "docs/images/folder-colors-light.png",
+    "docs/images/folder-colors-dark.png"
+  ],
+  "scope": "CSS vector shapes only; no new script, listener, animation, or timer. Test window and temporary themes removed; original theme restored."
+}
