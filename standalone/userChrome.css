@@ -439,10 +439,11 @@
     #tabbrowser-tabs[orient="vertical"][expanded] tab-split-view-wrapper > .tabbrowser-tab {
       min-inline-size: 0 !important;
     }
-    /* Hide native header dividers at both narrow and wide sidebar widths. */
-    #tabbrowser-tabs[orient="vertical"][expanded] tab-split-view-wrapper > .tabbrowser-tab > .tab-stack {
-      border-inline-start-color: transparent !important;
-      border-block-end-color: transparent !important;
+    /* Remove the native divider itself, including its reserved width, in both
+     * expanded and collapsed sidebars. Only the tab headers are affected. */
+    #tabbrowser-tabs[orient="vertical"] tab-split-view-wrapper > .tabbrowser-tab > .tab-stack {
+      border-inline: 0 !important;
+      border-block-end: 0 !important;
     }
   }
 }
