@@ -10,11 +10,13 @@ The optional graphical installer has a **Review and update** button. It needs on
 
 ## What stays
 
-- Your tabs, Favorites, folders, themes, Compact Mode preferences, shortcut, and other Firefox settings. Updates do not rewrite `user.js`, `prefs.js`, or session files.
+- Your tabs, Favorites, folders, themes, Compact Mode preferences, shortcut, and unrelated Firefox settings. Updates now add a small managed session-restore block to `user.js` to enable **Open previous windows and tabs**. Existing preference lines are retained; `prefs.js` and session files are not rewritten by setup.
 - Custom CSS in **`chrome/zenfx-custom.css`** inside your profile. This file loads after the managed stylesheet. Setup creates it once and leaves existing contents alone, including during uninstall.
 - Your original uninstall backups. Each update also backs up the files it replaces under `zenfx-backups/update-…` and rolls back completed writes if the update fails.
 
 Updates replace the managed CSS and interface scripts. They do not run in the background, add polling, change Firefox application files, or install the separate cleanup add-on.
+
+After this update, regular tabs restore when Firefox is fully quit and reopened. Private windows are excluded by Firefox. [Session restoration and recovery](SESSION-RESTORE.md).
 
 ## If you customized the files
 

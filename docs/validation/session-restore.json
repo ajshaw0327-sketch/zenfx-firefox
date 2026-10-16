@@ -1,0 +1,97 @@
+{
+  "pass": true,
+  "firefox": "158.0",
+  "platform": "macOS",
+  "realCleanQuitAndRelaunch": true,
+  "originalTestWindowsPreserved": true,
+  "restoredNativeFixture": {
+    "tabs": [
+      {
+        "kind": "Favorite",
+        "pinned": true,
+        "favorite": "true",
+        "group": null,
+        "groupColor": null,
+        "split": false,
+        "pending": false
+      },
+      {
+        "kind": "Pinned",
+        "pinned": true,
+        "favorite": "",
+        "group": null,
+        "groupColor": null,
+        "split": false,
+        "pending": false
+      },
+      {
+        "kind": "Folder A",
+        "pinned": false,
+        "favorite": "",
+        "group": "Restore fixture folder",
+        "groupColor": "green",
+        "split": false,
+        "pending": true
+      },
+      {
+        "kind": "Folder B",
+        "pinned": false,
+        "favorite": "",
+        "group": "Restore fixture folder",
+        "groupColor": "green",
+        "split": false,
+        "pending": true
+      },
+      {
+        "kind": "Ordinary",
+        "pinned": false,
+        "favorite": "",
+        "group": null,
+        "groupColor": null,
+        "split": false,
+        "pending": false
+      },
+      {
+        "kind": "Split A",
+        "pinned": false,
+        "favorite": "",
+        "group": null,
+        "groupColor": null,
+        "split": true,
+        "pending": true
+      },
+      {
+        "kind": "Split B",
+        "pinned": false,
+        "favorite": "",
+        "group": null,
+        "groupColor": null,
+        "split": true,
+        "pending": true
+      }
+    ],
+    "selected": "Ordinary",
+    "startup": 3
+  },
+  "tiersAfterExplicitHookLoad": [
+    "favorite",
+    "pinned",
+    "folder",
+    "folder",
+    "today",
+    "today",
+    "today"
+  ],
+  "installerTests": 41,
+  "limits": "Only authorized Firefox test profile. Native session restoration tested across a full process exit and relaunch; interface hooks were explicitly reloaded afterward, so application AutoConfig cold-start remains unverified. No normal profiles or application files modified. No crash/OS-reboot recovery test.",
+  "packagedUpdateFromPreviousRelease": {
+    "pass": true,
+    "existingSettingsRetained": true,
+    "restoreEnabledAfterExistingStartupPreference": true,
+    "secondUpdateNoWrites": true,
+    "laterUserSettingsKeptOnUninstall": true,
+    "sourceHashesVerified": true
+  },
+  "installerSHA256": "2b56c482417eba1a3d60a74396efc91fab75534d0aaec6db041f927582e0eee2",
+  "automatedTests": 80
+}

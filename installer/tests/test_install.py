@@ -154,7 +154,8 @@ class InstallerTests(unittest.TestCase):
         before={p:p.read_bytes() for p in [self.profile/'prefs.js',self.profile/'user.js',custom,self.app/'zenfx.cfg',self.app/'defaults/pref/zenfx-autoconfig.js']}
         result=setup.update(self.profile,closed=True)
         self.assertEqual(result['action'],'updated')
-        for p,data in before.items():self.assertEqual(p.read_bytes(),data)
+        for p,data in before.items():
+            self.assertEqual(p.read_bytes(),setup.session_restore_settings(data) if p==self.profile/'user.js' else data)
         self.assertEqual((self.profile/'chrome/zenfx-installed/userChrome.css').read_bytes(),(setup.ROOT/'standalone/userChrome.css').read_bytes())
         self.assertEqual((self.profile/'chrome/zenfx-installed/zenfx-newtab-overlay.uc.js').read_bytes(),(setup.ROOT/'optional-chrome/zenfx-newtab-overlay.uc.js').read_bytes())
 
@@ -250,6 +251,49 @@ class InstallerTests(unittest.TestCase):
         before=self.snapshot()
         with self.assertRaisesRegex(ValueError,'Unexpected path'):setup.update(self.profile,closed=True)
         self.assertEqual(self.snapshot(),before)
+
+    def test_install_enables_native_previous_session_restore(self):
+        (self.profile/'user.js').write_bytes(b'user_pref("browser.startup.page", 1);\r\nuser_pref("keep.me", true);\r\n')
+        setup.install(self.profile,closed=True)
+        data=(self.profile/'user.js').read_bytes()
+        self.assertTrue(data.endswith(setup.RESTORE_BLOCK))
+        self.assertIn(b'user_pref("keep.me", true);',data)
+
+    def test_update_migrates_session_restore_and_keeps_later_user_edits_on_uninstall(self):
+        self.age_installation();p=self.profile/'user.js'
+        state_path=self.profile/'zenfx-install-state.json';state=json.loads(state_path.read_text())
+        previous=setup.without_block(p.read_bytes(),setup.RESTORE_BEGIN,setup.RESTORE_END)
+        p.write_bytes(previous)
+        next(r for r in state['files'] if Path(r['path'])==p)['installed_hash']=setup.digest(previous)
+        state_path.write_text(json.dumps(state))
+        added=b'user_pref("my.later.setting", "keep this");\r\nuser_pref("browser.startup.page", 1);\r\n'
+        p.write_bytes(previous+added)
+        setup.update(self.profile,closed=True)
+        self.assertEqual(p.read_bytes(),previous+added+setup.RESTORE_BLOCK)
+        setup.uninstall(self.profile,closed=True)
+        self.assertIn(added,p.read_bytes())
+        self.assertNotIn(setup.BEGIN.encode(),p.read_bytes())
+        self.assertNotIn(setup.RESTORE_BEGIN,p.read_bytes())
+
+    def test_restore_settings_update_is_idempotent_and_does_not_change_privacy_prefs(self):
+        data=b'user_pref("privacy.sanitize.sanitizeOnShutdown", true);\r\nuser_pref("browser.privatebrowsing.autostart", true);\r\n'
+        result=setup.session_restore_settings(data)
+        self.assertTrue(result.startswith(data))
+        self.assertEqual(setup.session_restore_settings(result),result)
+        moved=setup.session_restore_settings(result+b'user_pref("unrelated", false);\n')
+        self.assertEqual(moved.count(setup.RESTORE_BEGIN),1)
+        self.assertTrue(moved.endswith(setup.RESTORE_BLOCK))
+
+    def test_update_session_pref_failure_rolls_back_original_user_settings(self):
+        self.age_installation();p=self.profile/'user.js'
+        prior=b'user_pref("my.custom.setting", true);\n';p.write_bytes(prior)
+        state_path=self.profile/'zenfx-install-state.json';before=state_path.read_bytes();write=setup.atomic_write
+        def fail(path,data):
+            if path==state_path:raise OSError('state commit failed')
+            return write(path,data)
+        with patch.object(setup,'atomic_write',fail),self.assertRaises(OSError):setup.update(self.profile,closed=True)
+        self.assertEqual(p.read_bytes(),prior)
+        self.assertEqual(state_path.read_bytes(),before)
 
     def run_guided(self, answers):
         import io

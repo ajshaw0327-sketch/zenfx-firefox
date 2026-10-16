@@ -10,6 +10,8 @@ A Zen-inspired Firefox interface using native vertical tabs, folder-style tab gr
 
 **Already installed? [Update in three steps](docs/UPDATING.md): run the latest setup and choose 4 — Update existing ZenFX.** Your settings and custom CSS stay; no uninstall is needed.
 
+Setup and updates now enable Firefox's **Open previous windows and tabs** setting so regular tabs restore after quitting and reopening. On Mac, use **Firefox → Quit Firefox (⌘Q)** while your windows are open. [Restoration details and recovery](docs/SESSION-RESTORE.md).
+
 **Mac: [Copy the quick setup command](docs/SOURCE-SETUP.md#quick-mac-setup-copy-once).** It downloads, checks, and starts setup for you. Requires Python 3.10+; no Apple Developer account, Tk, or downloaded app launcher is needed.
 
 No Git, cloning, or build tools are needed. Download the ZIP above and extract it before running setup; GitHub’s **Code → Download ZIP** is the source repository.
@@ -46,7 +48,7 @@ Right-click a tab → **Tab priority** → **Favorites**, **Pinned tabs**, or **
 
 - **Favorites:** icon tiles at the top, with saved per-tab status. They are native pinned tabs and are protected from automatic cleanup.
 - **Pinned tabs:** native pinned tabs shown as full rows with their titles; also protected from cleanup.
-- **Today tabs:** ordinary unpinned, ungrouped tabs, shown without a section heading. Eligible web tabs use the optional cleanup add-on's 24-hour inactivity rule; native session settings still apply.
+- **Today tabs:** ordinary unpinned, ungrouped tabs, shown without a section heading. They restore with the previous session; eligible web tabs still use the optional cleanup add-on's 24-hour inactivity rule.
 
 Favorites fill a compact icon grid. Pinned rows and group-colored outline folders sit above one divider with **↓ Clear**; **New Tab** and ordinary tabs sit below it. There is no space name or Today heading. **Clear** closes visible ordinary tabs, including ordinary split pairs, while preserving Favorites, pins, folders, and hidden tabs. Firefox’s **Reopen Closed Tab** recovers closed tabs. The collapsed sidebar retains the native icon rail. Separate a native Split View before changing one of its tabs to Favorites or Pinned tabs. [Details and validation](docs/TAB-HIERARCHY.md). [Public Zen styling reference](https://github.com/zen-browser/desktop/blob/dev/src/zen/tabs/zen-tabs/vertical-tabs.css).
 

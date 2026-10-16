@@ -5,6 +5,7 @@ import configparser
 import hashlib
 import json
 import os
+import re
 import shlex
 from pathlib import Path
 import sys
@@ -20,6 +21,21 @@ BLOCK = BEGIN + '\n' + '\n'.join('user_pref(%s, %s);' % (json.dumps(k), json.dum
 OLD_ENTRY = '/* ZenFX installer entry. Original saved in zenfx-backups. */\n@import url("zenfx-installed/userChrome.css");\n'
 ENTRY = OLD_ENTRY + '@import url("zenfx-custom.css");\n'
 CUSTOM = b'/* Your ZenFX overrides. Setup updates preserve this file. */\n'
+RESTORE_BEGIN = b'// BEGIN ZENFX SESSION RESTORE'
+RESTORE_END = b'// END ZENFX SESSION RESTORE'
+RESTORE_BLOCK = RESTORE_BEGIN + b'\nuser_pref("browser.startup.page", 3);\n' + RESTORE_END + b'\n'
+
+def without_block(data, begin, end):
+    pattern = rb'(?ms)^' + re.escape(begin) + rb'\r?\n.*?^' + re.escape(end) + rb'(?:\r?\n|$)'
+    result = re.sub(pattern, b'', data)
+    if begin in result or end in result:
+        raise ValueError('An incomplete ZenFX settings block needs review. Nothing was changed.')
+    return result
+
+def session_restore_settings(data):
+    if data.endswith(RESTORE_BLOCK): return data
+    prior = without_block(data, RESTORE_BEGIN, RESTORE_END)
+    return prior + (b'\n' if prior and not prior.endswith(b'\n') else b'') + RESTORE_BLOCK
 
 def digest(data):
     return hashlib.sha256(data).hexdigest()
@@ -92,7 +108,7 @@ def prepare(profile, application=None):
         raise ValueError('An existing ZenFX settings block was found. Resolve the previous installation first.')
     files = {
         profile / 'chrome' / 'userChrome.css': ENTRY.encode(),
-        profile / 'user.js': (prior + ('\n' if prior and not prior.endswith('\n') else '') + BLOCK).encode(),
+        profile / 'user.js': session_restore_settings((prior + ('\n' if prior and not prior.endswith('\n') else '') + BLOCK).encode()),
     }
     files.update(managed_files(managed))
     custom = profile / 'chrome' / 'zenfx-custom.css'
@@ -192,10 +208,15 @@ def update(profile, closed=False, dry_run=False):
     custom = profile / 'chrome/zenfx-custom.css'
     safe_target(custom)
     if not custom.exists(): desired[custom] = CUSTOM
+    user = profile / 'user.js'
+    if user not in records:
+        raise ValueError('The installation record is missing user.js. Nothing was changed.')
+    prior_user = user.read_bytes() if user.exists() else b''
+    desired[user] = session_restore_settings(prior_user)
     changes = {p: data for p, data in desired.items() if not p.exists() or p.read_bytes() != data}
     preview = {'action': 'update-preview' if dry_run else 'up-to-date', 'profile': str(profile),
         'files': [str(p) for p in changes], 'startup_loader': bool(state.get('application')),
-        'note': 'Settings and custom CSS are preserved. Application loader and cleanup extension are not changed.'}
+        'note': 'Previous windows and tabs will reopen on startup. Other settings and custom CSS are preserved. Application loader and cleanup extension are not changed.'}
     if dry_run or not changes: return preview
     backup = profile / 'zenfx-backups' / ('update-' + uuid.uuid4().hex[:12])
     safe_target(backup)
@@ -208,6 +229,13 @@ def update(profile, closed=False, dry_run=False):
         if data is not None: saved.write_bytes(data)
         saved_files.append({'path': str(target), 'existed': data is not None, 'backup': str(saved) if data is not None else None})
     (backup / 'files.json').write_text(json.dumps(saved_files, indent=2) + '\n')
+    # Retain user.js edits made since installation when uninstalling later.
+    # The original installation backup remains untouched in its own directory.
+    if user in changes and (not user.exists() or digest(prior_user) != records[user]['installed_hash']):
+        restored_user = without_block(without_block(prior_user, RESTORE_BEGIN, RESTORE_END), BEGIN.encode(), END.encode())
+        saved = backup / 'user.js-without-zenfx'
+        saved.write_bytes(restored_user)
+        records[user].update(existed=user.exists(), backup=str(saved))
     written = []
     try:
         for target, data in changes.items():
