@@ -4,14 +4,16 @@ These are privileged Firefox 158 interface scripts, not normal WebExtensions. A 
 
 | Script | Behavior |
 | --- | --- |
-| `zenfx-newtab-overlay.uc.js` | New Tab opens the real address/search field over the current live webpage, including Split View. Opening/repeating/Escape does not create tabs; submitting opens a tab. Tab switching cancels the overlay. Ordinary address editing remains native. |
+| `zenfx-newtab-overlay.uc.js` | The shared native New Tab action opens the real address/search field over the current live webpage, including Split View, before a new page is created. Button, menu, keyboard, and direct action calls share the same behavior. Opening/repeating/Escape does not create tabs; submitting opens a tab. Tab switching cancels the overlay. Ordinary address editing remains native. |
 | `zenfx-drag-to-split.uc.js` | Drag one ordinary unpinned tab onto the left/right half of the current page to create native Split View. Copy, modified, multi-tab, cross-window, and existing-split gestures remain outside this hook. |
-| `zenfx-tab-hierarchy.uc.js` | Adds Favorites icon tiles, full-width Pinned tabs, protected folders, and unlabeled ordinary tabs. A **↓ Clear** divider closes ordinary tabs; New Tab sits immediately below it. Right-click → Tab priority to change sections. Favorites use native pinning and saved session metadata; the cleanup add-on protects them as pinned tabs. |
+| `zenfx-tab-hierarchy.uc.js` | Adds Favorites icon tiles, full-width Pinned tabs, protected folders, and unlabeled ordinary tabs. Drag a single tab onto a tile/row to change its priority and position, or right-click → Tab priority. A **↓ Clear** divider closes ordinary tabs; New Tab sits immediately below it. Favorites use native pinning and saved session metadata; the cleanup add-on protects them as pinned tabs. |
 | `zenfx-compact-toggle.uc.js` | Adds the Compact Mode toolbar button and editable shortcut. Measures the real top-toolbar height so the shared compact sidebar inset follows bookmarks, theme sizing, and density changes. Its default replaces Firefox's localized sidebar-toggle shortcut (Control+Z on tested macOS). Choosing another shortcut, No shortcut, or uninstall restores native handling. |
 
 Right-click the Compact Mode button or use **Tools → ZenFX shortcut settings…** to change its binding. Choose **Use default → Save** to use the sidebar shortcut if you previously customized it.
 
 Floating New Tab search keeps its draft, search mode, and text selection through temporary window focus loss and restores them when that window returns. Recovery also handles sleep/resume notifications and minimize/restore, without polling or focusing a background window. Escape, an outside click, or switching tabs cancels the draft; recovery also cancels if the source page has navigated. Native window switching and minimize/restore were tested; power notifications were simulated, without forcing physical sleep. [Recovery validation](../docs/validation/search-wake.json).
+
+The New Tab hook now wraps Firefox's shared `BrowserCommands.openTab` entry point instead of trying to cancel command events after dispatch. Explicit URL requests, modified/middle clicks, and content fullscreen retain native handling. Unloading restores the original method; a later wrapper can still forward through an unloaded hook. [Entry-point validation](../docs/validation/newtab-entry.json).
 
 ## Persistence
 

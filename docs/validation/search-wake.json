@@ -39,11 +39,10 @@
   "errors": [],
   "pass": true,
   "firefox": "158.0",
-  "sourceSHA256": "2ca5c70df343c4f7b1b0da14a89677e82bec0620e215642e18148d40d50d6469",
+  "sourceSHA256": "8d7d32a75dff57e477903a5ae3c5c6249decf18af5939a3ab9a62a0782add18d",
   "limits": "Native macOS window activation and minimize/restore; direct calls to the hook observer simulate power events. Physical OS sleep was not forced. Test-only counters and observer access are absent from production.",
   "regressions": {
-    "automatedTests": 62,
-    "uiSearchModesSettingsHierarchy104TabsBothSplitDirections": true,
+    "automatedTests": 85,
     "compactInteractionStates": 19,
     "nativeVideoPiPFullscreenNewTabDownloadsPopupReducedMotion": true
   }

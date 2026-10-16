@@ -51,7 +51,9 @@ function fixture() {
     addObserver(observer, topic) { observers.set(topic, observer); },
     removeObserver(observer, topic) { assert.equal(observers.get(topic), observer); observers.delete(topic); },
   } };
-  Object.assign(window, { gBrowser, gURLBar: input, STATE_MINIMIZED: 2, windowState: 1 });
+  const nativeTabCalls = [], nativeOpenTab = function (options) { nativeTabCalls.push({ options, receiver: this }); return 'native tab'; };
+  const tabCommands = { openTab: nativeOpenTab };
+  Object.assign(window, { gBrowser, gURLBar: input, BrowserCommands: tabCommands, STATE_MINIMIZED: 2, windowState: 1 });
   const context = vm.createContext({ window, document, gBrowser, gURLBar: input, Services, console, queueMicrotask,
     requestAnimationFrame(fn) { const id = ++nextFrame; frames.set(id, fn); return id; },
     cancelAnimationFrame(id) { frames.delete(id); },
@@ -67,8 +69,43 @@ function fixture() {
   const activate = () => { foreground = true; Services.focus.activeWindow = window; window.emit('activate'); };
   const count = () => [window, document, field, gBrowser.tabContainer].reduce((n, target) => n + target.count(), 0);
   return { window, document, field, tab, browser, gBrowser, input, Services, api, frames, observers,
-    requests, flush, type, power, background, activate, count };
+    requests, flush, type, power, background, activate, count, tabCommands, nativeTabCalls, nativeOpenTab };
 }
+
+test('the shared New Tab function opens only the overlay, including repeated direct calls', () => {
+  const f = fixture(); f.tabCommands.openTab(); f.type(); f.tabCommands.openTab();
+  assert.equal(f.api.active, true); assert.equal(f.field.value, 'saved draft');
+  assert.equal(f.nativeTabCalls.length, 0);
+});
+
+test('explicit URLs and modified/middle clicks retain native behavior and arguments', () => {
+  for (const options of [{ url: 'https://fixture.invalid/new' }, { event: { button: 1 } },
+    { event: { shiftKey: true } }, { event: { altKey: true } },
+    { event: { button: 0, metaKey: true } }, { event: { button: 0, ctrlKey: true } }]) {
+    const f = fixture(); assert.equal(f.tabCommands.openTab(options), 'native tab');
+    assert.equal(f.nativeTabCalls[0].options, options);
+    assert.equal(f.nativeTabCalls[0].receiver, f.tabCommands); assert.equal(f.api.active, false);
+  }
+});
+
+test('content fullscreen retains native New Tab handling', () => {
+  const f = fixture(); f.document.documentElement.setAttribute('inDOMFullscreen', 'true');
+  assert.equal(f.tabCommands.openTab(), 'native tab'); assert.equal(f.api.active, false);
+});
+
+test('uninstall restores the native New Tab entry point', () => {
+  const f = fixture(); f.tabCommands.openTab(); f.api.uninstall();
+  assert.equal(f.tabCommands.openTab, f.nativeOpenTab);
+  f.tabCommands.openTab(); assert.equal(f.nativeTabCalls.length, 1);
+});
+
+test('an outer wrapper remains usable after this hook is uninstalled', () => {
+  const f = fixture(), inner = f.tabCommands.openTab;
+  const outer = function (options) { return inner.call(this, options); };
+  f.tabCommands.openTab = outer; f.api.uninstall();
+  assert.equal(f.tabCommands.openTab, outer);
+  assert.equal(f.tabCommands.openTab(), 'native tab'); assert.equal(f.api.active, false);
+});
 
 test('reactivation restores draft, selection and search mode after native field reset', () => {
   const f = fixture(); f.api.open(); f.input.searchMode = { source: 1, entry: 'typed' }; f.type();

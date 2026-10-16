@@ -18,4 +18,6 @@ Changing CSS/JavaScript, rebuilding ZIPs, or passing unit tests does not certify
 
 The floating-search tests simulate focus/power events and frame scheduling to cover draft recovery, cancellation races, background-window focus, and handler cleanup. They complement the isolated native-window checks; they do not put the operating system to sleep.
 
+They also cover the shared native New Tab wrapper: repeated direct calls do not create tabs, explicit URL/modifier/fullscreen cases forward unchanged, and unloading restores native behavior even when another wrapper was added later. Native keyboard/button/menu entry points and the pinned-layout drop geometry require the separate isolated Firefox checks recorded in the validation report.
+
 Installer tests include managed updates from the old entry format, preserved custom CSS/settings/application files, no-op/preview behavior, rollback/retry, and original uninstall restoration after an update. All targets are temporary filesystem fixtures. To test an update manually, use the latest extracted package, a closed disposable Firefox 158 profile, and `--update --dry-run` before making changes. No normal browsing profile or real application bundle is needed for the automated checks.

@@ -6,6 +6,7 @@ ZenFX keeps native tabs and Split View rather than embedding a second browser in
 
 - **Tab hierarchy:** notifications share one refresh per display frame; each refresh takes one tab snapshot and checks each pin’s saved Favorite status once. Folder discovery is reused. Sidebar resizing uses the observed width and cached Favorite count instead of rescanning all tabs. Native reordering waits until a drag finishes. Frame callbacks are canceled when the hook unloads.
 - **Drag-to-split:** drag-over events still validate each drop, but the preview is repainted only when the pointer enters a different half of the page.
+- **Pinned-tab dragging:** the mixed tile/row drop helper has one idle drag-start listener. Hover/drop/cancel handlers exist only during a tab drag and return to zero afterward. Pin rectangles are cached until size/scroll changes; 50 unchanged hovers produced zero further insertion-marker mutations. Grid resizing writes are deferred outside ResizeObserver delivery to prevent feedback warnings.
 - **Compact Mode:** the measured toolbar-height value is written only when it changes.
 - **Cleanup:** Firefox filters out title/favicon/loading updates before delivering the extension’s listener. Existing session activity state avoids tab queries and storage rewrites when the event page resumes. Protected and internal/private tabs skip unnecessary timestamp reads. Relevant pin/group/hide/navigation events and activity tracking remain active.
 

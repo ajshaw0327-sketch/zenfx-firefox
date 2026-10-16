@@ -6,12 +6,13 @@
   "use strict";
   if (document.documentElement.getAttribute("windowtype") !== "navigator:browser") return;
   window.ZenfxNewTabOverlay?.uninstall();
-  if (!window.gBrowser || !window.gURLBar?.parentController?.loadURL) return;
+  if (!window.gBrowser || !window.gURLBar?.parentController?.loadURL || !window.BrowserCommands?.openTab) return;
   const input = gURLBar, controller = input.parentController;
   const originalLoad = controller.loadURL;
   const hadOwnLoad = Object.hasOwn(controller, "loadURL");
-  const commands = new Set(["cmd_newNavigatorTab", "cmd_newNavigatorTabNoEvent"]);
-  let state = null, restoreFrame = 0;
+  const tabCommands = window.BrowserCommands, originalOpenTab = tabCommands.openTab;
+  const openTabDescriptor = Object.getOwnPropertyDescriptor(tabCommands, "openTab");
+  let state = null, restoreFrame = 0, installed = true;
   const listeners = [], activeListeners = [];
   const listen = (target, name, callback, capture = true) => {
     target.addEventListener(name, callback, capture);
@@ -123,19 +124,24 @@
     try { return originalLoad.call(this, forwarded); }
     finally { finish({ refresh: false }); }
   }
+  function openTab(options = {}) {
+    const event = options?.event?.sourceEvent || options?.event;
+    // Own the shared native entry point before Firefox creates a page. Command
+    // event cancellation can be too late, and direct button calls bypass it.
+    if (!installed || options?.url !== undefined ||
+        document.documentElement.hasAttribute("inDOMFullscreen") ||
+        event?.button === 1 || event?.shiftKey || event?.altKey ||
+        (typeof event?.button === "number" && (event.ctrlKey || event.metaKey))) {
+      return originalOpenTab.call(this, options);
+    }
+    return open();
+  }
+  tabCommands.openTab = openTab;
   controller.loadURL = loadURL;
   listen(document, "command", event => {
     if (event.target.id === "Browser:OpenLocation") {
       if (state) finish();
-      return;
     }
-    if (!commands.has(event.target.id)) return;
-    // Native New Tab owns exiting content fullscreen and creating its new tab.
-    if (document.documentElement.hasAttribute("inDOMFullscreen")) return;
-    // Middle-click paste/new-tab and special modifier commands retain Firefox behavior.
-    const source = event.sourceEvent;
-    if (source?.button === 1 || source?.shiftKey || source?.altKey) return;
-    event.preventDefault(); event.stopImmediatePropagation(); open();
   });
   function watchActive() {
     onActive(input.inputField, "input", rememberDraft);
@@ -182,11 +188,16 @@
     cancel: () => finish({ focus: true }),
     get active() { return !!state; },
     uninstall() {
+      installed = false;
       finish();
       for (const remove of listeners.splice(0)) remove();
       if (controller.loadURL === loadURL) {
         if (hadOwnLoad) controller.loadURL = originalLoad;
         else delete controller.loadURL;
+      }
+      if (tabCommands.openTab === openTab) {
+        if (openTabDescriptor) Object.defineProperty(tabCommands, "openTab", openTabDescriptor);
+        else delete tabCommands.openTab;
       }
       if (window.ZenfxNewTabOverlay === api) delete window.ZenfxNewTabOverlay;
     },

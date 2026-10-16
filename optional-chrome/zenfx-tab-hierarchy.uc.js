@@ -12,16 +12,17 @@
   const periphery = document.getElementById("tabbrowser-arrowscrollbox-periphery");
   const favoriteKey = "zenfxFavorite", columnsProperty = "--zenfx-favorite-columns";
   const priorColumns = [pins.style.getPropertyValue(columnsProperty), pins.style.getPropertyPriority(columnsProperty)];
-  const slots = new Map(), removers = [];
-  let queuedFrame = 0, updating = false, stopped = false, visibilityFrame = 0;
+  const slots = new Map(), removers = [], dragRemovers = [];
+  let priorityDrag = null;
+  let queuedFrame = 0, updating = false, stopped = false, visibilityFrame = 0, sizeFrame = 0;
   let favoriteCount = 0, pinWidth = pins.getBoundingClientRect().width, clearCount = -1;
   const flag = (element, name, value) => {
     if (element.hasAttribute(name) !== value) element.toggleAttribute(name, value);
   };
   const html = tag => document.createElementNS("http://www.w3.org/1999/xhtml", tag);
-  const listen = (target, type, fn) => {
-    target.addEventListener(type, fn);
-    removers.push(() => target.removeEventListener(type, fn));
+  const listen = (target, type, fn, capture = false) => {
+    target.addEventListener(type, fn, capture);
+    removers.push(() => target.removeEventListener(type, fn, capture));
   };
   const favorite = tab => tab.pinned && !tab.closing && store.getCustomTabValue(tab, favoriteKey) === "true";
   const groups = () => Array.from(strip.querySelectorAll("tab-group")).filter(group => group.tabs.some(tab => !tab.closing));
@@ -104,7 +105,7 @@
     sizeFavorites();
   }
   function refresh() {
-    if (stopped || updating || strip.hasAttribute("movingtab") || strip.hasAttribute("movingtabgroup")) return;
+    if (stopped || updating || priorityDrag || strip.hasAttribute("movingtab") || strip.hasAttribute("movingtabgroup")) return;
     cancelAnimationFrame(queuedFrame); queuedFrame = 0;
     updating = true;
     try {
@@ -166,6 +167,112 @@
     }
     refresh(); return true;
   }
+  function markDrop(target = null, edge = null) {
+    if (priorityDrag?.target === target && priorityDrag?.edge === edge) return;
+    priorityDrag?.target?.removeAttribute("zenfx-priority-drop");
+    if (priorityDrag) Object.assign(priorityDrag, { target, edge });
+    if (target) target.setAttribute("zenfx-priority-drop", edge);
+  }
+  function endPriorityDrag() {
+    markDrop();
+    priorityDrag = null;
+    for (const remove of dragRemovers.splice(0)) remove();
+    if (!stopped) schedule();
+  }
+  function cleanNativeDrag(source) {
+    const drag = strip.tabDragAndDrop;
+    drag.finishMoveTogetherSelectedTabs(source);
+    drag.finishAnimateTabMove();
+    drag._resetTabsAfterDrop(source);
+    drag._tabDropIndicator.hidden = true;
+    source.style.removeProperty("transform");
+  }
+  function leavePinArea() {
+    if (priorityDrag) { priorityDrag.inside = false; priorityDrag.geometry = null; }
+    return null;
+  }
+  function pinDrop(event) {
+    const state = priorityDrag, source = state?.source, dt = event.dataTransfer;
+    if (!source?.isConnected || source.closing || source.splitview ||
+        strip.getAttribute("orient") !== "vertical" || !strip.hasAttribute("expanded") ||
+        event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return leavePinArea();
+    try {
+      if (!dt || dt.dropEffect === "copy" || dt.mozItemCount !== 1 ||
+          dt.mozGetDataAt("application/x-moz-tabbrowser-tab", 0) !== source ||
+          source._dragData?.movingTabs.length !== 1) return leavePinArea();
+    } catch { return leavePinArea(); }
+    // Let the native scroll buttons handle dragging through an overflowing area.
+    const path = event.composedPath();
+    if (path.includes(pins._scrollButtonUp) || path.includes(pins._scrollButtonDown)) {
+      return leavePinArea();
+    }
+    const box = pins.getBoundingClientRect(), x = event.clientX, y = event.clientY;
+    if (x < box.left || x > box.right || y < box.top || y > box.bottom || !box.height) {
+      return leavePinArea();
+    }
+    if (!state.inside) {
+      // Native grid animation assumes every pin has the same size. Restore the
+      // real tile/row layout before using it as the drop target.
+      cleanNativeDrag(source); state.inside = true; state.geometry = null;
+    }
+    const scroll = pins.scrollPosition;
+    if (!state.geometry || state.scroll !== scroll) {
+      state.scroll = scroll;
+      state.geometry = Array.from(pins.children).filter(tab => tab.matches(".tabbrowser-tab") && !tab.closing)
+        .map(tab => ({ tab, rect: tab.getBoundingClientRect(), favorite: favorite(tab) }));
+    }
+    let hit = null, distance = Infinity;
+    for (const item of state.geometry) {
+      const r = item.rect;
+      const next = Math.max(r.left - x, 0, x - r.right) ** 2 + Math.max(r.top - y, 0, y - r.bottom) ** 2;
+      if (next < distance) { hit = item; distance = next; }
+    }
+    if (!hit) return null;
+    const after = hit.favorite ? (window.RTL_UI ? x < hit.rect.x + hit.rect.width / 2 : x > hit.rect.x + hit.rect.width / 2) : y > hit.rect.y + hit.rect.height / 2;
+    return { tab: hit.tab, tier: hit.favorite ? "favorite" : "pinned", after,
+      edge: hit.favorite ? (after !== !!window.RTL_UI ? "right" : "left") : after ? "bottom" : "top" };
+  }
+  listen(strip, "dragstart", event => {
+    const source = event.composedPath().find(node => node.matches?.(".tabbrowser-tab"));
+    if (!source || source.ownerDocument !== document || source.splitview ||
+        strip.getAttribute("orient") !== "vertical" || !strip.hasAttribute("expanded")) return;
+    endPriorityDrag(); priorityDrag = { source, target: null, inside: false, geometry: null };
+    const started = priorityDrag;
+    queueMicrotask(() => {
+      if (priorityDrag === started && (!source._dragData || event.defaultPrevented)) endPriorityDrag();
+    });
+    const during = (target, type, callback) => {
+      target.addEventListener(type, callback, true);
+      dragRemovers.push(() => target.removeEventListener(type, callback, true));
+    };
+    during(document, "dragover", event => {
+      const hit = pinDrop(event);
+      markDrop(hit?.tab, hit?.edge);
+      if (!hit) return;
+      event.preventDefault(); event.stopImmediatePropagation();
+      event.dataTransfer.dropEffect = "move";
+    });
+    during(document, "drop", event => {
+      const hit = pinDrop(event);
+      if (!hit) { endPriorityDrag(); return; }
+      event.preventDefault(); event.stopImmediatePropagation();
+      event.dataTransfer.dropEffect = "move";
+      try {
+        cleanNativeDrag(source);
+        if (source !== hit.tab && setTier(source, hit.tier)) {
+          if (hit.after) gBrowser.moveTabAfter(source, hit.tab);
+          else gBrowser.moveTabBefore(source, hit.tab);
+        }
+      } finally {
+        for (const item of strip.dragAndDropElements) delete item.currentIndex;
+        delete source._dragData;
+        endPriorityDrag();
+      }
+    });
+    during(document, "dragend", endPriorityDrag);
+    during(document, "keydown", event => { if (event.key === "Escape") endPriorityDrag(); });
+    during(strip, "TabClose", event => { if (event.target === source) endPriorityDrag(); });
+  }, true);
   function clearToday() {
     const tabs = Array.from(gBrowser.tabs).filter(clearable);
     if (!tabs.length) return;
@@ -213,8 +320,12 @@
   });
   groupObserver.observe(normal, { childList: true, subtree: true });
   const sizeObserver = new ResizeObserver(entries => {
-    pinWidth = entries[0].borderBoxSize?.[0]?.inlineSize ?? pins.getBoundingClientRect().width;
-    sizeFavorites();
+    if (priorityDrag) priorityDrag.geometry = null;
+    const width = entries[0].borderBoxSize?.[0]?.inlineSize ?? pins.getBoundingClientRect().width;
+    if (pinWidth === width) return;
+    pinWidth = width;
+    // Do not resize the observed grid synchronously inside ResizeObserver.
+    if (!sizeFrame) sizeFrame = requestAnimationFrame(() => { sizeFrame = 0; sizeFavorites(); });
   }); sizeObserver.observe(pins);
   root.setAttribute("zenfx-tab-hierarchy", "true"); refresh();
   const api = window.ZenfxTabHierarchy = {
@@ -222,7 +333,9 @@
     tierOf(tab) { return favorite(tab) ? "favorite" : tab.pinned ? "pinned" : tab.group ? "folder" : "today"; },
     uninstall() {
       stopped = true;
+      endPriorityDrag();
       cancelAnimationFrame(visibilityFrame); cancelAnimationFrame(queuedFrame);
+      cancelAnimationFrame(sizeFrame);
       for (const remove of removers.splice(0)) remove();
       expansionObserver.disconnect(); dragObserver.disconnect(); groupObserver.disconnect(); sizeObserver.disconnect(); restoreSlots();
       for (const element of [menu, pinStyle, regularStyle, protectedSlot, clearRow, newTabSlot]) element.remove();

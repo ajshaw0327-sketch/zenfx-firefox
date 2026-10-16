@@ -123,6 +123,9 @@
     listenActive(gBrowser.tabContainer, "TabClose", event => {
       if (state && (event.target === state.source || event.target === state.target)) clear();
     });
+    listenActive(gBrowser.tabContainer, "TabPinned", event => {
+      if (state && (event.target === state.source || event.target === state.target)) clear();
+    });
     listenActive(gBrowser.tabContainer, "TabSelect", () => {
       if (state && !state.dropping && gBrowser.selectedTab !== state.target) clear();
     });

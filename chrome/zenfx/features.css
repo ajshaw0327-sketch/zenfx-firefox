@@ -337,6 +337,10 @@ sidebar-main,
       column-gap: 8px !important;
       padding-inline: 10px !important;
     }
+    #pinned-tabs-container .tabbrowser-tab[zenfx-priority-drop="top"] .tab-background { box-shadow: inset 0 2px var(--zenfx-accent) !important; }
+    #pinned-tabs-container .tabbrowser-tab[zenfx-priority-drop="bottom"] .tab-background { box-shadow: inset 0 -2px var(--zenfx-accent) !important; }
+    #pinned-tabs-container .tabbrowser-tab[zenfx-priority-drop="left"] .tab-background { box-shadow: inset 2px 0 var(--zenfx-accent) !important; }
+    #pinned-tabs-container .tabbrowser-tab[zenfx-priority-drop="right"] .tab-background { box-shadow: inset -2px 0 var(--zenfx-accent) !important; }
     #tabbrowser-tabs[orient="vertical"] { gap: 0 !important; }
     #tabbrowser-tabs[orient="vertical"] #vertical-pinned-tabs-splitter { display: none !important; }
     #tabbrowser-tabs[orient="vertical"][expanded] #pinned-tabs-container {

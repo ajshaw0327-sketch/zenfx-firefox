@@ -1,0 +1,67 @@
+{
+  "cases": [
+    {
+      "entry": "normal command",
+      "tabs": 1,
+      "active": true,
+      "sameSource": true,
+      "currentPage": true,
+      "focused": true
+    },
+    {
+      "entry": "keyboard command",
+      "tabs": 1,
+      "active": true,
+      "sameSource": true,
+      "currentPage": true,
+      "focused": true
+    },
+    {
+      "entry": "File menu command",
+      "tabs": 1,
+      "active": true,
+      "sameSource": true,
+      "currentPage": true,
+      "focused": true
+    },
+    {
+      "entry": "direct shared function",
+      "tabs": 1,
+      "active": true,
+      "sameSource": true,
+      "currentPage": true,
+      "focused": true
+    },
+    {
+      "entry": "keyboard",
+      "tabs": 1,
+      "active": true,
+      "sameSource": true,
+      "currentPage": true,
+      "focused": true
+    },
+    {
+      "entry": "New Tab button",
+      "tabs": 1,
+      "active": true,
+      "sameSource": true,
+      "currentPage": true,
+      "focused": true
+    }
+  ],
+  "repeated30CallsKeepDraftAndTabCount": true,
+  "submitCreatesExactlyOneTab": true,
+  "explicitURLRetainsNativeTabCreation": true,
+  "reload10CyclesNoDuplicates": true,
+  "uninstallRestoresNativeEntry": true,
+  "errors": [],
+  "pass": true,
+  "sourceSHA256": "8d7d32a75dff57e477903a5ae3c5c6249decf18af5939a3ab9a62a0782add18d",
+  "limits": "Firefox 158/macOS test profile. Native command/controller paths, actual keyboard and button input, URL submission, reload and uninstall were tested; normal profiles and extensions outside this fixture were not inspected.",
+  "regressions": {
+    "automatedTests": 85,
+    "wakeRecovery": true,
+    "compactInteractionStates": 19,
+    "nativeFullscreenAndNewTabExit": true
+  }
+}
