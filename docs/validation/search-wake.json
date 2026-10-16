@@ -1,0 +1,50 @@
+{
+  "backgroundDoesNotStealFocus": true,
+  "realTwoWindowRecovery": {
+    "active": true,
+    "value": "wake draft example",
+    "focused": true,
+    "start": 3,
+    "end": 8,
+    "direction": "backward",
+    "mode": {
+      "source": 1,
+      "isPreview": false,
+      "entry": "typed"
+    },
+    "foreground": true,
+    "listeners": 13,
+    "observers": 4,
+    "tabs": 1
+  },
+  "repeatedRealFocusCycles": 6,
+  "simulatedPowerCycles": 20,
+  "processResume": true,
+  "nativeMinimizeRestore": true,
+  "escapeCancelsPendingRecovery": true,
+  "locationCommandCancelsPendingRecovery": true,
+  "outsidePointerCancelsPendingRecovery": true,
+  "tabSwitchCancelsPendingRecovery": true,
+  "originNavigationCancels": true,
+  "submissionAfterRecovery": {
+    "exactlyOneNewTab": true,
+    "originUnchanged": true,
+    "submitted": true
+  },
+  "lifecycle30Cycles": {
+    "idleListeners": 2,
+    "idlePowerObservers": 0
+  },
+  "uninstallRemovesAllHooks": true,
+  "errors": [],
+  "pass": true,
+  "firefox": "158.0",
+  "sourceSHA256": "2ca5c70df343c4f7b1b0da14a89677e82bec0620e215642e18148d40d50d6469",
+  "limits": "Native macOS window activation and minimize/restore; direct calls to the hook observer simulate power events. Physical OS sleep was not forced. Test-only counters and observer access are absent from production.",
+  "regressions": {
+    "automatedTests": 62,
+    "uiSearchModesSettingsHierarchy104TabsBothSplitDirections": true,
+    "compactInteractionStates": 19,
+    "nativeVideoPiPFullscreenNewTabDownloadsPopupReducedMotion": true
+  }
+}

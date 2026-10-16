@@ -46,6 +46,8 @@ The real extension API verified **zero alarms while paused**, with the normal fi
 
 [Lifecycle counts](validation/minimal-lifecycle.json) · [Native alarm/filter checks](validation/cleanup-filter.json) · [Complete recheck record](validation/minimal-audit.json)
 
+Floating-search recovery adds focus and power-event handlers only while the overlay is open. Signals share a single pending display frame; a background or minimized window waits for activation rather than retrying. Closing the overlay removes all four power observers and cancels pending recovery, returning to the same two idle listeners. Thirty native open/recover/cancel cycles confirmed those counts. [Recovery checks](validation/search-wake.json).
+
 ## What these results do not establish
 
 No controlled battery-discharge test, energy-use comparison, or total retained-RAM comparison has been completed. Source/archive sizes are not RAM measurements. No percentage battery saving or negligible-overhead guarantee is claimed. The small new caches hold counts, widths, and an activity map; they do not retain extra webpage/browser instances or create another process.

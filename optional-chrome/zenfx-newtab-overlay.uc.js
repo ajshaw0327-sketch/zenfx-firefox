@@ -11,7 +11,7 @@
   const originalLoad = controller.loadURL;
   const hadOwnLoad = Object.hasOwn(controller, "loadURL");
   const commands = new Set(["cmd_newNavigatorTab", "cmd_newNavigatorTabNoEvent"]);
-  let state = null;
+  let state = null, restoreFrame = 0;
   const listeners = [], activeListeners = [];
   const listen = (target, name, callback, capture = true) => {
     target.addEventListener(name, callback, capture);
@@ -21,8 +21,44 @@
     target.addEventListener(name, callback, true);
     activeListeners.push(() => target.removeEventListener(name, callback, true));
   };
+  function rememberDraft() {
+    if (!state || state.submitting) return;
+    const field = input.inputField;
+    state.draft = { value: field.value, mode: input.searchMode ? { ...input.searchMode } : null,
+      start: field.selectionStart, end: field.selectionEnd, direction: field.selectionDirection };
+  }
+  function suspend() {
+    if (!state || state.submitting) return;
+    if (!state.suspended && (input.focused || input.inputField.value === state.draft.value)) rememberDraft();
+    state.suspended = true;
+    cancelAnimationFrame(restoreFrame); restoreFrame = 0;
+  }
+  function resume() {
+    if (!state?.suspended || state.submitting || state.recovering || restoreFrame) return;
+    const previous = state;
+    // Let Firefox finish restoring its native focus and popover before repair.
+    // This is a one-shot frame on activation/wake, never a polling timer.
+    restoreFrame = requestAnimationFrame(() => {
+      restoreFrame = 0;
+      if (state !== previous || !previous.suspended) return;
+      if (!previous.tab.isConnected || previous.tab.closing || gBrowser.selectedTab !== previous.tab ||
+          previous.browser.currentURI.spec !== previous.uri) { finish(); return; }
+      if (!document.hasFocus() || Services.focus.activeWindow !== window ||
+          window.windowState === window.STATE_MINIMIZED || document.documentElement.hasAttribute("inDOMFullscreen")) return;
+      const draft = previous.draft;
+      previous.recovering = true;
+      try {
+        input.view.close();
+        input.searchMode = draft.mode;
+        input.search(draft.value);
+        input.inputField.setSelectionRange(draft.start, draft.end, draft.direction);
+        previous.suspended = false;
+      } finally { previous.recovering = false; }
+    });
+  }
   function finish({ focus = false, refresh = true } = {}) {
     if (!state) return;
+    cancelAnimationFrame(restoreFrame); restoreFrame = 0;
     for (const remove of activeListeners.splice(0)) remove();
     const previous = state;
     state = null;
@@ -65,11 +101,15 @@
       }
       state = { tab: gBrowser.selectedTab, browser: gBrowser.selectedBrowser,
         userTypedValue: gBrowser.selectedBrowser.userTypedValue,
-        searchMode: input.searchMode ? { ...input.searchMode } : null, otherSearchModes, submitting: false };
+        searchMode: input.searchMode ? { ...input.searchMode } : null, otherSearchModes, submitting: false,
+        uri: gBrowser.selectedBrowser.currentURI.spec, suspended: false,
+        draft: { value: "", mode: null, start: 0, end: 0, direction: "none" } };
       document.documentElement.setAttribute("zenfx-newtab-overlay", "true");
       watchActive();
       input.searchMode = null;
       input.search("");
+    } else if (state.suspended) {
+      resume();
     } else {
       input.focus();
     }
@@ -98,6 +138,23 @@
     event.preventDefault(); event.stopImmediatePropagation(); open();
   });
   function watchActive() {
+    onActive(input.inputField, "input", rememberDraft);
+    onActive(window, "deactivate", suspend);
+    // macOS can blur/refocus a window without sending another deactivate/activate.
+    onActive(window, "blur", event => { if (event.target === window) suspend(); });
+    onActive(window, "activate", resume);
+    onActive(window, "focus", event => { if (event.target === window) resume(); });
+    onActive(window, "sizemodechange", () => {
+      if (window.windowState === window.STATE_MINIMIZED) suspend(); else resume();
+    });
+    const powerObserver = { observe(_subject, topic) {
+      if (topic === "sleep_notification" || topic === "suspend_process_notification") suspend();
+      else { if (state && !state.suspended) suspend(); resume(); }
+    } };
+    for (const topic of ["sleep_notification", "wake_notification", "suspend_process_notification", "resume_process_notification"]) {
+      Services.obs.addObserver(powerObserver, topic);
+      activeListeners.push(() => Services.obs.removeObserver(powerObserver, topic));
+    }
     onActive(window, "keydown", event => {
       if (!state || event.key !== "Escape" || event.isComposing) return;
       event.preventDefault(); event.stopImmediatePropagation(); finish({ focus: true });
@@ -115,7 +172,9 @@
       if (state?.tab === event.target) finish({ refresh: false });
     });
     onActive(document, "focusin", event => {
-      if (state && !state.submitting && event.target === gBrowser.selectedBrowser) finish();
+      if (!state || state.submitting || state.recovering || event.target !== gBrowser.selectedBrowser) return;
+      if (state.suspended || !document.hasFocus()) { suspend(); resume(); }
+      else finish();
     });
   }
   const api = window.ZenfxNewTabOverlay = {

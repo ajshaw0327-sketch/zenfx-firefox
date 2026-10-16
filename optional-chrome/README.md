@@ -11,6 +11,8 @@ These are privileged Firefox 158 interface scripts, not normal WebExtensions. A 
 
 Right-click the Compact Mode button or use **Tools → ZenFX shortcut settings…** to change its binding. Choose **Use default → Save** to use the sidebar shortcut if you previously customized it.
 
+Floating New Tab search keeps its draft, search mode, and text selection through temporary window focus loss and restores them when that window returns. Recovery also handles sleep/resume notifications and minimize/restore, without polling or focusing a background window. Escape, an outside click, or switching tabs cancels the draft; recovery also cancels if the source page has navigated. Native window switching and minimize/restore were tested; power notifications were simulated, without forcing physical sleep. [Recovery validation](../docs/validation/search-wake.json).
+
 ## Persistence
 
 The [guided setup](../START-HERE.md) offers a profile-scoped AutoConfig loader when both a profile and Firefox application are explicitly selected. It adds two application files, preserves conflicting AutoConfig setups by refusing installation, and backs up changed profile files. Application updates may remove the loader.
