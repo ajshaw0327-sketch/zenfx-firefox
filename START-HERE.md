@@ -2,11 +2,13 @@
 
 **Desktop Firefox 158. macOS is browser-tested. Windows/Linux launchers and styles are experimental and have not been browser-tested. Mobile Firefox, older Firefox/ESR, and arbitrary future releases are not supported by this build.**
 
+**Mac source setup:** [Follow the guided Python instructions](docs/SOURCE-SETUP.md). This avoids the downloaded `.command` launcher and needs no ZenFX app signing or Tk. It does not change macOS security settings.
+
 ## Before you start
 
 - **Want only the look?** [Download appearance only](https://github.com/ajshaw0327-sketch/zenfx-firefox/raw/refs/heads/main/dist/ZenFX-Appearance.zip) and follow its [four copy-and-restart steps](appearance/README.md). Python is not needed.
 - **Want the tab features and Compact controls?** [Download full setup](https://github.com/ajshaw0327-sketch/zenfx-firefox/raw/refs/heads/main/dist/ZenFX-Setup.zip), extract the whole ZIP, and use the steps below. No Git or build step is needed.
-- Full setup needs **Python 3.10+ with Tk**. If Python is missing, use the [official Python downloads](https://www.python.org/downloads/). The official macOS and Windows Python distributions include Tk; Linux users may need their distribution’s Tk package. [Python’s Tk documentation](https://docs.python.org/3/library/tkinter.html) explains how to check it.
+- Full setup needs **Python 3.10+**. The graphical installer additionally needs Tk; [guided source setup](docs/SOURCE-SETUP.md) does not. If Python is missing, use the [official Python downloads](https://www.python.org/downloads/). The official macOS and Windows Python distributions include Tk; Linux users may need their distribution’s Tk package. [Python’s Tk documentation](https://docs.python.org/3/library/tkinter.html) explains how to check it.
 
 ## Install
 
@@ -15,7 +17,7 @@
 
    | System | Open | Firefox application field |
    | --- | --- | --- |
-   | macOS | Double-click **Install.command** | Select `Firefox.app`, usually in Applications |
+   | macOS | [Guided Python setup](docs/SOURCE-SETUP.md) (no Tk); `Install.command` is the unsigned graphical launcher | Select `Firefox.app`, usually in Applications |
    | Windows | Double-click **Install.cmd** | Select the Firefox installation folder containing `application.ini` |
    | Linux | Run **Install.sh** from a terminal with `sh Install.sh` | Select the Firefox installation folder containing `application.ini` |
 
@@ -51,7 +53,7 @@ The last four checks need the optional scripts. If only the appearance changes, 
 
 Choosing only a profile installs the appearance and enables native vertical tabs. Existing `userChrome.css` is backed up and replaced with the ZenFX entry; existing `user.js` settings are retained with an appended ZenFX block. Firefox must be closed. No network downloads, account access, automatic elevation, or extension-signature changes occur.
 
-For the full New Tab overlay, drag-to-split, Compact Mode controls, and tab hierarchy to load after restart, also select the **Firefox application** in setup. On macOS this is `Firefox.app`; on Windows/Linux it is the directory containing `application.ini`. This optional choice adds **`zenfx.cfg` and `defaults/pref/zenfx-autoconfig.js` to that application**. It enables privileged AutoConfig JavaScript, as required by the supplied startup loader. Only profiles explicitly containing the ZenFX managed marker/scripts load the hooks. An existing AutoConfig setup or conflicting files cause setup to stop rather than overwrite them. An unwritable application folder requires a separately authorized administrator install; this installer does not request elevation. Application updates may remove these files.
+For the full New Tab overlay, drag-to-split, Compact Mode controls, and tab hierarchy to load after restart, also select the **Firefox application** in setup. On macOS this is `Firefox.app`; on Windows/Linux it is the directory containing `application.ini`. This optional choice adds **`zenfx.cfg` and `defaults/pref/zenfx-autoconfig.js` to that application**. It enables privileged AutoConfig JavaScript, as required by the supplied startup loader. Only profiles explicitly containing the ZenFX managed marker/scripts load the hooks. An existing AutoConfig setup or conflicting files cause setup to stop rather than overwrite them. An unwritable application folder requires a separately authorized administrator install; this installer does not request elevation. Application updates may remove these files. On macOS, these application writes can affect Firefox’s code signature; appearance-only avoids them.
 
 The application-level AutoConfig installation has **not** been performed on this machine. The loader's real new-window lifecycle was tested within the authorized test profile; a full application AutoConfig cold-start remains unverified. Setup writes the selected files but does not certify that cold-start path.
 
@@ -95,7 +97,7 @@ python3 installer/install.py --profile "/path/to/profile" --application "/path/t
 python3 installer/install.py --profile "/path/to/profile" --closed-confirmed --uninstall
 ```
 
-On Windows, replace `python3` with `py -3`. GUI setup needs Tk; the command-line path does not.
+On Windows, replace `python3` with `py -3`. GUI setup needs Tk; the command-line path does not. For prompts instead of path flags, run `python3 installer/install.py --guided` from the extracted ZenFX folder.
 
 [Full feature and installation notes](README.md) · [What was tested](docs/VALIDATION.md)
 

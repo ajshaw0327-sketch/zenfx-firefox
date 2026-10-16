@@ -5,6 +5,7 @@ import configparser
 import hashlib
 import json
 import os
+import shlex
 from pathlib import Path
 import sys
 import uuid
@@ -171,6 +172,52 @@ def uninstall(profile, closed=False, dry_run=False):
     if managed.exists() and not any(managed.iterdir()): managed.rmdir()
     return {'action': 'uninstalled', 'backup_preserved': state['backup'], 'note': 'Native vertical tabs remain enabled. Shared application loader files are retained for other opted-in profiles; remove them separately after all profiles are uninstalled. Reset zenfx preferences/about:config if desired.'}
 
+def prompt_path(label):
+    value = input(label).strip()
+    # Finder can paste either a quoted path or a shell-escaped drag/drop path.
+    # Interpret quoting only; never evaluate a shell command or substitutions.
+    if os.name == 'nt':
+        if len(value) >= 2 and value[0] == value[-1] and value[0] in "\"'":
+            value = value[1:-1]
+    else:
+        parts = shlex.split(value)
+        if len(parts) == 1: value = parts[0]
+    if not value: raise ValueError('A folder path is required. Nothing was changed.')
+    return str(Path(value).expanduser())
+
+def guided():
+    print('ZenFX source setup — no downloaded app launcher or Tk required.')
+    print('1. Appearance only (profile files; default)')
+    print('2. Full setup (also adds the startup loader to Firefox)')
+    print('3. Uninstall / restore profile originals')
+    choice = input('Choose 1, 2, or 3 [1]: ').strip() or '1'
+    if choice not in ('1', '2', '3'): raise ValueError('Choose 1, 2, or 3. Nothing was changed.')
+    print('In Firefox, open about:support → Profile Folder → Open Folder / Show in Finder.')
+    profile = prompt_path('Paste or drag that profile folder here: ')
+    application = None
+    if choice == '2':
+        print('Full setup writes two AutoConfig files inside the selected Firefox application.')
+        print('On macOS, changing a signed app bundle can affect its signature and future launches.')
+        print('Signing this installer would not remove that separate limitation. Full-restart loading is unverified.')
+        application = prompt_path('Paste or drag Firefox.app (or its installation folder) here: ')
+    if input('Quit Firefox completely. Is it fully closed? Type yes: ').strip().lower() != 'yes':
+        print('Canceled. Nothing was changed.'); return None
+    preview = uninstall(profile, closed=True, dry_run=True) if choice == '3' else install(profile, application, closed=True, dry_run=True)
+    print('\nFiles to ' + ('restore/remove:' if choice == '3' else 'install/update:'))
+    for name in preview['files']: print('  ' + name)
+    print('Existing originals are backed up; existing backups are retained.')
+    if input('Proceed with these changes? Type yes: ').strip().lower() != 'yes':
+        print('Canceled. Nothing was changed.'); return None
+    result = uninstall(profile, closed=True) if choice == '3' else install(profile, application, closed=True)
+    if choice == '3':
+        print('Profile originals restored. Backups and any shared application loader were retained.')
+    else:
+        print('Done. Reopen the selected Firefox profile.')
+        print('Backup: ' + result['backup'])
+        print('Startup scripts prepared.' if result['startup_loader'] else 'Appearance installed. Startup scripts are not enabled.')
+        print('Automatic cleanup is separate; its unsigned source was not installed.')
+    return result
+
 def gui():
     import tkinter as tk
     from tkinter import filedialog, messagebox, ttk
@@ -210,8 +257,16 @@ def main():
     parser.add_argument('--profile'); parser.add_argument('--application')
     parser.add_argument('--closed-confirmed', action='store_true')
     parser.add_argument('--dry-run', action='store_true'); parser.add_argument('--uninstall', action='store_true')
-    parser.add_argument('--gui', action='store_true')
+    interface = parser.add_mutually_exclusive_group()
+    interface.add_argument('--gui', action='store_true')
+    interface.add_argument('--guided', action='store_true', help='Interactive source setup in Terminal; no Tk required')
     args = parser.parse_args()
+    if args.guided:
+        if args.profile or args.application or args.uninstall or args.dry_run or args.closed_confirmed:
+            parser.error('--guided asks for its own targets and confirmations; do not combine it with other setup flags')
+        try: guided()
+        except (EOFError, KeyboardInterrupt): print('\nSetup interrupted. No further changes were made.')
+        return
     if args.gui or not args.profile:
         gui(); return
     result = uninstall(args.profile, args.closed_confirmed, args.dry_run) if args.uninstall else install(args.profile, args.application, args.closed_confirmed, args.dry_run)

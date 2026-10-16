@@ -125,4 +125,37 @@ class InstallerTests(unittest.TestCase):
         self.assertEqual(target.read_bytes(), before)
         self.assertEqual(list(self.profile.glob('*.tmp')), [])
 
+    def run_guided(self, answers):
+        import io
+        with patch('builtins.input', side_effect=answers), patch('sys.stdout', new_callable=io.StringIO):
+            return setup.guided()
+    def test_guided_default_installs_appearance_and_can_restore(self):
+        result = self.run_guided(['', str(self.profile), 'yes', 'yes'])
+        self.assertFalse(result['startup_loader'])
+        self.assertFalse((self.app/'zenfx.cfg').exists())
+        self.run_guided(['3', str(self.profile), 'yes', 'yes'])
+        self.assertEqual((self.profile/'chrome/userChrome.css').read_text(), '/* original theme */\n')
+    def test_guided_full_setup_requires_explicit_application(self):
+        result = self.run_guided(['2', str(self.profile), str(self.app), 'yes', 'yes'])
+        self.assertTrue(result['startup_loader'])
+        self.assertTrue((self.app/'zenfx.cfg').exists())
+    def test_guided_cancel_at_review_leaves_no_changes(self):
+        before = {str(p): p.read_bytes() for p in self.base.rglob('*') if p.is_file()}
+        self.assertIsNone(self.run_guided(['1', str(self.profile), 'yes', 'no']))
+        self.assertEqual(before, {str(p): p.read_bytes() for p in self.base.rglob('*') if p.is_file()})
+    def test_guided_refuses_to_continue_while_browser_is_open(self):
+        self.assertIsNone(self.run_guided(['1', str(self.profile), 'no']))
+        self.assertFalse((self.profile/'zenfx-install-state.json').exists())
+    def test_guided_empty_full_target_cannot_silently_install_appearance(self):
+        with self.assertRaises(ValueError): self.run_guided(['2', str(self.profile), ''])
+        self.assertFalse((self.profile/'zenfx-install-state.json').exists())
+    @unittest.skipIf(setup.os.name == 'nt', 'Finder path syntax is macOS-specific')
+    def test_guided_accepts_finder_paths_without_evaluating_shell_text(self):
+        folder = self.base / 'Example Profile'; folder.mkdir()
+        for value in [str(folder).replace(' ', r'\ '), '"' + str(folder) + '"', str(folder)]:
+            with patch('builtins.input', return_value=value): self.assertEqual(setup.prompt_path(''), str(folder))
+        literal = str(self.base / '$(touch BAD)')
+        with patch('builtins.input', return_value="'" + literal + "'"): self.assertEqual(setup.prompt_path(''), literal)
+        self.assertFalse((self.base / 'BAD').exists())
+
 if __name__=='__main__':unittest.main()
