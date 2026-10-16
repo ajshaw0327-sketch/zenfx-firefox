@@ -2,11 +2,52 @@
 
 **Desktop Firefox 158. macOS is browser-tested. Windows/Linux launchers and styles are experimental and have not been browser-tested. Mobile Firefox, older Firefox/ESR, and arbitrary future releases are not supported by this build.**
 
-## Install on another compatible Firefox profile
+## Before you start
 
-1. Extract this entire ZIP. Install **Python 3.10 or newer with Tk** if it is not already available. The installer is not a standalone native application.
-2. In the target Firefox, open `about:support` and use **Profile Folder → Open Folder / Show in Finder**. Remember that folder, then quit Firefox completely.
-3. Double-click **Install.command** on macOS, **Install.cmd** on Windows, or run **Install.sh** on Linux. Choose that **profile folder**, review the changes, and install. The installer does not scan or select your profiles automatically.
+- **Want only the look?** [Download appearance only](https://github.com/ajshaw0327-sketch/zenfx-firefox/raw/refs/heads/main/dist/ZenFX-Appearance.zip) and follow its [four copy-and-restart steps](appearance/README.md). Python is not needed.
+- **Want the tab features and Compact controls?** [Download full setup](https://github.com/ajshaw0327-sketch/zenfx-firefox/raw/refs/heads/main/dist/ZenFX-Setup.zip), extract the whole ZIP, and use the steps below. No Git or build step is needed.
+- Full setup needs **Python 3.10+ with Tk**. If Python is missing, use the [official Python downloads](https://www.python.org/downloads/). The official macOS and Windows Python distributions include Tk; Linux users may need their distribution’s Tk package. [Python’s Tk documentation](https://docs.python.org/3/library/tkinter.html) explains how to check it.
+
+## Install
+
+1. In the Firefox you want to customize, enter `about:support` in the address bar. Click **Profile Folder → Open Folder / Show in Finder**. Keep that folder open so you can select it in setup, then **quit Firefox completely**.
+2. Open the extracted **ZenFX** folder. Use the launcher for your operating system:
+
+   | System | Open | Firefox application field |
+   | --- | --- | --- |
+   | macOS | Double-click **Install.command** | Select `Firefox.app`, usually in Applications |
+   | Windows | Double-click **Install.cmd** | Select the Firefox installation folder containing `application.ini` |
+   | Linux | Run **Install.sh** from a terminal with `sh Install.sh` | Select the Firefox installation folder containing `application.ini` |
+
+3. In **Firefox profile folder**, choose the folder from step 1. For floating New Tab search, drag-to-split, Favorites, Clear, and Compact controls, also choose the **Firefox application**. Leaving that field blank installs only the appearance.
+4. Check **Firefox is completely closed**. Click **Review and install**, inspect the listed files, and confirm installation. Setup backs up the files it replaces.
+5. Reopen that Firefox profile, then check the controls below.
+
+## Check it worked
+
+| Check | Expected result |
+| --- | --- |
+| Appearance | Vertical sidebar, rounded page frame, and folder-style native groups; drag the expanded sidebar’s edge to resize |
+| Floating New Tab | The normal New Tab command opens search over the current page; Escape cancels, and submitting creates a tab |
+| Tab hierarchy | Right-click a tab → **Tab priority** → Favorites / Pinned tabs / Today tabs; **↓ Clear** sits above New Tab |
+| Compact controls | Right-click the Compact Mode button, or use **Tools → ZenFX shortcut settings…**, to choose hidden bars and record a shortcut |
+| Drag to split | Drag an ordinary tab onto the left or right side of the current page; dropping creates native Split View |
+
+The last four checks need the optional scripts. If only the appearance changes, follow the troubleshooting table below. The AutoConfig loader’s full quit/relaunch path remains unverified; these checks let you confirm it on your installation.
+
+## If something is missing
+
+| Problem | What to do |
+| --- | --- |
+| Setup will not open / Python or Tk is missing | Install Python with Tk using the official links above, or use the [command-line alternative](#command-line-alternative). Do not run the launcher from inside the ZIP. |
+| A launcher is not executable | From the extracted ZenFX folder, use `python3 installer/install.py --gui` on Mac/Linux or `py -3 installer/install.py --gui` on Windows. |
+| Firefox looks unchanged | Recheck the exact profile in `about:support`. In `about:config`, confirm `toolkit.legacyUserProfileCustomizations.stylesheets` is `true`, then fully quit and reopen Firefox. Enable native Vertical Tabs in the sidebar settings if needed. |
+| Appearance works, but the scripts are missing | Confirm setup included the Firefox application. For an existing managed install, use the [update/restore instructions](#favorites-pinned-tabs-and-today-tabs). Copying scripts into the profile alone does not run them. See the startup limitation below. |
+| Setup says another AutoConfig exists | Keep that configuration. This installer refuses conflicts; use appearance only or integrate the scripts with your existing compatible loader. |
+| Setup cannot write the application folder | Appearance-only setup does not need application writes. The optional loader needs a writable application or a separately authorized administrator installation; setup does not elevate itself. |
+| Cleanup is not running | It is a separate unsigned extension source package, not part of automatic setup. See [cleanup installation limits](#what-is-an-extension). |
+
+## What setup changes
 
 Choosing only a profile installs the appearance and enables native vertical tabs. Existing `userChrome.css` is backed up and replaced with the ZenFX entry; existing `user.js` settings are retained with an appended ZenFX block. Firefox must be closed. No network downloads, account access, automatic elevation, or extension-signature changes occur.
 
@@ -14,7 +55,10 @@ For the full New Tab overlay, drag-to-split, Compact Mode controls, and tab hier
 
 The application-level AutoConfig installation has **not** been performed on this machine. The loader's real new-window lifecycle was tested within the authorized test profile; a full application AutoConfig cold-start remains unverified. Setup writes the selected files but does not certify that cold-start path.
 
-## Change the shortcut
+## Change visibility or the shortcut
+
+Right-click the Compact Mode button to choose **Hide the top toolbar**, **Hide the sidebar**, and **Reveal both bars together**. Turn off the last option for independent edge reveals, then click **Save**.
+
 
 **Right-click the Compact Mode button → click the shortcut field → press your combination → Save.**
 
@@ -56,5 +100,3 @@ On Windows, replace `python3` with `py -3`. GUI setup needs Tk; the command-line
 [Full feature and installation notes](README.md) · [What was tested](docs/VALIDATION.md)
 
 References: [Mozilla CSS customization](https://support.mozilla.org/en-US/kb/contributors-guide-firefox-advanced-customization), [Mozilla AutoConfig](https://support.mozilla.org/en-US/kb/customizing-firefox-using-autoconfig), [Mozilla extension signing](https://extensionworkshop.com/documentation/publish/signing-and-distribution-overview/). The small startup bootstrap follows the documented AutoConfig entry and the public [fx-autoconfig chrome-registration pattern](https://github.com/MrOtherGuy/fx-autoconfig/blob/master/program/config.js); no third-party runtime is downloaded or installed.
-
-The Compact Mode settings dialog also has separate **Hide top toolbar** and **Hide sidebar** controls. **Reveal both bars together** keeps the default shared hover area; turn it off for independent edge reveals. CSS-only users can set `zenfx.compact.independent-reveal` to `true` for independent reveals.

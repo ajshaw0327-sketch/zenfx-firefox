@@ -4,13 +4,26 @@ A Zen-inspired Firefox interface using native vertical tabs, folder-style tab gr
 
 **Tested on Firefox 158 for macOS.** Windows/Linux styling and launchers are experimental. This is an independent customization, not an official Mozilla or Zen Browser product.
 
-## Download
+## Get started
 
-- **[Appearance only](https://github.com/ajshaw0327-sketch/zenfx-firefox/raw/refs/heads/main/dist/ZenFX-Appearance.zip)** — just `userChrome.css` and installation instructions.
-- **[Full setup](https://github.com/ajshaw0327-sketch/zenfx-firefox/raw/refs/heads/main/dist/ZenFX-Setup.zip)** — appearance, the four optional scripts, guided installer, and unsigned tab-cleanup source.
-- **[Single CSS file](standalone/userChrome.css)** — replace your stylesheet, enable Firefox's custom stylesheets preference, and restart.
+**[Download ZenFX Setup](https://github.com/ajshaw0327-sketch/zenfx-firefox/raw/refs/heads/main/dist/ZenFX-Setup.zip)** · **[Step-by-step setup guide](START-HERE.md)**
 
-Start with [appearance installation](appearance/README.md) or [full setup instructions](START-HERE.md).
+No Git, cloning, or build tools are needed. Download the ZIP above and extract it before running setup; GitHub’s **Code → Download ZIP** is the source repository.
+
+| Choose | What you get | Requirements |
+| --- | --- | --- |
+| **[Full setup](START-HERE.md)** | Appearance, floating New Tab search, drag-to-split, Favorites/Pinned/Today, Clear tabs, Compact Mode button and shortcut editor | Desktop Firefox 158; Python 3.10+ with Tk; select both profile and application for startup scripts |
+| **[Appearance only](https://github.com/ajshaw0327-sketch/zenfx-firefox/raw/refs/heads/main/dist/ZenFX-Appearance.zip)** | Sidebar, folders, rounded frame, floating address-field styling, and split-header styling | Desktop Firefox 158; copy one CSS file; no Python required |
+
+### Full setup in five steps
+
+1. **Prepare:** use desktop Firefox 158 and install [Python with Tk](START-HERE.md#before-you-start) if needed. macOS is browser-tested; Windows/Linux remain experimental.
+2. **Find your profile:** enter `about:support` in Firefox, then click **Profile Folder → Open Folder / Show in Finder**. Keep that folder open and quit Firefox completely.
+3. **Open setup:** extract the [full setup ZIP](https://github.com/ajshaw0327-sketch/zenfx-firefox/raw/refs/heads/main/dist/ZenFX-Setup.zip), open its `ZenFX` folder, and launch `Install.command` (Mac), `Install.cmd` (Windows), or `Install.sh` (Linux).
+4. **Choose both targets:** select the profile folder and the Firefox application. Check **Firefox is completely closed**, click **Review and install**, and review the listed changes. Originals are backed up. Leave the application blank to install appearance only.
+5. **Reopen Firefox:** right-click a tab → **Tab priority**; right-click the Compact Mode button to change visibility or its shortcut. Use the [setup checks](START-HERE.md#check-it-worked) if something is missing.
+
+**Current limits:** startup scripts use an application AutoConfig loader whose full quit/relaunch path remains unverified. Automatic 24-hour cleanup is a separate unsigned add-on and is not installed by setup. [Details, troubleshooting, and removal](START-HERE.md).
 
 ## What each part does
 
