@@ -479,6 +479,6 @@
   "closedSourceClean": true,
   "errors": [],
   "pass": true,
-  "hookSHA256": "8d019d3c95883ec10f98078f28fa2fe7743f709390b08ca4b577b05c1f857c4a",
+  "hookSHA256": "88f5ed355d4ed47ae8b7bda0bb837c9673b8f24be94df7119aa857925e7d24ae",
   "limits": "Expanded native vertical sidebar, controlled same-window single-tab moves. Modified/copy/multi-tab/cross-window gestures stay native. Physical OS release and overflow autoscroll are not certified by this fixture."
 }

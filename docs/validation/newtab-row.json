@@ -1,0 +1,850 @@
+{
+  "method": "Firefox 158/macOS test profile, disposable fixture window. Native drag setup with controlled drag events; OS pointer release is not certified.",
+  "sourceSHA256": "88f5ed355d4ed47ae8b7bda0bb837c9673b8f24be94df7119aa857925e7d24ae",
+  "cases": [
+    {
+      "name": "overflow width 180 selected 0",
+      "button": {
+        "top": 74,
+        "bottom": 110,
+        "height": 36,
+        "width": 166
+      },
+      "periphery": {
+        "top": 1552,
+        "bottom": 1552,
+        "height": 0,
+        "width": 180
+      },
+      "buttonParent": "",
+      "nativeTabsOnly": true,
+      "overflow": true,
+      "scrollTop": 0,
+      "scrollHeight": 1506,
+      "clientHeight": 624,
+      "overlaps": [],
+      "visibleButtons": [
+        "zenfx-newtab-row"
+      ],
+      "sentinelAfterTabs": true,
+      "selected": {
+        "top": 112,
+        "bottom": 148,
+        "height": 36,
+        "width": 180
+      },
+      "viewport": {
+        "top": 46,
+        "bottom": 669.5,
+        "height": 623.5,
+        "width": 180
+      },
+      "selectedVisible": true
+    },
+    {
+      "name": "overflow width 180 selected 20",
+      "button": {
+        "top": -124.5,
+        "bottom": -88.5,
+        "height": 36,
+        "width": 166
+      },
+      "periphery": {
+        "top": 1353.5,
+        "bottom": 1353.5,
+        "height": 0,
+        "width": 180
+      },
+      "buttonParent": "",
+      "nativeTabsOnly": true,
+      "overflow": true,
+      "scrollTop": 198.5,
+      "scrollHeight": 1506,
+      "clientHeight": 624,
+      "overlaps": [],
+      "visibleButtons": [
+        "zenfx-newtab-row"
+      ],
+      "sentinelAfterTabs": true,
+      "selected": {
+        "top": 633.5,
+        "bottom": 669.5,
+        "height": 36,
+        "width": 180
+      },
+      "viewport": {
+        "top": 46,
+        "bottom": 669.5,
+        "height": 623.5,
+        "width": 180
+      },
+      "selectedVisible": true
+    },
+    {
+      "name": "overflow width 180 selected 39",
+      "button": {
+        "top": -808.5,
+        "bottom": -772.5,
+        "height": 36,
+        "width": 166
+      },
+      "periphery": {
+        "top": 669.5,
+        "bottom": 669.5,
+        "height": 0,
+        "width": 180
+      },
+      "buttonParent": "",
+      "nativeTabsOnly": true,
+      "overflow": true,
+      "scrollTop": 882.5,
+      "scrollHeight": 1506,
+      "clientHeight": 624,
+      "overlaps": [],
+      "visibleButtons": [
+        "zenfx-newtab-row"
+      ],
+      "sentinelAfterTabs": true,
+      "selected": {
+        "top": 633.5,
+        "bottom": 669.5,
+        "height": 36,
+        "width": 180
+      },
+      "viewport": {
+        "top": 46,
+        "bottom": 669.5,
+        "height": 623.5,
+        "width": 180
+      },
+      "selectedVisible": true
+    },
+    {
+      "name": "overflow width 240 selected 0",
+      "button": {
+        "top": 8,
+        "bottom": 44,
+        "height": 36,
+        "width": 226
+      },
+      "periphery": {
+        "top": 1486,
+        "bottom": 1486,
+        "height": 0,
+        "width": 240
+      },
+      "buttonParent": "",
+      "nativeTabsOnly": true,
+      "overflow": true,
+      "scrollTop": 66,
+      "scrollHeight": 1506,
+      "clientHeight": 665,
+      "overlaps": [],
+      "visibleButtons": [
+        "zenfx-newtab-row"
+      ],
+      "sentinelAfterTabs": true,
+      "selected": {
+        "top": 46,
+        "bottom": 82,
+        "height": 36,
+        "width": 240
+      },
+      "viewport": {
+        "top": 46,
+        "bottom": 710.5,
+        "height": 664.5,
+        "width": 240
+      },
+      "selectedVisible": true
+    },
+    {
+      "name": "overflow width 240 selected 20",
+      "button": {
+        "top": -83.5,
+        "bottom": -47.5,
+        "height": 36,
+        "width": 226
+      },
+      "periphery": {
+        "top": 1394.5,
+        "bottom": 1394.5,
+        "height": 0,
+        "width": 240
+      },
+      "buttonParent": "",
+      "nativeTabsOnly": true,
+      "overflow": true,
+      "scrollTop": 157.5,
+      "scrollHeight": 1506,
+      "clientHeight": 665,
+      "overlaps": [],
+      "visibleButtons": [
+        "zenfx-newtab-row"
+      ],
+      "sentinelAfterTabs": true,
+      "selected": {
+        "top": 674.5,
+        "bottom": 710.5,
+        "height": 36,
+        "width": 240
+      },
+      "viewport": {
+        "top": 46,
+        "bottom": 710.5,
+        "height": 664.5,
+        "width": 240
+      },
+      "selectedVisible": true
+    },
+    {
+      "name": "overflow width 240 selected 39",
+      "button": {
+        "top": -767.5,
+        "bottom": -731.5,
+        "height": 36,
+        "width": 226
+      },
+      "periphery": {
+        "top": 710.5,
+        "bottom": 710.5,
+        "height": 0,
+        "width": 240
+      },
+      "buttonParent": "",
+      "nativeTabsOnly": true,
+      "overflow": true,
+      "scrollTop": 841.5,
+      "scrollHeight": 1506,
+      "clientHeight": 665,
+      "overlaps": [],
+      "visibleButtons": [
+        "zenfx-newtab-row"
+      ],
+      "sentinelAfterTabs": true,
+      "selected": {
+        "top": 674.5,
+        "bottom": 710.5,
+        "height": 36,
+        "width": 240
+      },
+      "viewport": {
+        "top": 46,
+        "bottom": 710.5,
+        "height": 664.5,
+        "width": 240
+      },
+      "selectedVisible": true
+    },
+    {
+      "name": "overflow width 300 selected 0",
+      "button": {
+        "top": 8,
+        "bottom": 44,
+        "height": 36,
+        "width": 286
+      },
+      "periphery": {
+        "top": 1486,
+        "bottom": 1486,
+        "height": 0,
+        "width": 300
+      },
+      "buttonParent": "",
+      "nativeTabsOnly": true,
+      "overflow": true,
+      "scrollTop": 66,
+      "scrollHeight": 1506,
+      "clientHeight": 665,
+      "overlaps": [],
+      "visibleButtons": [
+        "zenfx-newtab-row"
+      ],
+      "sentinelAfterTabs": true,
+      "selected": {
+        "top": 46,
+        "bottom": 82,
+        "height": 36,
+        "width": 300
+      },
+      "viewport": {
+        "top": 46,
+        "bottom": 710.5,
+        "height": 664.5,
+        "width": 300
+      },
+      "selectedVisible": true
+    },
+    {
+      "name": "overflow width 300 selected 20",
+      "button": {
+        "top": -83.5,
+        "bottom": -47.5,
+        "height": 36,
+        "width": 286
+      },
+      "periphery": {
+        "top": 1394.5,
+        "bottom": 1394.5,
+        "height": 0,
+        "width": 300
+      },
+      "buttonParent": "",
+      "nativeTabsOnly": true,
+      "overflow": true,
+      "scrollTop": 157.5,
+      "scrollHeight": 1506,
+      "clientHeight": 665,
+      "overlaps": [],
+      "visibleButtons": [
+        "zenfx-newtab-row"
+      ],
+      "sentinelAfterTabs": true,
+      "selected": {
+        "top": 674.5,
+        "bottom": 710.5,
+        "height": 36,
+        "width": 300
+      },
+      "viewport": {
+        "top": 46,
+        "bottom": 710.5,
+        "height": 664.5,
+        "width": 300
+      },
+      "selectedVisible": true
+    },
+    {
+      "name": "overflow width 300 selected 39",
+      "button": {
+        "top": -767.5,
+        "bottom": -731.5,
+        "height": 36,
+        "width": 286
+      },
+      "periphery": {
+        "top": 710.5,
+        "bottom": 710.5,
+        "height": 0,
+        "width": 300
+      },
+      "buttonParent": "",
+      "nativeTabsOnly": true,
+      "overflow": true,
+      "scrollTop": 841.5,
+      "scrollHeight": 1506,
+      "clientHeight": 665,
+      "overlaps": [],
+      "visibleButtons": [
+        "zenfx-newtab-row"
+      ],
+      "sentinelAfterTabs": true,
+      "selected": {
+        "top": 674.5,
+        "bottom": 710.5,
+        "height": 36,
+        "width": 300
+      },
+      "viewport": {
+        "top": 46,
+        "bottom": 710.5,
+        "height": 664.5,
+        "width": 300
+      },
+      "selectedVisible": true
+    },
+    {
+      "name": "collapsed overflow",
+      "button": {
+        "top": -955.316650390625,
+        "bottom": -919.316650390625,
+        "height": 36,
+        "width": 34
+      },
+      "periphery": {
+        "top": 563.433349609375,
+        "bottom": 563.433349609375,
+        "height": 0,
+        "width": 52
+      },
+      "buttonParent": "",
+      "nativeTabsOnly": true,
+      "overflow": true,
+      "scrollTop": 1001.316650390625,
+      "scrollHeight": 1519,
+      "clientHeight": 517,
+      "overlaps": [],
+      "visibleButtons": [
+        "zenfx-newtab-row"
+      ],
+      "sentinelAfterTabs": true,
+      "selected": {
+        "top": 526.433349609375,
+        "bottom": 563.433349609375,
+        "height": 37,
+        "width": 52
+      },
+      "viewport": {
+        "top": 46,
+        "bottom": 563.433349609375,
+        "height": 517.433349609375,
+        "width": 52
+      },
+      "selectedVisible": true
+    },
+    {
+      "name": "reexpanded overflow",
+      "button": {
+        "top": -808.5,
+        "bottom": -772.5,
+        "height": 36,
+        "width": 151
+      },
+      "periphery": {
+        "top": 669.5,
+        "bottom": 669.5,
+        "height": 0,
+        "width": 165
+      },
+      "buttonParent": "",
+      "nativeTabsOnly": true,
+      "overflow": true,
+      "scrollTop": 882.5,
+      "scrollHeight": 1506,
+      "clientHeight": 624,
+      "overlaps": [],
+      "visibleButtons": [
+        "zenfx-newtab-row"
+      ],
+      "sentinelAfterTabs": true,
+      "selected": {
+        "top": 633.5,
+        "bottom": 669.5,
+        "height": 36,
+        "width": 165
+      },
+      "viewport": {
+        "top": 46,
+        "bottom": 669.5,
+        "height": 623.5,
+        "width": 165
+      },
+      "selectedVisible": true
+    },
+    {
+      "name": "drag 0 toward 5",
+      "button": {
+        "top": 74,
+        "bottom": 110,
+        "height": 36,
+        "width": 151
+      },
+      "periphery": {
+        "top": 328,
+        "bottom": 328,
+        "height": 0,
+        "width": 165
+      },
+      "buttonParent": "",
+      "nativeTabsOnly": true,
+      "overflow": false,
+      "scrollTop": 0,
+      "scrollHeight": 624,
+      "clientHeight": 624,
+      "overlaps": [],
+      "visibleButtons": [
+        "zenfx-newtab-row"
+      ],
+      "sentinelAfterTabs": true,
+      "selected": {
+        "top": 290,
+        "bottom": 326,
+        "height": 36,
+        "width": 165
+      },
+      "viewport": {
+        "top": 46,
+        "bottom": 669.5,
+        "height": 623.5,
+        "width": 165
+      },
+      "selectedVisible": true
+    },
+    {
+      "name": "drag end 0 toward 5",
+      "button": {
+        "top": 74,
+        "bottom": 110,
+        "height": 36,
+        "width": 151
+      },
+      "periphery": {
+        "top": 328,
+        "bottom": 328,
+        "height": 0,
+        "width": 165
+      },
+      "buttonParent": "",
+      "nativeTabsOnly": true,
+      "overflow": false,
+      "scrollTop": 0,
+      "scrollHeight": 624,
+      "clientHeight": 624,
+      "overlaps": [],
+      "visibleButtons": [
+        "zenfx-newtab-row"
+      ],
+      "sentinelAfterTabs": true,
+      "selected": {
+        "top": 112,
+        "bottom": 148,
+        "height": 36,
+        "width": 165
+      },
+      "viewport": {
+        "top": 46,
+        "bottom": 669.5,
+        "height": 623.5,
+        "width": 165
+      },
+      "selectedVisible": true
+    },
+    {
+      "name": "drag 5 toward 0",
+      "button": {
+        "top": 74,
+        "bottom": 110,
+        "height": 36,
+        "width": 151
+      },
+      "periphery": {
+        "top": 328,
+        "bottom": 328,
+        "height": 0,
+        "width": 165
+      },
+      "buttonParent": "",
+      "nativeTabsOnly": true,
+      "overflow": false,
+      "scrollTop": 0,
+      "scrollHeight": 624,
+      "clientHeight": 624,
+      "overlaps": [],
+      "visibleButtons": [
+        "zenfx-newtab-row"
+      ],
+      "sentinelAfterTabs": true,
+      "selected": {
+        "top": 110,
+        "bottom": 146,
+        "height": 36,
+        "width": 165
+      },
+      "viewport": {
+        "top": 46,
+        "bottom": 669.5,
+        "height": 623.5,
+        "width": 165
+      },
+      "selectedVisible": true
+    },
+    {
+      "name": "drag end 5 toward 0",
+      "button": {
+        "top": 74,
+        "bottom": 110,
+        "height": 36,
+        "width": 151
+      },
+      "periphery": {
+        "top": 328,
+        "bottom": 328,
+        "height": 0,
+        "width": 165
+      },
+      "buttonParent": "",
+      "nativeTabsOnly": true,
+      "overflow": false,
+      "scrollTop": 0,
+      "scrollHeight": 624,
+      "clientHeight": 624,
+      "overlaps": [],
+      "visibleButtons": [
+        "zenfx-newtab-row"
+      ],
+      "sentinelAfterTabs": true,
+      "selected": {
+        "top": 292,
+        "bottom": 328,
+        "height": 36,
+        "width": 165
+      },
+      "viewport": {
+        "top": 46,
+        "bottom": 669.5,
+        "height": 623.5,
+        "width": 165
+      },
+      "selectedVisible": true
+    },
+    {
+      "name": "drag 2 toward 4",
+      "button": {
+        "top": 74,
+        "bottom": 110,
+        "height": 36,
+        "width": 151
+      },
+      "periphery": {
+        "top": 328,
+        "bottom": 328,
+        "height": 0,
+        "width": 165
+      },
+      "buttonParent": "",
+      "nativeTabsOnly": true,
+      "overflow": false,
+      "scrollTop": 0,
+      "scrollHeight": 624,
+      "clientHeight": 624,
+      "overlaps": [],
+      "visibleButtons": [
+        "zenfx-newtab-row"
+      ],
+      "sentinelAfterTabs": true,
+      "selected": {
+        "top": 254,
+        "bottom": 290,
+        "height": 36,
+        "width": 165
+      },
+      "viewport": {
+        "top": 46,
+        "bottom": 669.5,
+        "height": 623.5,
+        "width": 165
+      },
+      "selectedVisible": true
+    },
+    {
+      "name": "drag end 2 toward 4",
+      "button": {
+        "top": 74,
+        "bottom": 110,
+        "height": 36,
+        "width": 151
+      },
+      "periphery": {
+        "top": 328,
+        "bottom": 328,
+        "height": 0,
+        "width": 165
+      },
+      "buttonParent": "",
+      "nativeTabsOnly": true,
+      "overflow": false,
+      "scrollTop": 0,
+      "scrollHeight": 624,
+      "clientHeight": 624,
+      "overlaps": [],
+      "visibleButtons": [
+        "zenfx-newtab-row"
+      ],
+      "sentinelAfterTabs": true,
+      "selected": {
+        "top": 184,
+        "bottom": 220,
+        "height": 36,
+        "width": 165
+      },
+      "viewport": {
+        "top": 46,
+        "bottom": 669.5,
+        "height": 623.5,
+        "width": 165
+      },
+      "selectedVisible": true
+    },
+    {
+      "name": "folder expanded",
+      "button": {
+        "top": 180,
+        "bottom": 216,
+        "height": 36,
+        "width": 151
+      },
+      "periphery": {
+        "top": 362,
+        "bottom": 362,
+        "height": 0,
+        "width": 165
+      },
+      "buttonParent": "",
+      "nativeTabsOnly": true,
+      "overflow": false,
+      "scrollTop": 0,
+      "scrollHeight": 624,
+      "clientHeight": 624,
+      "overlaps": [],
+      "visibleButtons": [
+        "zenfx-newtab-row"
+      ],
+      "sentinelAfterTabs": true,
+      "selected": {
+        "top": 254,
+        "bottom": 290,
+        "height": 36,
+        "width": 165
+      },
+      "viewport": {
+        "top": 46,
+        "bottom": 669.5,
+        "height": 623.5,
+        "width": 165
+      },
+      "selectedVisible": true
+    },
+    {
+      "name": "folder collapsed",
+      "button": {
+        "top": 111,
+        "bottom": 147,
+        "height": 36,
+        "width": 151
+      },
+      "periphery": {
+        "top": 293,
+        "bottom": 293,
+        "height": 0,
+        "width": 165
+      },
+      "buttonParent": "",
+      "nativeTabsOnly": true,
+      "overflow": false,
+      "scrollTop": 0,
+      "scrollHeight": 624,
+      "clientHeight": 624,
+      "overlaps": [],
+      "visibleButtons": [
+        "zenfx-newtab-row"
+      ],
+      "sentinelAfterTabs": true,
+      "selected": {
+        "top": 185,
+        "bottom": 221,
+        "height": 36,
+        "width": 165
+      },
+      "viewport": {
+        "top": 46,
+        "bottom": 669.5,
+        "height": 623.5,
+        "width": 165
+      },
+      "selectedVisible": true
+    },
+    {
+      "name": "10 hierarchy reloads",
+      "button": {
+        "top": 180,
+        "bottom": 216,
+        "height": 36,
+        "width": 151
+      },
+      "periphery": {
+        "top": 362,
+        "bottom": 362,
+        "height": 0,
+        "width": 165
+      },
+      "buttonParent": "",
+      "nativeTabsOnly": true,
+      "overflow": false,
+      "scrollTop": 0,
+      "scrollHeight": 624,
+      "clientHeight": 624,
+      "overlaps": [],
+      "visibleButtons": [
+        "zenfx-newtab-row"
+      ],
+      "sentinelAfterTabs": true,
+      "selected": {
+        "top": 254,
+        "bottom": 290,
+        "height": 36,
+        "width": 165
+      },
+      "viewport": {
+        "top": 46,
+        "bottom": 669.5,
+        "height": 623.5,
+        "width": 165
+      },
+      "selectedVisible": true
+    },
+    {
+      "name": "horizontal to vertical",
+      "button": {
+        "top": 180,
+        "bottom": 216,
+        "height": 36,
+        "width": 151
+      },
+      "periphery": {
+        "top": 362,
+        "bottom": 362,
+        "height": 0,
+        "width": 165
+      },
+      "buttonParent": "",
+      "nativeTabsOnly": true,
+      "overflow": false,
+      "scrollTop": 0,
+      "scrollHeight": 624,
+      "clientHeight": 624,
+      "overlaps": [],
+      "visibleButtons": [
+        "zenfx-newtab-row"
+      ],
+      "sentinelAfterTabs": true,
+      "selected": {
+        "top": 254,
+        "bottom": 290,
+        "height": 36,
+        "width": 165
+      },
+      "viewport": {
+        "top": 46,
+        "bottom": 669.5,
+        "height": 623.5,
+        "width": 165
+      },
+      "selectedVisible": true
+    }
+  ],
+  "horizontalRestored": true,
+  "realNewTabClick": true,
+  "keyboardNewTab": true,
+  "middleClickNative": true,
+  "expandedLabel": {
+    "label": "New Tab",
+    "display": "flex",
+    "width": 52.633331298828125
+  },
+  "uninstallRestored": true,
+  "errors": [],
+  "execution": "Final pass ran headlessly in the same test profile. Initial reproduction used a visible window.",
+  "beforeFix": {
+    "duringDragOverlapCount": 1,
+    "newTabTopBeforeDrag": 74,
+    "newTabTopDuringDrag": 110,
+    "newTabHeightWith40Tabs": 0
+  },
+  "loadedTabStress": {
+    "tabCount": 104,
+    "overflow": true,
+    "lastVisible": true,
+    "pinned": 12
+  },
+  "pass": true
+}

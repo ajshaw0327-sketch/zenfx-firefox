@@ -9,7 +9,7 @@
   const pins = document.getElementById("pinned-tabs-container");
   const normal = document.getElementById("tabbrowser-arrowscrollbox");
   const context = document.getElementById("tabContextMenu");
-  const periphery = document.getElementById("tabbrowser-arrowscrollbox-periphery");
+  const newTabButton = document.getElementById("tabs-newtab-button");
   const favoriteKey = "zenfxFavorite", columnsProperty = "--zenfx-favorite-columns";
   const priorColumns = [pins.style.getPropertyValue(columnsProperty), pins.style.getPropertyPriority(columnsProperty)];
   const slots = new Map(), removers = [], dragRemovers = [];
@@ -40,25 +40,69 @@
   }
 
   // Native light-DOM tab/group children stay where Firefox expects them. Named
-  // slots place protected folders, the Clear row, New Tab, then ordinary tabs.
+  // slots place protected folders above Clear. The New Tab row lives in the
+  // shadow tree so native tab enumeration and drag boundaries stay unchanged.
   const nativeSlot = normal.shadowRoot.querySelector('[part="items-wrapper"]');
   const protectedSlot = html("slot"); protectedSlot.name = "zenfx-protected-folders";
-  const newTabSlot = html("slot"); newTabSlot.name = "zenfx-newtab-row";
+  const newTabRow = html("button"); newTabRow.id = "zenfx-newtab-row"; newTabRow.type = "button";
+  const newTabLabel = html("span"); newTabLabel.className = "zenfx-newtab-label";
+  newTabLabel.textContent = newTabButton.getAttribute("label") || "New Tab"; newTabRow.append(newTabLabel);
+  newTabRow.setAttribute("aria-label", newTabLabel.textContent);
+  newTabRow.title = newTabLabel.textContent;
+  listen(newTabRow, "click", event => {
+    if (event.button === 0) window.BrowserCommands.openTab({ event });
+  });
+  listen(newTabRow, "pointerdown", event => {
+    if (event.button === 1) event.preventDefault();
+  });
+  listen(newTabRow, "pointerup", event => {
+    if (event.button === 1) { event.preventDefault(); window.BrowserCommands.openTab({ event }); }
+  });
   const clearRow = html("div"); clearRow.className = "zenfx-clear-row";
   const line = html("span"); line.className = "zenfx-clear-line"; line.setAttribute("aria-hidden", "true");
   const clearButton = html("button"); clearButton.id = "zenfx-clear-tabs"; clearButton.type = "button";
   clearButton.setAttribute("aria-label", "Clear ordinary tabs");
   clearButton.textContent = "↓ Clear";
   clearRow.append(line, clearButton);
-  for (const element of [protectedSlot, clearRow, newTabSlot]) nativeSlot.before(element);
+  for (const element of [protectedSlot, clearRow, newTabRow]) nativeSlot.before(element);
   const regularStyle = html("style");
   regularStyle.textContent = `
     .zenfx-clear-row { display: none; }
     :host([zenfx-hierarchy-vertical]) [part="scrollbox"] {
       display: flex; flex-direction: column; align-items: stretch;
+      /* Late native New Tab reveals must not animate toward stale geometry. */
+      scroll-behavior: auto !important;
     }
-    :host([zenfx-hierarchy-vertical]) slot[name="zenfx-protected-folders"],
-    :host([zenfx-hierarchy-vertical]) slot[name="zenfx-newtab-row"] { display: contents; }
+    :host([zenfx-hierarchy-vertical]) slot[name="zenfx-protected-folders"] { display: contents; }
+    #zenfx-newtab-row { display: none; }
+    :host([zenfx-hierarchy-vertical]) #zenfx-newtab-row {
+      display: flex; align-items: center; appearance: none; flex: 0 0 auto; min-height: 36px;
+      border: 0; background: transparent; color: inherit; font: inherit; cursor: pointer;
+      line-height: var(--tab-label-line-height); border-radius: var(--tab-border-radius);
+      padding: 0 calc(var(--tab-padding-inline) - var(--tab-margin-inline-inner));
+      width: var(--tab-collapsed-background-width); margin-inline: var(--tab-margin-inline-inner);
+      margin-block: var(--tab-margin-block);
+      -moz-window-dragging: no-drag;
+    }
+    :host([zenfx-hierarchy-expanded]) #zenfx-newtab-row {
+      margin: 0 7px 2px; width: calc(100% - 14px); justify-content: start;
+    }
+    #zenfx-newtab-row:hover {
+      background-color: var(--tab-background-color-hover); outline-color: var(--tab-border-color-hover);
+    }
+    #zenfx-newtab-row:hover:active {
+      color: var(--button-text-color-ghost-active); background-color: var(--button-background-color-ghost-active);
+    }
+    #zenfx-newtab-row:focus-visible { outline: var(--focus-outline); outline-offset: var(--focus-outline-inset); }
+    #zenfx-newtab-row::before {
+      content: ""; width: 16px; height: 16px; flex: 0 0 16px; background: currentColor;
+      mask: url(chrome://global/skin/icons/plus.svg) center / contain no-repeat;
+    }
+    #zenfx-newtab-row > .zenfx-newtab-label {
+      text-align: start; padding-inline-start: var(--tab-icon-margin-inline-end); color: var(--toolbarbutton-icon-fill);
+    }
+    :host([zenfx-hierarchy-expanded]) #zenfx-newtab-row > .zenfx-newtab-label { display: flex; }
+    :host(:not([zenfx-hierarchy-expanded])) #zenfx-newtab-row > .zenfx-newtab-label { display: none; }
     :host([zenfx-hierarchy-expanded]) .zenfx-clear-row {
       display: flex; align-items: center; gap: 6px; flex: 0 0 24px;
       min-height: 24px; margin: 3px 10px 1px; -moz-window-dragging: drag;
@@ -99,7 +143,6 @@
       flag(container, "zenfx-hierarchy-expanded", expanded);
     }
     if (vertical) {
-      assignSlot(periphery, "zenfx-newtab-row");
       for (const group of folders) assignSlot(group, "zenfx-protected-folders");
     } else restoreSlots();
     sizeFavorites();
@@ -142,7 +185,10 @@
         visibilityFrame = 0;
         const selected = gBrowser.selectedTab;
         if (!stopped && !strip.hasAttribute("movingtab") && !strip.hasAttribute("movingtabgroup") && selected?.isConnected) {
-          (selected.pinned ? pins : normal).ensureElementIsVisible(selected, false);
+          // Flush the new slot geometry before Firefox's no-flush visibility
+          // check. Its shared queue also cancels outdated reveal requests.
+          selected.getBoundingClientRect();
+          (selected.pinned ? pins : normal).ensureElementIsVisible(selected, true);
         }
       });
       const count = tabs.filter(clearable).length;
@@ -311,7 +357,7 @@
   }
   for (const type of ["TabOpen", "TabClose", "TabShow", "TabHide", "TabPinned", "TabMove", "TabGroupCreate", "TabGroupRemoved", "TabGrouped", "TabUngrouped", "SSTabRestoring", "SSTabRestored"]) listen(strip, type, schedule);
   listen(strip, "TabUnpinned", event => { store.deleteCustomTabValue(event.target, favoriteKey); event.target.removeAttribute("zenfx-favorite"); schedule(); });
-  const expansionObserver = new MutationObserver(() => syncExpansion());
+  const expansionObserver = new MutationObserver(() => { syncExpansion(); schedule(); });
   expansionObserver.observe(strip, { attributes: true, attributeFilter: ["expanded", "orient"] });
   const dragObserver = new MutationObserver(schedule);
   dragObserver.observe(strip, { attributes: true, attributeFilter: ["movingtab", "movingtabgroup"] });
@@ -338,7 +384,7 @@
       cancelAnimationFrame(sizeFrame);
       for (const remove of removers.splice(0)) remove();
       expansionObserver.disconnect(); dragObserver.disconnect(); groupObserver.disconnect(); sizeObserver.disconnect(); restoreSlots();
-      for (const element of [menu, pinStyle, regularStyle, protectedSlot, clearRow, newTabSlot]) element.remove();
+      for (const element of [menu, pinStyle, regularStyle, protectedSlot, clearRow, newTabRow]) element.remove();
       if (priorColumns[0]) pins.style.setProperty(columnsProperty, ...priorColumns); else pins.style.removeProperty(columnsProperty);
       for (const container of [pins, normal]) for (const name of ["zenfx-hierarchy-expanded", "zenfx-hierarchy-vertical"]) container.removeAttribute(name);
       for (const name of ["zenfx-tab-hierarchy", "zenfx-has-favorites", "zenfx-has-pins", "zenfx-has-folders"]) root.removeAttribute(name);

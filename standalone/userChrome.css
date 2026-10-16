@@ -721,13 +721,13 @@ sidebar-main,
     }
     #tabbrowser-tabs[orient="vertical"][expanded] #tabbrowser-arrowscrollbox::before,
     #tabbrowser-tabs[orient="vertical"][expanded] #tabbrowser-arrowscrollbox::after { content: none !important; display: none !important; }
-    #tabbrowser-tabs[orient="vertical"][expanded] #tabs-newtab-button {
-      min-height: 36px !important;
-      margin-block: 0 2px !important;
-      margin-inline: 7px !important;
-      width: calc(100% - 14px) !important;
+    /* The hierarchy provides one dedicated New Tab row in the shadow tree.
+       Keep the native periphery after tabs for Firefox's drag calculations. */
+    #tabbrowser-tabs[orient="vertical"] #tabs-newtab-button,
+    #tabbrowser-tabs[orient="vertical"] > #vertical-tabs-newtab-button {
+      display: none !important;
     }
-    #tabbrowser-tabs[orient="vertical"][expanded] #tabbrowser-arrowscrollbox-periphery { min-height: 0 !important; }
+    #tabbrowser-tabs[orient="vertical"] #tabbrowser-arrowscrollbox-periphery { min-height: 0 !important; }
     @media not (forced-colors) {
       #tabbrowser-tabs[orient="vertical"][expanded] #pinned-tabs-container .tabbrowser-tab:not([zenfx-favorite], [selected], [multiselected], :hover) .tab-background {
         background: transparent !important;
