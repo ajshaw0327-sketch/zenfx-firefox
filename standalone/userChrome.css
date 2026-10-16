@@ -272,15 +272,20 @@
       #navigator-toolbox:not(:hover):not(:focus-within):not(:has([open="true"], #urlbar[focused])) > toolbar {
         opacity: 0;
         pointer-events: none;
+        /* Keep controls painted until the slide-out finishes. Opacity, rather
+         * than visibility, keeps Cmd/Ctrl+L able to focus the hidden URL field. */
+        transition: opacity 0s linear calc(var(--zenfx-hide-delay) + var(--zenfx-animation-speed)) !important;
       }
       #navigator-toolbox:is(:hover, :focus-within, :has([open="true"], #urlbar[focused])),
       &:has(panel[panelopen="true"], menupopup[open="true"]) #navigator-toolbox {
         transform: translateY(0) !important;
         transition-delay: 0ms !important;
       }
+      #navigator-toolbox:is(:hover, :focus-within, :has([open="true"], #urlbar[focused])) > toolbar,
       &:has(panel[panelopen="true"], menupopup[open="true"]) #navigator-toolbox > toolbar {
-        opacity: 1;
-        pointer-events: auto;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        transition: none !important;
       }
     }
   }
@@ -339,17 +344,23 @@
   }
 }
 
-/* Both floating components remain usable at once: move only the overlay below
- * a revealed top bar, without moving or resizing the webpage. */
+/* With both bars compact, one L-shaped interaction area owns reveal/focus.
+ * Its geometry never changes when the pointer crosses between the two bars. */
 @media ((-moz-platform: macos) or (-moz-platform: windows) or (-moz-platform: linux)) and -moz-pref("zenfx.compact.top") and -moz-pref("zenfx.compact.sidebar") {
   :root:has(#tabbrowser-tabs[orient="vertical"]):not([chromehidden]):not([customizing]):not([inDOMFullscreen]):not([sizemode="fullscreen"]) {
-    --zenfx-floating-top-height: var(--zenfx-toolbar-height);
-    &:has(#PersonalToolbar:not([collapsed]):not([hidden])) {
-      --zenfx-floating-top-height: calc(var(--zenfx-toolbar-height) + var(--zenfx-bookmarks-height));
+    --zenfx-floating-top-height: var(--zenfx-measured-top-height, var(--zenfx-toolbar-height));
+    &:has(#PersonalToolbar:not([collapsed="true"]):not([hidden="true"])) {
+      --zenfx-floating-top-height: var(--zenfx-measured-top-height, calc(var(--zenfx-toolbar-height) + var(--zenfx-bookmarks-height)));
     }
+    #sidebar-container:not([hidden]) { inset-block-start: var(--zenfx-floating-top-height) !important; }
+    /* Keep the left-edge trigger reachable above the sidebar's stable inset. */
+    #sidebar-container::after { inset-block-start: calc(-1 * var(--zenfx-floating-top-height)) !important; }
     &:has(#navigator-toolbox:is(:hover, :focus-within, :has([open="true"], #urlbar[focused]))),
-    &:has(panel[panelopen="true"], menupopup[open="true"]) {
-      #sidebar-container { inset-block-start: var(--zenfx-floating-top-height) !important; }
+    &:has(#sidebar-container:is(:hover, :focus-within, [sidebar-ongoing-animations])),
+    &:has(panel[panelopen="true"], menupopup[open="true"], #tabbrowser-tabs[movingtab]) {
+      #navigator-toolbox { transform: translateY(0) !important; transition-delay: 0ms !important; }
+      #navigator-toolbox > toolbar { opacity: 1 !important; pointer-events: auto !important; transition-delay: 0ms !important; }
+      #sidebar-container { transform: translateX(0) !important; transition-delay: 0ms !important; }
     }
   }
 }

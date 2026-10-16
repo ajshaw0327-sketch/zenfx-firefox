@@ -47,7 +47,7 @@ This feature requires the **fourth optional script plus the updated CSS and load
 
 Drag the expanded sidebar's right edge to resize it. Right-click a tab and choose **Add Split View** to display two pages side by side.
 
-For CSS-only Compact Mode, create Boolean preferences `zenfx.compact.top` and/or `zenfx.compact.sidebar`: `true` hides that bar until its edge is hovered, and `false` keeps it visible. The sidebar resize handle is available when sidebar Compact Mode is off.
+For CSS-only Compact Mode, create Boolean preferences `zenfx.compact.top` and/or `zenfx.compact.sidebar`: `true` hides that bar until its edge is hovered, and `false` keeps it visible. When both are enabled, either edge reveals both bars as one shared area; the sidebar stays below the toolbar while you move between them. The sidebar resize handle is available when sidebar Compact Mode is off.
 
 ## Keep the scripts across restarts
 

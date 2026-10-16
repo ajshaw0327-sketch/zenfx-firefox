@@ -195,11 +195,27 @@
   document.documentElement.append(commandset, keyset);
   for (const name of prefs) Services.prefs.addObserver(name, sync);
   sync();
+  // The shared compact corner follows the actual toolbar, including bookmarks,
+  // theme sizing and density changes. CSS-only installs retain their fallback.
+  const root = document.documentElement;
+  const heightProperty = "--zenfx-measured-top-height";
+  const priorHeight = [root.style.getPropertyValue(heightProperty), root.style.getPropertyPriority(heightProperty)];
+  const toolbox = document.getElementById("navigator-toolbox");
+  const measureTop = () => {
+    const height = toolbox.getBoundingClientRect().height;
+    if (height > 0) root.style.setProperty(heightProperty, `${height}px`);
+  };
+  const heightObserver = new ResizeObserver(measureTop);
+  heightObserver.observe(toolbox);
+  measureTop();
   const api = window.ZenfxCompactToggle = {
     toggle,
     openSettings,
     get enabled() { return enabled(); },
     uninstall() {
+      heightObserver.disconnect();
+      if (priorHeight[0]) root.style.setProperty(heightProperty, ...priorHeight);
+      else root.style.removeProperty(heightProperty);
       for (const name of prefs) Services.prefs.removeObserver(name, sync);
       Services.prefs.removeObserver(shortcutPref, shortcutObserver);
       restoreSidebarKey();

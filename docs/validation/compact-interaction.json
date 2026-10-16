@@ -1,0 +1,669 @@
+{
+  "version": "158.0",
+  "method": "Trusted Marionette pointer and keyboard input in a disposable test-profile window. No pseudo-class locks.",
+  "states": [
+    {
+      "case": "hidden",
+      "top": {
+        "x": 0,
+        "y": -40,
+        "w": 1185,
+        "h": 44
+      },
+      "side": {
+        "x": -260,
+        "y": 44,
+        "w": 260,
+        "h": 830
+      },
+      "page": {
+        "x": 9,
+        "y": 9,
+        "w": 1168,
+        "h": 857
+      },
+      "hover": [
+        false,
+        false
+      ],
+      "controls": "0",
+      "controlsPointer": "none",
+      "focus": false,
+      "measured": "44px"
+    },
+    {
+      "case": "top edge reveals both",
+      "top": {
+        "x": 0,
+        "y": 0,
+        "w": 1185,
+        "h": 44
+      },
+      "side": {
+        "x": 0,
+        "y": 44,
+        "w": 260,
+        "h": 830
+      },
+      "page": {
+        "x": 9,
+        "y": 9,
+        "w": 1168,
+        "h": 857
+      },
+      "hover": [
+        true,
+        false
+      ],
+      "controls": "1",
+      "controlsPointer": "auto",
+      "focus": false,
+      "measured": "44px"
+    },
+    {
+      "case": "top to sidebar",
+      "top": {
+        "x": 0,
+        "y": 0,
+        "w": 1185,
+        "h": 44
+      },
+      "side": {
+        "x": 0,
+        "y": 44,
+        "w": 260,
+        "h": 830
+      },
+      "page": {
+        "x": 9,
+        "y": 9,
+        "w": 1168,
+        "h": 857
+      },
+      "hover": [
+        false,
+        true
+      ],
+      "controls": "1",
+      "controlsPointer": "auto",
+      "focus": false,
+      "measured": "44px"
+    },
+    {
+      "case": "sidebar to toolbar",
+      "top": {
+        "x": 0,
+        "y": 0,
+        "w": 1185,
+        "h": 44
+      },
+      "side": {
+        "x": 0,
+        "y": 44,
+        "w": 260,
+        "h": 830
+      },
+      "page": {
+        "x": 9,
+        "y": 9,
+        "w": 1168,
+        "h": 857
+      },
+      "hover": [
+        true,
+        false
+      ],
+      "controls": "1",
+      "controlsPointer": "auto",
+      "focus": false,
+      "measured": "44px"
+    },
+    {
+      "case": "shared corner",
+      "top": {
+        "x": 0,
+        "y": 0,
+        "w": 1185,
+        "h": 44
+      },
+      "side": {
+        "x": 0,
+        "y": 44,
+        "w": 260,
+        "h": 830
+      },
+      "page": {
+        "x": 9,
+        "y": 9,
+        "w": 1168,
+        "h": 857
+      },
+      "hover": [
+        true,
+        false
+      ],
+      "controls": "1",
+      "controlsPointer": "auto",
+      "focus": false,
+      "measured": "44px"
+    },
+    {
+      "case": "back to sidebar",
+      "top": {
+        "x": 0,
+        "y": 0,
+        "w": 1185,
+        "h": 44
+      },
+      "side": {
+        "x": 0,
+        "y": 44,
+        "w": 260,
+        "h": 830
+      },
+      "page": {
+        "x": 9,
+        "y": 9,
+        "w": 1168,
+        "h": 857
+      },
+      "hover": [
+        false,
+        true
+      ],
+      "controls": "1",
+      "controlsPointer": "auto",
+      "focus": false,
+      "measured": "44px"
+    },
+    {
+      "case": "tab click",
+      "top": {
+        "x": 0,
+        "y": 0,
+        "w": 1185,
+        "h": 44
+      },
+      "side": {
+        "x": 0,
+        "y": 44,
+        "w": 260,
+        "h": 830
+      },
+      "page": {
+        "x": 9,
+        "y": 9,
+        "w": 1168,
+        "h": 857
+      },
+      "hover": [
+        false,
+        true
+      ],
+      "controls": "1",
+      "controlsPointer": "auto",
+      "focus": false,
+      "measured": "44px"
+    },
+    {
+      "case": "tab context menu holds both",
+      "top": {
+        "x": 0,
+        "y": 0,
+        "w": 1185,
+        "h": 44
+      },
+      "side": {
+        "x": 0,
+        "y": 44,
+        "w": 260,
+        "h": 830
+      },
+      "page": {
+        "x": 9,
+        "y": 9,
+        "w": 1168,
+        "h": 857
+      },
+      "hover": [
+        false,
+        false
+      ],
+      "controls": "1",
+      "controlsPointer": "auto",
+      "focus": false,
+      "measured": "44px"
+    },
+    {
+      "case": "application menu holds both",
+      "top": {
+        "x": 0,
+        "y": 0,
+        "w": 1185,
+        "h": 44
+      },
+      "side": {
+        "x": 0,
+        "y": 44,
+        "w": 260,
+        "h": 830
+      },
+      "page": {
+        "x": 9,
+        "y": 9,
+        "w": 1168,
+        "h": 857
+      },
+      "hover": [
+        false,
+        false
+      ],
+      "controls": "1",
+      "controlsPointer": "auto",
+      "focus": false,
+      "measured": "44px"
+    },
+    {
+      "case": "hide together after leaving",
+      "top": {
+        "x": 0,
+        "y": -40,
+        "w": 1185,
+        "h": 44
+      },
+      "side": {
+        "x": -260,
+        "y": 44,
+        "w": 260,
+        "h": 830
+      },
+      "page": {
+        "x": 9,
+        "y": 9,
+        "w": 1168,
+        "h": 857
+      },
+      "hover": [
+        false,
+        false
+      ],
+      "controls": "0",
+      "controlsPointer": "none",
+      "focus": false,
+      "measured": "44px"
+    },
+    {
+      "case": "left edge reveals both",
+      "top": {
+        "x": 0,
+        "y": 0,
+        "w": 1185,
+        "h": 44
+      },
+      "side": {
+        "x": 0,
+        "y": 44,
+        "w": 260,
+        "h": 830
+      },
+      "page": {
+        "x": 9,
+        "y": 9,
+        "w": 1168,
+        "h": 857
+      },
+      "hover": [
+        false,
+        true
+      ],
+      "controls": "1",
+      "controlsPointer": "auto",
+      "focus": false,
+      "measured": "44px"
+    },
+    {
+      "case": "Command L from hidden",
+      "top": {
+        "x": 0,
+        "y": 0,
+        "w": 1185,
+        "h": 44
+      },
+      "side": {
+        "x": 0,
+        "y": 44,
+        "w": 260,
+        "h": 830
+      },
+      "page": {
+        "x": 9,
+        "y": 9,
+        "w": 1168,
+        "h": 857
+      },
+      "hover": [
+        true,
+        false
+      ],
+      "controls": "1",
+      "controlsPointer": "auto",
+      "focus": true,
+      "measured": "44px"
+    },
+    {
+      "case": "floating new tab search",
+      "top": {
+        "x": 0,
+        "y": 0,
+        "w": 1185,
+        "h": 44
+      },
+      "side": {
+        "x": 0,
+        "y": 44,
+        "w": 260,
+        "h": 830
+      },
+      "page": {
+        "x": 9,
+        "y": 9,
+        "w": 1168,
+        "h": 857
+      },
+      "hover": [
+        true,
+        false
+      ],
+      "controls": "1",
+      "controlsPointer": "auto",
+      "focus": true,
+      "measured": "44px"
+    },
+    {
+      "case": "bookmarks None",
+      "top": {
+        "x": 0,
+        "y": 0,
+        "w": 1185,
+        "h": 72
+      },
+      "side": {
+        "x": 0,
+        "y": 72,
+        "w": 260,
+        "h": 802
+      },
+      "page": {
+        "x": 9,
+        "y": 9,
+        "w": 1168,
+        "h": 857
+      },
+      "hover": [
+        false,
+        true
+      ],
+      "controls": "1",
+      "controlsPointer": "auto",
+      "focus": false,
+      "measured": "72px"
+    },
+    {
+      "case": "bookmarks 40px",
+      "top": {
+        "x": 0,
+        "y": 0,
+        "w": 1185,
+        "h": 84
+      },
+      "side": {
+        "x": 0,
+        "y": 84,
+        "w": 260,
+        "h": 790
+      },
+      "page": {
+        "x": 9,
+        "y": 9,
+        "w": 1168,
+        "h": 857
+      },
+      "hover": [
+        false,
+        true
+      ],
+      "controls": "1",
+      "controlsPointer": "auto",
+      "focus": false,
+      "measured": "84px"
+    },
+    {
+      "case": "bookmarks hidden again",
+      "top": {
+        "x": 0,
+        "y": 0,
+        "w": 1185,
+        "h": 44
+      },
+      "side": {
+        "x": 0,
+        "y": 44,
+        "w": 260,
+        "h": 830
+      },
+      "page": {
+        "x": 9,
+        "y": 9,
+        "w": 1168,
+        "h": 857
+      },
+      "hover": [
+        false,
+        true
+      ],
+      "controls": "1",
+      "controlsPointer": "auto",
+      "focus": false,
+      "measured": "44px"
+    },
+    {
+      "case": "CSS only top edge",
+      "top": {
+        "x": 0,
+        "y": 0,
+        "w": 1185,
+        "h": 44
+      },
+      "side": {
+        "x": 0,
+        "y": 44,
+        "w": 260,
+        "h": 830
+      },
+      "page": {
+        "x": 9,
+        "y": 9,
+        "w": 1168,
+        "h": 857
+      },
+      "hover": [
+        true,
+        false
+      ],
+      "controls": "1",
+      "controlsPointer": "auto",
+      "focus": false,
+      "measured": ""
+    },
+    {
+      "case": "CSS only sidebar handoff",
+      "top": {
+        "x": 0,
+        "y": 0,
+        "w": 1185,
+        "h": 44
+      },
+      "side": {
+        "x": 0,
+        "y": 44,
+        "w": 260,
+        "h": 830
+      },
+      "page": {
+        "x": 9,
+        "y": 9,
+        "w": 1168,
+        "h": 857
+      },
+      "hover": [
+        false,
+        true
+      ],
+      "controls": "1",
+      "controlsPointer": "auto",
+      "focus": false,
+      "measured": ""
+    },
+    {
+      "case": "collapsed rail",
+      "top": {
+        "x": 0,
+        "y": 0,
+        "w": 1185,
+        "h": 44
+      },
+      "side": {
+        "x": 0,
+        "y": 44,
+        "w": 52,
+        "h": 830
+      },
+      "page": {
+        "x": 9,
+        "y": 9,
+        "w": 1168,
+        "h": 857
+      },
+      "hover": [
+        false,
+        true
+      ],
+      "controls": "1",
+      "controlsPointer": "auto",
+      "focus": false,
+      "measured": ""
+    }
+  ],
+  "contextMenu": {
+    "open": "open",
+    "correctTab": true
+  },
+  "appMenu": "open",
+  "hideGrace": {
+    "controls": "1",
+    "topY": 0,
+    "sideX": 0
+  },
+  "floatingNewTab": {
+    "active": true,
+    "count": 3
+  },
+  "toolbarHeights": [
+    72,
+    84
+  ],
+  "heightRestored": true,
+  "singleModes": [
+    {
+      "top": {
+        "x": 0,
+        "y": 0,
+        "w": 1185,
+        "h": 44
+      },
+      "side": {
+        "x": 0,
+        "y": 44,
+        "w": 173,
+        "h": 830
+      },
+      "page": {
+        "x": 174,
+        "y": 53,
+        "w": 1003,
+        "h": 813
+      },
+      "hover": [
+        false,
+        false
+      ],
+      "controls": "1",
+      "controlsPointer": "auto",
+      "focus": false,
+      "measured": "",
+      "compactTop": false,
+      "compactSidebar": false
+    },
+    {
+      "top": {
+        "x": 0,
+        "y": 0,
+        "w": 1185,
+        "h": 44
+      },
+      "side": {
+        "x": 0,
+        "y": 0,
+        "w": 173,
+        "h": 874
+      },
+      "page": {
+        "x": 174,
+        "y": 9,
+        "w": 1003,
+        "h": 857
+      },
+      "hover": [
+        true,
+        false
+      ],
+      "controls": "1",
+      "controlsPointer": "auto",
+      "focus": false,
+      "measured": "",
+      "compactTop": true,
+      "compactSidebar": false
+    },
+    {
+      "top": {
+        "x": 0,
+        "y": 0,
+        "w": 1185,
+        "h": 44
+      },
+      "side": {
+        "x": 0,
+        "y": 44,
+        "w": 173,
+        "h": 830
+      },
+      "page": {
+        "x": 9,
+        "y": 53,
+        "w": 1168,
+        "h": 813
+      },
+      "hover": [
+        false,
+        true
+      ],
+      "controls": "1",
+      "controlsPointer": "auto",
+      "focus": false,
+      "measured": "",
+      "compactTop": false,
+      "compactSidebar": true
+    }
+  ],
+  "pass": true
+}
