@@ -23,7 +23,7 @@
    | Windows | Double-click **Install.cmd** | Select the Firefox installation folder containing `application.ini` |
    | Linux | Run **Install.sh** from a terminal with `sh Install.sh` | Select the Firefox installation folder containing `application.ini` |
 
-3. In the text wizard, choose **1** for appearance or **2** for full setup and paste/drag the profile folder from step 1. If using the optional graphical installer, choose it in **Firefox profile folder**. For floating New Tab search, drag-to-split, Favorites, Clear, and Compact controls, also choose the **Firefox application**. In the graphical installer, leaving that field blank installs only the appearance.
+3. In the text wizard, choose **1** for appearance or **2** for full setup and paste/drag the profile folder from step 1. If using the optional graphical installer, choose it in **Firefox profile folder**. For drag-to-split, Favorites, Clear, and Compact controls, also choose the **Firefox application**. In the graphical installer, leaving that field blank installs only the appearance.
 4. Confirm Firefox is completely closed, inspect the listed files, and type `yes` to proceed. In the optional graphical installer, check **Firefox is completely closed** and click **Review and install**. Setup backs up the files it replaces.
 5. Reopen that Firefox profile, then check the controls below.
 
@@ -32,13 +32,13 @@
 | Check | Expected result |
 | --- | --- |
 | Appearance | Vertical sidebar, rounded page frame, and folder-style native groups; drag the expanded sidebar’s edge to resize |
-| Floating New Tab | The normal New Tab command opens search over the current page; Escape cancels, and submitting creates a tab |
+| New Tab | Opens a normal Firefox tab; the floating New Tab feature has been removed |
 | Tab hierarchy | Right-click a tab → **Tab priority** → Favorites / Pinned tabs / Today tabs; **↓ Clear** sits above New Tab |
 | Compact controls | Right-click the Compact Mode button, or use **Tools → ZenFX shortcut settings…**, to choose hidden bars and record a shortcut |
 | Drag to split | Drag an ordinary tab onto the left or right side of the current page; dropping creates native Split View |
 | Tab restoration | Quit Firefox with windows still open, then reopen it; previous regular tabs return. On Mac use ⌘Q. |
 
-The last four checks need the optional scripts. If only the appearance changes, follow the troubleshooting table below. The AutoConfig loader’s full quit/relaunch path remains unverified; these checks let you confirm it on your installation.
+Tab hierarchy, Compact controls, and drag-to-split need the optional scripts. If only the appearance changes, follow the troubleshooting table below. The AutoConfig loader’s full quit/relaunch path remains unverified; these checks let you confirm it on your installation.
 
 ## If something is missing
 
@@ -58,7 +58,7 @@ Choosing only a profile installs the appearance and enables native vertical tabs
 
 Setup and updates also enable native **Open previous windows and tabs** through `browser.startup.page = 3`. Updates append this setting without removing unrelated preferences. [Session restoration, private-window limits, and recovering missing tabs](docs/SESSION-RESTORE.md).
 
-For the full New Tab overlay, drag-to-split, Compact Mode controls, and tab hierarchy to load after restart, also select the **Firefox application** in setup. On macOS this is `Firefox.app`; on Windows/Linux it is the directory containing `application.ini`. This optional choice adds **`zenfx.cfg` and `defaults/pref/zenfx-autoconfig.js` to that application**. It enables privileged AutoConfig JavaScript, as required by the supplied startup loader. Only profiles explicitly containing the ZenFX managed marker/scripts load the hooks. An existing AutoConfig setup or conflicting files cause setup to stop rather than overwrite them. An unwritable application folder requires a separately authorized administrator install; this installer does not request elevation. Application updates may remove these files. On macOS, these application writes can affect Firefox’s code signature; appearance-only avoids them.
+For drag-to-split, Compact Mode controls, and tab hierarchy to load after restart, also select the **Firefox application** in setup. On macOS this is `Firefox.app`; on Windows/Linux it is the directory containing `application.ini`. This optional choice adds **`zenfx.cfg` and `defaults/pref/zenfx-autoconfig.js` to that application**. It enables privileged AutoConfig JavaScript, as required by the supplied startup loader. Only profiles explicitly containing the ZenFX managed marker/scripts load the hooks. An existing AutoConfig setup or conflicting files cause setup to stop rather than overwrite them. An unwritable application folder requires a separately authorized administrator install; this installer does not request elevation. Application updates may remove these files. On macOS, these application writes can affect Firefox’s code signature; appearance-only avoids them.
 
 The application-level AutoConfig installation has **not** been performed on this machine. The loader's real new-window lifecycle was tested within the authorized test profile; a full application AutoConfig cold-start remains unverified. Setup writes the selected files but does not certify that cold-start path.
 

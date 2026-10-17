@@ -8,6 +8,8 @@
 
 The optional graphical installer has a **Review and update** button. It needs only the profile folder; the application field is ignored for updates.
 
+The floating New Tab feature has been removed. Option 4 replaces its old script with a compatibility cleanup file, so older startup loaders stop intercepting New Tab too. No application-loader change is required for this removal. New Tab opens a regular Firefox tab after restart.
+
 ## What stays
 
 - Your tabs, Favorites, folders, themes, Compact Mode preferences, shortcut, and unrelated Firefox settings. Updates now add a small managed session-restore block to `user.js` to enable **Open previous windows and tabs**. Existing preference lines are retained; `prefs.js` and session files are not rewritten by setup.

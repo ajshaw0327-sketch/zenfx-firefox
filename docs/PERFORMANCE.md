@@ -33,6 +33,8 @@ Automated checks cover skipped protected-tab timestamp reads, activity-state reu
 
 ## Minimal idle footprint
 
+**Current New Tab behavior:** the floating-search hook has been removed. It now contributes zero listeners, command wrappers, recovery frames, or power observers. Search-specific counts and recovery checks below describe the previous implementation, retained as historical measurements.
+
 A second pass defers the Compact settings dialog until it is opened, removes its DOM tree after closing, attaches search/split gesture handlers only while those features are active, and uses weak references for saved background search-mode browsers. A pressed-tab reference is released after ordinary clicks and rejected drags. Cleanup prunes records for closed windows and skips protected-tab timestamp reads in its popup as well as sweeps.
 
 | Isolated lifecycle check | Previous optimized build | Minimal build |

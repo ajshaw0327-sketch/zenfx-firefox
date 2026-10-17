@@ -1,0 +1,81 @@
+{
+  "cases": [
+    {
+      "entry": "normal command",
+      "count": 2,
+      "newSelected": true,
+      "normalNewPage": true,
+      "sourcePreserved": true,
+      "noOverlay": true,
+      "nativeOpen": true,
+      "nativeLoad": true
+    },
+    {
+      "entry": "keyboard command",
+      "count": 2,
+      "newSelected": true,
+      "normalNewPage": true,
+      "sourcePreserved": true,
+      "noOverlay": true,
+      "nativeOpen": true,
+      "nativeLoad": true
+    },
+    {
+      "entry": "File menu command",
+      "count": 2,
+      "newSelected": true,
+      "normalNewPage": true,
+      "sourcePreserved": true,
+      "noOverlay": true,
+      "nativeOpen": true,
+      "nativeLoad": true
+    },
+    {
+      "entry": "direct native action",
+      "count": 2,
+      "newSelected": true,
+      "normalNewPage": true,
+      "sourcePreserved": true,
+      "noOverlay": true,
+      "nativeOpen": true,
+      "nativeLoad": true
+    },
+    {
+      "entry": "Command+T",
+      "count": 2,
+      "newSelected": true,
+      "normalNewPage": true,
+      "sourcePreserved": true,
+      "noOverlay": true,
+      "nativeOpen": true,
+      "nativeLoad": true
+    },
+    {
+      "entry": "sidebar New Tab click",
+      "count": 2,
+      "newSelected": true,
+      "normalNewPage": true,
+      "sourcePreserved": true,
+      "noOverlay": true,
+      "nativeOpen": true,
+      "nativeLoad": true
+    },
+    {
+      "entry": "sidebar New Tab keyboard after 10 reloads",
+      "count": 2,
+      "newSelected": true,
+      "normalNewPage": true,
+      "sourcePreserved": true,
+      "noOverlay": true,
+      "nativeOpen": true,
+      "nativeLoad": true
+    }
+  ],
+  "sourceSha256": "2e47033dbd7bf2ed79d3f2f10c80126ceeeca2761061394d7f986e2c1cf0d59b",
+  "method": "Firefox 158 isolated test profile; disposable window, native commands, real keyboard and pointer actions.",
+  "activeOldHookUnloaded": true,
+  "submissionUsesNewTab": true,
+  "errors": [],
+  "otherFeaturesLoaded": true,
+  "pass": true
+}

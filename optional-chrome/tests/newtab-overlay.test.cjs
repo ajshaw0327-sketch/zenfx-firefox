@@ -5,176 +5,31 @@ const fs = require('node:fs');
 const path = require('node:path');
 const source = fs.readFileSync(path.join(__dirname, '../zenfx-newtab-overlay.uc.js'), 'utf8');
 
-function fixture() {
-  class Target {
-    handlers = new Map();
-    addEventListener(type, callback) {
-      if (!this.handlers.has(type)) this.handlers.set(type, new Set());
-      this.handlers.get(type).add(callback);
-    }
-    removeEventListener(type, callback) { this.handlers.get(type)?.delete(callback); }
-    emit(type, target = this, extra = {}) {
-      for (const fn of [...(this.handlers.get(type) || [])]) fn({ target, ...extra });
-    }
-    count() { return [...this.handlers.values()].reduce((n, set) => n + set.size, 0); }
-  }
-  const window = new Target(), document = new Target(), field = new Target();
-  const attributes = new Map([['windowtype', 'navigator:browser']]);
-  document.documentElement = {
-    getAttribute: name => attributes.get(name),
-    hasAttribute: name => attributes.has(name),
-    setAttribute: (name, value) => attributes.set(name, value),
-    removeAttribute: name => attributes.delete(name),
-  };
-  let foreground = true;
-  document.hasFocus = () => foreground;
-  const tab = { isConnected: true, closing: false };
-  const browser = { currentURI: { spec: 'https://fixture.invalid/' }, userTypedValue: null,
-    focus() { input.focused = false; document.emit('focusin', browser); } };
-  tab.linkedBrowser = browser;
-  const gBrowser = { selectedTab: tab, selectedBrowser: browser, tabs: [tab], tabContainer: new Target() };
-  Object.assign(field, { value: '', selectionStart: 0, selectionEnd: 0, selectionDirection: 'none',
-    setSelectionRange(start, end, direction) { Object.assign(this, { selectionStart: start, selectionEnd: end, selectionDirection: direction }); } });
-  const requests = [], input = {
-    inputField: field, focused: false, searchMode: null,
-    parentController: { loadURL(request) { requests.push(request); } },
-    view: { close() {} },
-    focus() { this.focused = true; window.emit('focus'); document.emit('focusin', field); },
-    search(value) { this.focus(); field.value = value; field.setSelectionRange(value.length, value.length, 'none'); },
-    setURI() { field.value = browser.currentURI.spec; },
-    contains(target) { return target === field || target === input; },
-    getSearchMode() { return null; }, setSearchMode() { return Promise.resolve(); },
-  };
-  const observers = new Map(), frames = new Map();
-  let nextFrame = 0;
-  const Services = { focus: { activeWindow: window }, obs: {
-    addObserver(observer, topic) { observers.set(topic, observer); },
-    removeObserver(observer, topic) { assert.equal(observers.get(topic), observer); observers.delete(topic); },
+test('an older loader can evaluate the retired filename without changing native commands', () => {
+  const nativeOpen = () => 'native tab', nativeLoad = () => 'native URL';
+  const window = { BrowserCommands: { openTab: nativeOpen }, gURLBar: { parentController: { loadURL: nativeLoad } } };
+  const context = vm.createContext({ window });
+  for (let i = 0; i < 3; i++) vm.runInContext(source, context);
+  assert.equal(window.BrowserCommands.openTab, nativeOpen);
+  assert.equal(window.gURLBar.parentController.loadURL, nativeLoad);
+  assert.equal(window.ZenfxNewTabOverlay, undefined);
+});
+
+test('upgrading a live window unloads the old hook and subsequent loads stay harmless', () => {
+  let removed = 0;
+  const nativeOpen = () => 'native tab', nativeLoad = () => 'native URL';
+  const window = { BrowserCommands: { openTab: () => 'old overlay' }, gURLBar: { parentController: { loadURL: () => 'old redirect' } } };
+  window.ZenfxNewTabOverlay = { uninstall() {
+    removed++;
+    window.BrowserCommands.openTab = nativeOpen;
+    window.gURLBar.parentController.loadURL = nativeLoad;
+    delete window.ZenfxNewTabOverlay;
   } };
-  const nativeTabCalls = [], nativeOpenTab = function (options) { nativeTabCalls.push({ options, receiver: this }); return 'native tab'; };
-  const tabCommands = { openTab: nativeOpenTab };
-  Object.assign(window, { gBrowser, gURLBar: input, BrowserCommands: tabCommands, STATE_MINIMIZED: 2, windowState: 1 });
-  const context = vm.createContext({ window, document, gBrowser, gURLBar: input, Services, console, queueMicrotask,
-    requestAnimationFrame(fn) { const id = ++nextFrame; frames.set(id, fn); return id; },
-    cancelAnimationFrame(id) { frames.delete(id); },
-  });
+  const context = vm.createContext({ window });
   vm.runInContext(source, context);
-  const api = window.ZenfxNewTabOverlay;
-  const flush = () => { const pending = [...frames.values()]; frames.clear(); pending.forEach(fn => fn()); };
-  const type = (value = 'saved draft') => {
-    field.value = value; field.setSelectionRange(2, 6, 'backward'); field.emit('input');
-  };
-  const power = topic => observers.get(topic)?.observe(null, topic);
-  const background = () => { foreground = false; Services.focus.activeWindow = {}; window.emit('deactivate'); input.focused = false; };
-  const activate = () => { foreground = true; Services.focus.activeWindow = window; window.emit('activate'); };
-  const count = () => [window, document, field, gBrowser.tabContainer].reduce((n, target) => n + target.count(), 0);
-  return { window, document, field, tab, browser, gBrowser, input, Services, api, frames, observers,
-    requests, flush, type, power, background, activate, count, tabCommands, nativeTabCalls, nativeOpenTab };
-}
-
-test('the shared New Tab function opens only the overlay, including repeated direct calls', () => {
-  const f = fixture(); f.tabCommands.openTab(); f.type(); f.tabCommands.openTab();
-  assert.equal(f.api.active, true); assert.equal(f.field.value, 'saved draft');
-  assert.equal(f.nativeTabCalls.length, 0);
-});
-
-test('explicit URLs and modified/middle clicks retain native behavior and arguments', () => {
-  for (const options of [{ url: 'https://fixture.invalid/new' }, { event: { button: 1 } },
-    { event: { shiftKey: true } }, { event: { altKey: true } },
-    { event: { button: 0, metaKey: true } }, { event: { button: 0, ctrlKey: true } }]) {
-    const f = fixture(); assert.equal(f.tabCommands.openTab(options), 'native tab');
-    assert.equal(f.nativeTabCalls[0].options, options);
-    assert.equal(f.nativeTabCalls[0].receiver, f.tabCommands); assert.equal(f.api.active, false);
-  }
-});
-
-test('content fullscreen retains native New Tab handling', () => {
-  const f = fixture(); f.document.documentElement.setAttribute('inDOMFullscreen', 'true');
-  assert.equal(f.tabCommands.openTab(), 'native tab'); assert.equal(f.api.active, false);
-});
-
-test('uninstall restores the native New Tab entry point', () => {
-  const f = fixture(); f.tabCommands.openTab(); f.api.uninstall();
-  assert.equal(f.tabCommands.openTab, f.nativeOpenTab);
-  f.tabCommands.openTab(); assert.equal(f.nativeTabCalls.length, 1);
-});
-
-test('an outer wrapper remains usable after this hook is uninstalled', () => {
-  const f = fixture(), inner = f.tabCommands.openTab;
-  const outer = function (options) { return inner.call(this, options); };
-  f.tabCommands.openTab = outer; f.api.uninstall();
-  assert.equal(f.tabCommands.openTab, outer);
-  assert.equal(f.tabCommands.openTab(), 'native tab'); assert.equal(f.api.active, false);
-});
-
-test('reactivation restores draft, selection and search mode after native field reset', () => {
-  const f = fixture(); f.api.open(); f.input.searchMode = { source: 1, entry: 'typed' }; f.type();
-  f.background(); f.field.value = ''; f.browser.focus(); f.flush();
-  assert.equal(f.input.focused, false);
-  f.activate(); f.browser.focus(); f.flush();
-  assert.equal(f.api.active, true); assert.equal(f.field.value, 'saved draft');
-  assert.equal(f.input.focused, true); assert.equal(f.field.selectionStart, 2);
-  assert.equal(f.field.selectionEnd, 6); assert.equal(f.field.selectionDirection, 'backward');
-  assert.equal(f.input.searchMode.source, 1); assert.equal(f.frames.size, 0);
-});
-
-test('window blur without deactivate preserves the overlay through native content focus', () => {
-  const f = fixture(); f.api.open(); f.type();
-  f.window.emit('blur'); f.input.focused = false; f.window.emit('focus'); f.browser.focus(); f.flush();
-  assert.equal(f.api.active, true); assert.equal(f.field.value, 'saved draft');
-  assert.equal(f.input.focused, true); assert.equal(f.frames.size, 0);
-});
-
-test('wake coalesces repeated signals and never focuses a background window', () => {
-  const f = fixture(); f.api.open(); f.type(); f.background();
-  for (let i = 0; i < 20; i++) f.power('wake_notification');
-  assert.equal(f.frames.size, 1); f.flush(); assert.equal(f.input.focused, false);
-  f.activate(); f.flush(); assert.equal(f.input.focused, true); assert.equal(f.frames.size, 0);
-});
-
-test('recovery tolerates synchronous content focus during native view teardown', () => {
-  const f = fixture(); f.api.open(); f.type(); f.power('sleep_notification');
-  f.input.view.close = () => f.browser.focus(); f.power('wake_notification'); f.flush();
-  assert.equal(f.api.active, true); assert.equal(f.field.value, 'saved draft');
-  assert.equal(f.frames.size, 0);
-});
-
-test('minimize defers recovery until restored', () => {
-  const f = fixture(); f.api.open(); f.type(); f.window.windowState = 2;
-  f.window.emit('sizemodechange'); f.input.focused = false;
-  f.power('wake_notification'); f.flush(); assert.equal(f.input.focused, false);
-  f.window.windowState = 1; f.window.emit('sizemodechange'); f.flush();
-  assert.equal(f.field.value, 'saved draft'); assert.equal(f.input.focused, true);
-});
-
-for (const cause of ['Escape', 'outside click', 'Cmd+L', 'tab switch', 'origin close', 'navigation', 'uninstall']) {
-  test(`${cause} cancels pending recovery and removes its observers`, () => {
-    const f = fixture(); f.api.open(); f.type(); f.power('sleep_notification'); f.power('wake_notification');
-    if (cause === 'Escape') f.window.emit('keydown', f.field, { key: 'Escape', preventDefault() {}, stopImmediatePropagation() {} });
-    if (cause === 'outside click') f.document.emit('pointerdown', {}, { composedPath: () => [] });
-    if (cause === 'Cmd+L') f.document.emit('command', { id: 'Browser:OpenLocation' });
-    if (cause === 'tab switch') { f.gBrowser.selectedTab = {}; f.gBrowser.tabContainer.emit('TabSelect'); }
-    if (cause === 'origin close') { f.tab.closing = true; f.gBrowser.tabContainer.emit('TabClose', f.tab); }
-    if (cause === 'navigation') { f.browser.currentURI.spec += 'changed'; f.flush(); }
-    if (cause === 'uninstall') f.api.uninstall();
-    f.flush(); assert.equal(f.api.active, false); assert.equal(f.frames.size, 0);
-    assert.equal(f.observers.size, 0); assert.equal(f.count(), cause === 'uninstall' ? 0 : 2);
-  });
-}
-
-test('submission after recovery forwards native request and returns to two idle listeners', () => {
-  const f = fixture(); f.api.open(); f.type(); f.power('suspend_process_notification');
-  f.power('resume_process_notification'); f.flush();
-  const principal = {}; f.input.parentController.loadURL({ where: 'current', triggeringPrincipal: principal });
-  assert.equal(f.requests[0].where, 'tab'); assert.equal(f.requests[0].triggeringPrincipal, principal);
-  assert.equal(f.api.active, false); assert.equal(f.observers.size, 0); assert.equal(f.count(), 2);
-});
-
-test('repeated lifecycle leaves no wake observers, pending frames or extra idle listeners', () => {
-  const f = fixture();
-  for (let i = 0; i < 40; i++) {
-    f.api.open(); f.type(); f.power('sleep_notification'); f.power('wake_notification'); f.flush(); f.api.cancel();
-    assert.equal(f.count(), 2); assert.equal(f.observers.size, 0); assert.equal(f.frames.size, 0);
-  }
-  f.api.uninstall(); assert.equal(f.count(), 0);
+  vm.runInContext(source, context);
+  assert.equal(removed, 1);
+  assert.equal(window.BrowserCommands.openTab, nativeOpen);
+  assert.equal(window.gURLBar.parentController.loadURL, nativeLoad);
+  assert.equal(window.BrowserCommands.openTab(), 'native tab');
 });

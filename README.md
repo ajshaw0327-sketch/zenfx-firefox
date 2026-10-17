@@ -18,7 +18,7 @@ No Git, cloning, or build tools are needed. Download the ZIP above and extract i
 
 | Choose | What you get | Requirements |
 | --- | --- | --- |
-| **[Full setup](START-HERE.md)** | Appearance, floating New Tab search, drag-to-split, Favorites/Pinned/Today, Clear tabs, Compact Mode button and shortcut editor | Desktop Firefox 158; Python 3.10+ (Tk only if you explicitly choose the optional graphical installer); select both profile and application for startup scripts |
+| **[Full setup](START-HERE.md)** | Appearance, drag-to-split, Favorites/Pinned/Today, Clear tabs, Compact Mode button and shortcut editor | Desktop Firefox 158; Python 3.10+ (Tk only if you explicitly choose the optional graphical installer); select both profile and application for startup scripts |
 | **[Appearance only](https://github.com/ajshaw0327-sketch/zenfx-firefox/raw/refs/heads/main/dist/ZenFX-Appearance.zip)** | Sidebar, folders, rounded frame, floating address-field styling, and split-header styling | Desktop Firefox 158; copy one CSS file; no Python required |
 
 ### Full setup in five steps
@@ -31,12 +31,13 @@ No Git, cloning, or build tools are needed. Download the ZIP above and extract i
 
 **Current limits:** startup scripts use an application AutoConfig loader whose full quit/relaunch path remains unverified. On Mac, its application writes can affect Firefox’s signature. Automatic 24-hour cleanup is a separate unsigned add-on and is not installed by setup. [Details, troubleshooting, and removal](START-HERE.md).
 
+New Tab uses Firefox’s normal behavior. The floating New Tab override has been removed; [update existing installations](docs/UPDATING.md) to remove it there too.
+
 ## What each part does
 
 | Part | Features | How it runs |
 | --- | --- | --- |
 | Appearance | Resizable vertical sidebar, theme-aware folder icons, rounded page frame, floating address-field styling, paired split-tab headers without an internal divider, draggable empty sidebar space | `userChrome.css` |
-| Floating New Tab search | New Tab opens the real search/address field over the current webpage; Escape cancels; submitting opens a tab | Optional browser script |
 | Drag to split | Drag one ordinary tab onto the left or right side of the current page to create native Split View | Optional browser script |
 | Tab hierarchy | Favorites as icon tiles, Pinned tabs as full rows, unlabeled ordinary tabs below a Clear control; right-click → Tab priority to change a tab’s section | Optional browser script |
 | Compact Mode controls | Button and editable shortcut; the default takes over Firefox's sidebar-toggle binding, Control+Z in the tested macOS build | Optional browser script |
@@ -52,7 +53,7 @@ Right-click a tab → **Tab priority** → **Favorites**, **Pinned tabs**, or **
 
 Favorites fill a compact icon grid. Pinned rows and group-colored outline folders sit above one divider with **↓ Clear**; **New Tab** and ordinary tabs sit below it. There is no space name or Today heading. **Clear** closes visible ordinary tabs, including ordinary split pairs, while preserving Favorites, pins, folders, and hidden tabs. Firefox’s **Reopen Closed Tab** recovers closed tabs. The collapsed sidebar retains the native icon rail. Separate a native Split View before changing one of its tabs to Favorites or Pinned tabs. [Details and validation](docs/TAB-HIERARCHY.md). [Public Zen styling reference](https://github.com/zen-browser/desktop/blob/dev/src/zen/tabs/zen-tabs/vertical-tabs.css).
 
-This feature requires the **fourth optional script plus the updated CSS and loader**; appearance-only CSS cannot save Favorites, add the priority menu, or make Clear work. [Update managed profile files](docs/UPDATING.md) with option 4. An older application loader missing the fourth script also needs the separate loader setup described there.
+This feature requires the **hierarchy script plus the updated CSS and loader**; appearance-only CSS cannot save Favorites, add the priority menu, or make Clear work. [Update managed profile files](docs/UPDATING.md) with option 4. An older application loader missing the hierarchy script also needs the separate loader setup described there.
 
 ![Favorites, Pinned tabs, and Today tabs](docs/images/tab-hierarchy.png)
 
@@ -74,7 +75,7 @@ Webpage right-click menus, select dropdowns, form suggestions, and date pickers 
 
 ## Keep the scripts across restarts
 
-The four scripts are in [optional-chrome](optional-chrome/). Copying them into `chrome` does not execute them. They need a compatible browser script loader.
+The three feature scripts are in [optional-chrome](optional-chrome/). Copying them into `chrome` does not execute them. They need a compatible browser script loader.
 
 The [full setup](START-HERE.md) offers an AutoConfig loader when you explicitly select both your profile and the Firefox application. This writes two files into that application and backs up changed profile files. Python 3.10+ is required; the graphical installer also needs Tk. Existing AutoConfig conflicts are refused.
 

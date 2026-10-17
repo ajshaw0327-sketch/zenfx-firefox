@@ -50,7 +50,7 @@ On Windows, use `py -3` instead of `python3`. On Linux, use `python3`. Quoted pa
 | Choice | Result |
 | --- | --- |
 | **1 — Appearance only (default)** | Installs profile CSS/settings, enables vertical tabs, and backs up replaced files. Firefox.app is not changed. No startup scripts are activated. |
-| **2 — Full setup** | Also asks for Firefox.app or its installation folder and installs the optional AutoConfig loader for floating New Tab, drag-to-split, tab priorities/Clear, and Compact controls. |
+| **2 — Full setup** | Also asks for Firefox.app or its installation folder and installs the optional AutoConfig loader for drag-to-split, tab priorities/Clear, and Compact controls. |
 | **3 — Uninstall / restore** | Restores the profile’s original files using its saved installation record. Edited files are preserved for review; backups and any shared application loader remain. |
 | **4 — Update existing ZenFX** | Replaces managed profile files with this package's version, keeping settings, `chrome/zenfx-custom.css`, and original uninstall backups. No application writes. Use the quick command above to get the latest package first. |
 

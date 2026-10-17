@@ -21,7 +21,7 @@ Optional: in `about:config`, create Boolean preferences `zenfx.compact.top` and/
 
 The Favorites / Pinned tabs / Today tabs hierarchy requires the separate `zenfx-tab-hierarchy.uc.js` script and updated loader; this CSS-only package cannot save Favorite status, provide its priority menu, or provide a working Clear tabs control.
 
-Firefox's native groups remain available. Automatic tab cleanup, current-page New Tab command interception, and page-drop drag-to-split require separate code and are not in this package.
+Firefox's native groups remain available. Automatic tab cleanup and page-drop drag-to-split require separate code and are not in this package. New Tab uses Firefox’s normal behavior; the former floating New Tab override has been removed.
 
 Tested on desktop Firefox 158/macOS. Windows/Linux styling is experimental; mobile Firefox and other Firefox versions are not verified.
 
