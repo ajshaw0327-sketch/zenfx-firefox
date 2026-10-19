@@ -2,11 +2,13 @@
 
 The browser target is Firefox 158.0 on macOS. Browser checks were performed only in a disposable test profile. Normal browsing profiles and the Zen installation were not used. This record describes targeted checks, not a guarantee for every Firefox version, theme, platform, or extension.
 
-## Current New Tab behavior
+## Current address bar and New Tab behavior
 
-The floating New Tab feature has been removed. The former script filename remains only as compatibility cleanup for existing loaders; it unloads an active older hook and installs no command wrapper, listener, or wake observer. Managed updates replace the old script without application changes. Earlier floating-search checks below describe the retired implementation, not a current feature.
+The floating New Tab hook and the centered address-bar CSS have both been removed. Earlier removal checks covered only command interception; the remaining CSS still moved the focused address bar over the page. The address field and its native suggestions now retain Firefox’s toolbar positioning. The former script filename remains only as compatibility cleanup for existing loaders; it unloads an active older hook and installs no command wrapper, listener, or wake observer. Managed updates replace the old script without application changes. Earlier floating-search checks below describe the retired implementation, not a current feature.
 
 In the isolated profile, an active copy of the previously shipped hook was unloaded, restoring native command and URL submission implementations. Seven entry checks passed: both command IDs, the File menu command, direct native action, real Command+T, a real sidebar click, and sidebar keyboard activation after ten compatibility-file reloads. Each created one regular tab and preserved the source page; address submission used the created tab without adding another. The other three features loaded, no window errors were captured, and test settings/windows were restored. [Removal checks](validation/newtab-retirement.json).
+
+The remaining floating-CSS defect was reproduced by loading the previous stylesheet: the focused address bar computed to `position: fixed` over the page. With that entire block removed, real Command+L and Command+T kept the address bar within the toolbar in all four normal/compact combinations (eight cases), with native `position: relative`. Normal New Tab creation remained intact. The toolbar placement was also visually inspected with suggestions open. [Docked address-bar checks](validation/docked-address.json).
 
 ## Browser checks
 

@@ -108,7 +108,7 @@
   function createSettings() {
     const panel = document.createElementNS("http://www.w3.org/1999/xhtml", "dialog");
     panel.id = "zenfx-compact-settings";
-    panel.style.cssText = "padding:0;border:1px solid var(--zenfx-search-border);border-radius:11px;background:var(--zenfx-panel);color:var(--zenfx-foreground);box-shadow:var(--zenfx-shadow);max-width:calc(100vw - 32px);";
+    panel.style.cssText = "padding:0;border:1px solid var(--zenfx-panel-border);border-radius:11px;background:var(--zenfx-panel);color:var(--zenfx-foreground);box-shadow:var(--zenfx-shadow);max-width:calc(100vw - 32px);";
     panel.setAttribute("role", "dialog");
     panel.setAttribute("aria-label", "ZenFX Compact Mode settings");
     const html = (tag, text) => {

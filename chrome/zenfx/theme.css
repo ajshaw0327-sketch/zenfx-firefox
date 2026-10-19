@@ -25,7 +25,6 @@
   --zenfx-field: var(--toolbar-field-background-color, var(--zenfx-background));
   --zenfx-panel: var(--urlbar-background-color-focus, var(--toolbar-field-background-color-focus, var(--zenfx-background)));
   --zenfx-panel-text: var(--toolbar-field-text-color-focus, var(--zenfx-foreground));
-  --zenfx-search-selected-text: var(--urlbarview-text-color-selected, var(--zenfx-panel-text));
   --zenfx-shadow: 0 5px 18px rgb(0 0 0 / 16%);
   --zenfx-animation-speed: 140ms;
   --zenfx-hide-delay: 220ms;
@@ -33,13 +32,7 @@
   --zenfx-top-peek-size: 4px;
   --zenfx-folder-tint: 9%;
   --zenfx-folder-icon-size: 20px;
-  --zenfx-search-width: 640px;
-  --zenfx-search-top: 20vh;
-  --zenfx-search-radius: 12px;
-  --zenfx-search-field-height: 44px;
-  --zenfx-search-row-height: 34px;
-  --zenfx-search-border: var(--toolbar-field-border-color, color-mix(in srgb, var(--zenfx-panel-text) 16%, transparent));
-  --zenfx-search-muted: color-mix(in srgb, var(--zenfx-panel-text) 64%, var(--zenfx-panel));
+  --zenfx-panel-border: var(--toolbar-field-border-color, color-mix(in srgb, var(--zenfx-panel-text) 16%, transparent));
   /* Keep overlays opaque for reliable contrast. No backdrop-filter. */
   --zenfx-overlay-opacity: 1;
 }
@@ -219,7 +212,7 @@
 @media (forced-colors: active) {
   :root {
     --zenfx-background: Canvas; --zenfx-foreground: CanvasText;
-    --zenfx-panel: Canvas; --zenfx-panel-text: CanvasText; --zenfx-search-selected-text: ButtonText; --zenfx-selected: ButtonFace;
+    --zenfx-panel: Canvas; --zenfx-panel-text: CanvasText; --zenfx-selected: ButtonFace;
     --zenfx-hover: ButtonFace; --zenfx-field: Field;
   }
 }

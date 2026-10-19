@@ -8,7 +8,7 @@
 
 The optional graphical installer has a **Review and update** button. It needs only the profile folder; the application field is ignored for updates.
 
-The floating New Tab feature has been removed. Option 4 replaces its old script with a compatibility cleanup file, so older startup loaders stop intercepting New Tab too. No application-loader change is required for this removal. New Tab opens a regular Firefox tab after restart.
+Both the floating New Tab hook and the CSS that centered the address bar over the page have been removed. Option 4 updates the stylesheet as well as the scripts. Option 4 replaces its old script with a compatibility cleanup file, so older startup loaders stop intercepting New Tab too. No application-loader change is required for this removal. New Tab opens a regular Firefox tab after restart, and the address bar stays in the toolbar when focused.
 
 ## What stays
 

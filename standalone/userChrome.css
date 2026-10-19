@@ -28,7 +28,6 @@
   --zenfx-field: var(--toolbar-field-background-color, var(--zenfx-background));
   --zenfx-panel: var(--urlbar-background-color-focus, var(--toolbar-field-background-color-focus, var(--zenfx-background)));
   --zenfx-panel-text: var(--toolbar-field-text-color-focus, var(--zenfx-foreground));
-  --zenfx-search-selected-text: var(--urlbarview-text-color-selected, var(--zenfx-panel-text));
   --zenfx-shadow: 0 5px 18px rgb(0 0 0 / 16%);
   --zenfx-animation-speed: 140ms;
   --zenfx-hide-delay: 220ms;
@@ -36,13 +35,7 @@
   --zenfx-top-peek-size: 4px;
   --zenfx-folder-tint: 9%;
   --zenfx-folder-icon-size: 20px;
-  --zenfx-search-width: 640px;
-  --zenfx-search-top: 20vh;
-  --zenfx-search-radius: 12px;
-  --zenfx-search-field-height: 44px;
-  --zenfx-search-row-height: 34px;
-  --zenfx-search-border: var(--toolbar-field-border-color, color-mix(in srgb, var(--zenfx-panel-text) 16%, transparent));
-  --zenfx-search-muted: color-mix(in srgb, var(--zenfx-panel-text) 64%, var(--zenfx-panel));
+  --zenfx-panel-border: var(--toolbar-field-border-color, color-mix(in srgb, var(--zenfx-panel-text) 16%, transparent));
   /* Keep overlays opaque for reliable contrast. No backdrop-filter. */
   --zenfx-overlay-opacity: 1;
 }
@@ -222,7 +215,7 @@
 @media (forced-colors: active) {
   :root {
     --zenfx-background: Canvas; --zenfx-foreground: CanvasText;
-    --zenfx-panel: Canvas; --zenfx-panel-text: CanvasText; --zenfx-search-selected-text: ButtonText; --zenfx-selected: ButtonFace;
+    --zenfx-panel: Canvas; --zenfx-panel-text: CanvasText; --zenfx-selected: ButtonFace;
     --zenfx-hover: ButtonFace; --zenfx-field: Field;
   }
 }
@@ -396,7 +389,7 @@
 }
 
 
-/* ZenFX 1.1 — folder-style native groups, native split view, floating URL field.
+/* ZenFX 1.1 — folder-style native groups and native split view.
  * These are real Firefox controls. CSS does not add nesting, workspace state,
  * search commands, cleanup timers, or Zen's replace-new-tab behavior.
  */
@@ -497,152 +490,6 @@
     #tabbrowser-tabs[orient="vertical"] tab-split-view-wrapper > .tabbrowser-tab > .tab-stack {
       border-inline: 0 !important;
       border-block-end: 0 !important;
-    }
-  }
-}
-
-/* Centered native search. Its top-layer popover and field must share the
- * SAME outer bounds: Firefox's breakout background has negative native insets.
- * Set zenfx.urlbar.docked=true for the untouched docked-on-focus fallback. */
-@media ((-moz-platform: macos) or (-moz-platform: windows) or (-moz-platform: linux)) and (not -moz-pref("zenfx.urlbar.docked")) {
-  :root:has(#tabbrowser-tabs[orient="vertical"]):not([chromehidden]):not([customizing]):not([inDOMFullscreen]):not([sizemode="fullscreen"]):has(#urlbar[focused]) {
-    #navigator-toolbox { transform: none !important; }
-    #urlbar[focused] {
-      position: fixed !important;
-      inset: var(--zenfx-search-top) auto auto 50vw !important;
-      width: min(var(--zenfx-search-width), calc(100vw - 32px)) !important;
-      min-width: 0 !important;
-      height: var(--zenfx-search-field-height) !important;
-      min-height: var(--zenfx-search-field-height) !important;
-      transform: translateX(-50%) !important;
-      color: var(--zenfx-panel-text) !important;
-      z-index: 20 !important;
-    }
-    #urlbar[focused] > .urlbar-input-container {
-      height: var(--zenfx-search-field-height) !important;
-      min-height: var(--zenfx-search-field-height) !important;
-      box-sizing: border-box !important;
-      padding-inline: 10px !important;
-      border-radius: var(--zenfx-search-radius) !important;
-      outline: none !important;
-    }
-    #urlbar[focused] #urlbar-input {
-      font-size: 14px !important;
-      color: var(--zenfx-panel-text) !important;
-    }
-    #urlbar[focused] #urlbar-input::placeholder {
-      color: var(--zenfx-search-muted) !important;
-      opacity: 1 !important;
-    }
-    #urlbar[focused] > .urlbar-background {
-      /* Cancel native breakout outsets and its matching 24px joint clip. */
-      inset: 0 !important;
-      clip-path: none !important;
-      width: auto !important;
-      height: auto !important;
-      margin: 0 !important;
-      box-sizing: border-box !important;
-      border: 1px solid var(--zenfx-search-border) !important;
-      border-radius: var(--zenfx-search-radius) !important;
-      background: var(--zenfx-panel) !important;
-      box-shadow: 0 5px 24px rgb(0 0 0 / 18%) !important;
-    }
-    #urlbar[focused]:has(> .urlbarView:popover-open) > .urlbar-background {
-      border-bottom: 0 !important;
-      border-end-start-radius: 0 !important;
-      border-end-end-radius: 0 !important;
-      box-shadow: 0 -4px 20px rgb(0 0 0 / 12%) !important;
-    }
-    /* Native engine control, with its real logo/menu/focus behavior retained. */
-    #urlbar[focused] .searchmode-switcher {
-      --button-background-color-muted: transparent !important;
-      --button-background-color-muted-hover: var(--zenfx-hover) !important;
-      --button-background-color-muted-active: var(--zenfx-selected) !important;
-      --button-border-radius: var(--zenfx-control-radius) !important;
-      --button-padding: 0 6px !important;
-    }
-    #urlbar[focused] .searchmode-switcher::part(button) {
-      border-radius: var(--zenfx-control-radius) !important;
-      background: transparent !important;
-      color: var(--zenfx-panel-text) !important;
-    }
-    #urlbar[focused] .searchmode-switcher:hover::part(button) {
-      background: var(--zenfx-hover) !important;
-    }
-    #urlbar[focused] > .urlbarView {
-      position: fixed !important;
-      position-anchor: auto !important;
-      position-area: none !important;
-      position-try: none !important;
-      inset: calc(var(--zenfx-search-top) + var(--zenfx-search-field-height)) auto auto 50vw !important;
-      width: min(var(--zenfx-search-width), calc(100vw - 32px)) !important;
-      max-width: none !important;
-      max-height: calc(100vh - var(--zenfx-search-top) - var(--zenfx-search-field-height) - 24px) !important;
-      margin: 0 !important;
-      padding: 6px !important;
-      box-sizing: border-box !important;
-      translate: none !important;
-      transform: translateX(-50%) !important;
-      border: 1px solid var(--zenfx-search-border) !important;
-      border-top: 1px solid color-mix(in srgb, var(--zenfx-foreground) 8%, transparent) !important;
-      border-radius: 0 0 var(--zenfx-search-radius) var(--zenfx-search-radius) !important;
-      background: var(--zenfx-panel) !important;
-      color: var(--zenfx-panel-text) !important;
-      font-size: 13px !important;
-      box-shadow: 0 14px 28px rgb(0 0 0 / 20%) !important;
-      overflow-y: auto !important;
-    }
-    /* Preserve native result-list sizing: an arbitrary row cap hides the
-     * keyboard-selected result because Firefox doesn't scroll that selection. */
-    #urlbar[focused] .urlbarView-background {
-      inset: 0 !important;
-      clip-path: none !important;
-      border-radius: inherit !important;
-      background: transparent !important;
-      border: 0 !important;
-      box-shadow: none !important;
-    }
-    #urlbar[focused] .urlbarView-row {
-      padding: 0 !important;
-      margin-inline: 0 !important;
-      border-radius: var(--zenfx-control-radius) !important;
-      background: transparent !important;
-      color: var(--zenfx-panel-text) !important;
-    }
-    #urlbar[focused] .urlbarView-row-inner {
-      min-height: var(--zenfx-search-row-height) !important;
-      box-sizing: border-box !important;
-      padding: 5px 10px !important;
-      border-radius: var(--zenfx-control-radius) !important;
-      color: var(--zenfx-panel-text) !important;
-    }
-    #urlbar[focused] .urlbarView-row[selected] .urlbarView-row-inner,
-    #urlbar[focused] .urlbarView-row-inner[selected] {
-      background: var(--zenfx-selected) !important;
-      color: var(--zenfx-search-selected-text) !important;
-    }
-    #urlbar[focused] .urlbarView-row:not([selected]):hover .urlbarView-row-inner {
-      background: var(--zenfx-hover) !important;
-    }
-    #urlbar[focused] .urlbarView-row-inner:focus-visible {
-      outline: 2px solid var(--zenfx-accent) !important;
-      outline-offset: -2px !important;
-    }
-    #urlbar[focused] .urlbarView-title { font-size: 13px !important; }
-    #urlbar[focused] .urlbarView-url {
-      color: var(--zenfx-search-muted) !important;
-      font-size: 12px !important;
-      max-inline-size: 48% !important;
-    }
-    #urlbar[focused] .urlbarView-title-separator { opacity: .4 !important; }
-    #urlbar[focused] .urlbarView-row[label] { margin-block-start: 22px !important; }
-    #urlbar[focused] .urlbarView-row[label]::before {
-      inset-block-start: -18px !important;
-      margin-inline-start: 10px !important;
-      color: var(--zenfx-search-muted) !important;
-      font-size: 11px !important;
-      line-height: 16px !important;
-      font-weight: 500 !important;
     }
   }
 }

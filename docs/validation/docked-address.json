@@ -1,0 +1,292 @@
+{
+  "cases": [
+    {
+      "focused": true,
+      "position": "relative",
+      "transform": "none",
+      "url": {
+        "x": 266,
+        "y": 6,
+        "width": 750,
+        "height": 32,
+        "bottom": 38
+      },
+      "toolbar": {
+        "x": 0,
+        "y": 0,
+        "width": 1185,
+        "height": 44,
+        "bottom": 44
+      },
+      "suggestions": {
+        "x": 263.25,
+        "y": 35.25,
+        "width": 755.5,
+        "height": 270.75,
+        "bottom": 306
+      },
+      "viewOpen": true,
+      "noHook": true,
+      "topCompact": false,
+      "sidebarCompact": false,
+      "action": "Command+L",
+      "tabs": 1
+    },
+    {
+      "focused": true,
+      "position": "relative",
+      "transform": "none",
+      "url": {
+        "x": 266,
+        "y": 6,
+        "width": 750,
+        "height": 32,
+        "bottom": 38
+      },
+      "toolbar": {
+        "x": 0,
+        "y": 0,
+        "width": 1185,
+        "height": 44,
+        "bottom": 44
+      },
+      "suggestions": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0,
+        "bottom": 0
+      },
+      "viewOpen": false,
+      "noHook": true,
+      "topCompact": false,
+      "sidebarCompact": false,
+      "action": "Command+T",
+      "tabs": 2
+    },
+    {
+      "focused": true,
+      "position": "relative",
+      "transform": "none",
+      "url": {
+        "x": 266,
+        "y": 6,
+        "width": 750,
+        "height": 32,
+        "bottom": 38
+      },
+      "toolbar": {
+        "x": 0,
+        "y": 0,
+        "width": 1185,
+        "height": 44,
+        "bottom": 44
+      },
+      "suggestions": {
+        "x": 263.25,
+        "y": 35.25,
+        "width": 755.5,
+        "height": 270.75,
+        "bottom": 306
+      },
+      "viewOpen": true,
+      "noHook": true,
+      "topCompact": true,
+      "sidebarCompact": false,
+      "action": "Command+L",
+      "tabs": 1
+    },
+    {
+      "focused": true,
+      "position": "relative",
+      "transform": "none",
+      "url": {
+        "x": 266,
+        "y": 6,
+        "width": 750,
+        "height": 32,
+        "bottom": 38
+      },
+      "toolbar": {
+        "x": 0,
+        "y": 0,
+        "width": 1185,
+        "height": 44,
+        "bottom": 44
+      },
+      "suggestions": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0,
+        "bottom": 0
+      },
+      "viewOpen": false,
+      "noHook": true,
+      "topCompact": true,
+      "sidebarCompact": false,
+      "action": "Command+T",
+      "tabs": 2
+    },
+    {
+      "focused": true,
+      "position": "relative",
+      "transform": "none",
+      "url": {
+        "x": 266,
+        "y": 6,
+        "width": 750,
+        "height": 32,
+        "bottom": 38
+      },
+      "toolbar": {
+        "x": 0,
+        "y": 0,
+        "width": 1185,
+        "height": 44,
+        "bottom": 44
+      },
+      "suggestions": {
+        "x": 263.25,
+        "y": 35.25,
+        "width": 755.5,
+        "height": 270.75,
+        "bottom": 306
+      },
+      "viewOpen": true,
+      "noHook": true,
+      "topCompact": false,
+      "sidebarCompact": true,
+      "action": "Command+L",
+      "tabs": 1
+    },
+    {
+      "focused": true,
+      "position": "relative",
+      "transform": "none",
+      "url": {
+        "x": 266,
+        "y": 6,
+        "width": 750,
+        "height": 32,
+        "bottom": 38
+      },
+      "toolbar": {
+        "x": 0,
+        "y": 0,
+        "width": 1185,
+        "height": 44,
+        "bottom": 44
+      },
+      "suggestions": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0,
+        "bottom": 0
+      },
+      "viewOpen": false,
+      "noHook": true,
+      "topCompact": false,
+      "sidebarCompact": true,
+      "action": "Command+T",
+      "tabs": 2
+    },
+    {
+      "focused": true,
+      "position": "relative",
+      "transform": "none",
+      "url": {
+        "x": 266,
+        "y": 6,
+        "width": 750,
+        "height": 32,
+        "bottom": 38
+      },
+      "toolbar": {
+        "x": 0,
+        "y": 0,
+        "width": 1185,
+        "height": 44,
+        "bottom": 44
+      },
+      "suggestions": {
+        "x": 263.25,
+        "y": 35.25,
+        "width": 755.5,
+        "height": 270.75,
+        "bottom": 306
+      },
+      "viewOpen": true,
+      "noHook": true,
+      "topCompact": true,
+      "sidebarCompact": true,
+      "action": "Command+L",
+      "tabs": 1
+    },
+    {
+      "focused": true,
+      "position": "relative",
+      "transform": "none",
+      "url": {
+        "x": 266,
+        "y": 6,
+        "width": 750,
+        "height": 32,
+        "bottom": 38
+      },
+      "toolbar": {
+        "x": 0,
+        "y": 0,
+        "width": 1185,
+        "height": 44,
+        "bottom": 44
+      },
+      "suggestions": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0,
+        "bottom": 0
+      },
+      "viewOpen": false,
+      "noHook": true,
+      "topCompact": true,
+      "sidebarCompact": true,
+      "action": "Command+T",
+      "tabs": 2
+    }
+  ],
+  "method": "Firefox 158 isolated test profile, real Command+L and Command+T, with all remaining optional feature scripts loaded.",
+  "previousCss": {
+    "focused": true,
+    "position": "fixed",
+    "transform": "matrix(1, 0, 0, 1, -320, 0)",
+    "url": {
+      "x": 272.5,
+      "y": 153.60000610351562,
+      "width": 640,
+      "height": 44,
+      "bottom": 197.60000610351562
+    },
+    "toolbar": {
+      "x": 0,
+      "y": 0,
+      "width": 1185,
+      "height": 44,
+      "bottom": 44
+    },
+    "suggestions": {
+      "x": 272.5,
+      "y": 197.60000610351562,
+      "width": 640,
+      "height": 329,
+      "bottom": 526.6000061035156
+    },
+    "viewOpen": true,
+    "noHook": true
+  },
+  "featuresSha256": "1b419c513576f673e7fcd142ebe0bee8ab6061449f29ac58a3a12259b2154116",
+  "themeSha256": "0a794df0fc5aa56e5e03899c5eb500b76e78cec600bb7c03581e9e6450c00f31",
+  "pass": true
+}

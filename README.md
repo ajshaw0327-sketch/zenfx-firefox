@@ -1,6 +1,6 @@
 # ZenFX for Firefox
 
-A Zen-inspired Firefox interface using native vertical tabs, folder-style tab groups, a floating address field, and native Split View. Firefox supplies the sidebar’s native colors and header images; folder icons follow their native group colors, and the sidebar stays resizable.
+A Zen-inspired Firefox interface using native vertical tabs, folder-style tab groups and native Split View. Firefox supplies the sidebar’s native colors and header images; folder icons follow their native group colors, and the sidebar stays resizable.
 
 **Tested on Firefox 158 for macOS.** Windows/Linux styling and launchers are experimental. This is an independent customization, not an official Mozilla or Zen Browser product.
 
@@ -19,7 +19,7 @@ No Git, cloning, or build tools are needed. Download the ZIP above and extract i
 | Choose | What you get | Requirements |
 | --- | --- | --- |
 | **[Full setup](START-HERE.md)** | Appearance, drag-to-split, Favorites/Pinned/Today, Clear tabs, Compact Mode button and shortcut editor | Desktop Firefox 158; Python 3.10+ (Tk only if you explicitly choose the optional graphical installer); select both profile and application for startup scripts |
-| **[Appearance only](https://github.com/ajshaw0327-sketch/zenfx-firefox/raw/refs/heads/main/dist/ZenFX-Appearance.zip)** | Sidebar, folders, rounded frame, floating address-field styling, and split-header styling | Desktop Firefox 158; copy one CSS file; no Python required |
+| **[Appearance only](https://github.com/ajshaw0327-sketch/zenfx-firefox/raw/refs/heads/main/dist/ZenFX-Appearance.zip)** | Sidebar, folders, rounded frame and split-header styling | Desktop Firefox 158; copy one CSS file; no Python required |
 
 ### Full setup in five steps
 
@@ -31,13 +31,13 @@ No Git, cloning, or build tools are needed. Download the ZIP above and extract i
 
 **Current limits:** startup scripts use an application AutoConfig loader whose full quit/relaunch path remains unverified. On Mac, its application writes can affect Firefox’s signature. Automatic 24-hour cleanup is a separate unsigned add-on and is not installed by setup. [Details, troubleshooting, and removal](START-HERE.md).
 
-New Tab uses Firefox’s normal behavior. The floating New Tab override has been removed; [update existing installations](docs/UPDATING.md) to remove it there too.
+The address bar stays in Firefox’s toolbar, including when focused. The floating address-bar styling and New Tab override have both been removed; [update existing installations](docs/UPDATING.md) to remove it there too.
 
 ## What each part does
 
 | Part | Features | How it runs |
 | --- | --- | --- |
-| Appearance | Resizable vertical sidebar, theme-aware folder icons, rounded page frame, floating address-field styling, paired split-tab headers without an internal divider, draggable empty sidebar space | `userChrome.css` |
+| Appearance | Resizable vertical sidebar, theme-aware folder icons, rounded page frame, paired split-tab headers without an internal divider, draggable empty sidebar space | `userChrome.css` |
 | Drag to split | Drag one ordinary tab onto the left or right side of the current page to create native Split View | Optional browser script |
 | Tab hierarchy | Favorites as icon tiles, Pinned tabs as full rows, unlabeled ordinary tabs below a Clear control; right-click → Tab priority to change a tab’s section | Optional browser script |
 | Compact Mode controls | Button and editable shortcut; the default takes over Firefox's sidebar-toggle binding, Control+Z in the tested macOS build | Optional browser script |
