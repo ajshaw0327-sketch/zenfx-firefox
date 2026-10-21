@@ -10,6 +10,12 @@ In the isolated profile, an active copy of the previously shipped hook was unloa
 
 The remaining floating-CSS defect was reproduced by loading the previous stylesheet: the focused address bar computed to `position: fixed` over the page. With that entire block removed, real Command+L and Command+T kept the address bar within the toolbar in all four normal/compact combinations (eight cases), with native `position: relative`. Normal New Tab creation remained intact. The toolbar placement was also visually inspected with suggestions open. [Docked address-bar checks](validation/docked-address.json).
 
+## Fullscreen toolbar fix
+
+The previous stylesheet still applied a 44px minimum toolbar height and 2px vertical padding while Firefox collapsed the toolbar for page fullscreen. A native fullscreen request in the test profile confirmed that the hidden nav bar retained 4px of padding; the page itself already started at y=0 in that headless reproduction, so the exact macOS white strip was not reproduced.
+
+Page fullscreen now bypasses the foundation layout overrides and explicitly removes the toolbox from layout and painting. Ordinary browser fullscreen retains Firefox's own toolbar sizing, padding and painting. Eight focused checks covered real page-fullscreen entry/Escape and browser-fullscreen address-bar access in all four compact configurations. The page reached y=0, toolbox and nav-bar rectangles were zero, and the first 20 rows of a black fixture contained no white pixels. Exiting page fullscreen inside browser fullscreen restored the native toolbar; normal-window sizing returned after exit. No fixture window errors were recorded. This was a headless Firefox 158/macOS test; physical macOS menu-bar auto-hide was not tested or changed. [Measurements](validation/fullscreen-toolbar.json).
+
 ## Browser checks
 
 - Native vertical tabs, groups, pinned tabs, collapsed rail, split panes, and native menus were exercised.

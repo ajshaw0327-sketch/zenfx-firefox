@@ -11,7 +11,7 @@
   "chrome/zenfx/compact.css": "7c19e9d4eee085dd60fd8916d2729a4354769da7900aa0777c317c3867c1ceb9",
   "chrome/zenfx/custom.css": "fcac60a0c41dc79fcb3920a57ace3f583487837b7c81407854dabcd3ad8b5b0a",
   "chrome/zenfx/features.css": "1b419c513576f673e7fcd142ebe0bee8ab6061449f29ac58a3a12259b2154116",
-  "chrome/zenfx/theme.css": "0a794df0fc5aa56e5e03899c5eb500b76e78cec600bb7c03581e9e6450c00f31",
+  "chrome/zenfx/theme.css": "840efe919132dfd5b2ff93949f41c50df6cda1d7c569f8decc8d28d00ad5f98a",
   "companion/README.md": "41ade033fb28f2a060227b2700afc3593ecd143702bc98e5af32e1b62f23b5a0",
   "companion/background.js": "ac8ef2fec83b9e8e0534ba2ccfb0938d0ed86c7ef25b56eb113fb0b3adf95dd6",
   "companion/cleanup.js": "e148a38688f97f5b928bfad7ae0c7fa2fe40fe43c415386ab2f7ea6f4ccbdb71",
@@ -28,8 +28,8 @@
   "docs/SOURCE-SETUP.md": "b53ae008ac446ad5a1d7987204ed4e7cd2e8fe84656c75cdeeabe833bb03ed59",
   "docs/TAB-HIERARCHY.md": "ccf76dbfb6ee0de46cf42d1c2b089898bf0bc5a7e56f73fe3596d65f71269a6e",
   "docs/THEMES.md": "a0227a66d4165a2687ca1b00e05ddfbbf3df1e9ef0f9817e32bd6104d841e904",
-  "docs/UPDATING.md": "d0766ef9a80906e4ae4d60ef3349c9512e8b1692ef7ad54bd6b40b1c6192b3eb",
-  "docs/VALIDATION.md": "e09226f4c8889694ce287488413179f7c6a8926f02db69a275b50516581cf0f4",
+  "docs/UPDATING.md": "b99d0615f4aadff943a5efa950a4ad6f8838602be5dcc89fe45e12f450d46bb1",
+  "docs/VALIDATION.md": "6da771cd686a3af773cf7c2fea205c58629a6e8c35213946218bea6138c38609",
   "docs/images/compact-interaction.png": "e383a72f91dcf63d7af1d934980a1decc32811673d0adf03b5bb8236435ed34a",
   "docs/images/compact-settings.png": "05016372f79847f9a95633da6d407588ad06938d0dc5cd3385ddae7d8804a2c1",
   "docs/images/folder-colors-dark.png": "e1cd13ef148ba2a624a61e908ea067dcdfe2d055aab0dbb7f756904675cc633c",
@@ -47,6 +47,7 @@
   "docs/validation/compact-trigger.json": "28c4fd8bfe89bab54d2935438f77f562bec3302816781895bb07e59d6d516049",
   "docs/validation/docked-address.json": "0082abdaccd2d9ced9712f388c9754a4a6918e7f469caf4fcced8603fa256825",
   "docs/validation/folder-icons.json": "1358476a943726ab2880fcd8c55f285ca5bf580d6c1a01f09cc966570ae36e86",
+  "docs/validation/fullscreen-toolbar.json": "4c5200134ba922ceef5a41ece9748cc937ad4a687d21abc84cf9a354ed8383e7",
   "docs/validation/managed-update.json": "1b3efb037847ade068c6d06f88084049f3a7040777b822b3b2c849d806237e56",
   "docs/validation/minimal-audit.json": "7d6e1b16fad15aaa635de7eb244fe5d3c59817bab1c9c76894d7ef9765a15f79",
   "docs/validation/minimal-lifecycle.json": "b51d7cc306e3d2e8ac6927d6980b0c8e27c1ffab4b7d7a3220c6918c0715ce6f",
@@ -79,5 +80,5 @@
   "optional-chrome/zenfx-drag-to-split.uc.js": "bdb5fcf7adf8ee0564ffaaac44503317f16adbd7e3f2c26002f5cfd511637d89",
   "optional-chrome/zenfx-newtab-overlay.uc.js": "2e47033dbd7bf2ed79d3f2f10c80126ceeeca2761061394d7f986e2c1cf0d59b",
   "optional-chrome/zenfx-tab-hierarchy.uc.js": "88f5ed355d4ed47ae8b7bda0bb837c9673b8f24be94df7119aa857925e7d24ae",
-  "standalone/userChrome.css": "85e6e1d5f5c4d59ce80082babe483dee3cfecaa3c924aa49f63714a92bcffa77"
+  "standalone/userChrome.css": "9d394c4b48876832f8d9ac19d12ccf3ea09d878a52056038333a31a45ee05b36"
 }

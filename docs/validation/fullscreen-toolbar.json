@@ -1,0 +1,621 @@
+{
+  "cases": [
+    {
+      "dom": true,
+      "size": "fullscreen",
+      "fullScreen": true,
+      "toolbox": {
+        "y": 0,
+        "height": 0,
+        "bottom": 0,
+        "minHeight": "0px",
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "display": "none",
+        "visibility": "collapse"
+      },
+      "nav": {
+        "y": 0,
+        "height": 0,
+        "bottom": 0,
+        "minHeight": "20px",
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "display": "flex",
+        "visibility": "collapse"
+      },
+      "panels": {
+        "y": 0,
+        "height": 768,
+        "bottom": 768,
+        "minHeight": "0px",
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "display": "flex",
+        "visibility": "visible"
+      },
+      "browser": {
+        "y": 0,
+        "height": 768,
+        "bottom": 768,
+        "minHeight": "0px",
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "display": "block",
+        "visibility": "visible"
+      },
+      "exit": {
+        "dom": false,
+        "size": "normal",
+        "fullScreen": false,
+        "toolbox": {
+          "y": 0,
+          "height": 44,
+          "bottom": 44,
+          "minHeight": "auto",
+          "paddingTop": "0px",
+          "paddingBottom": "0px",
+          "display": "flex",
+          "visibility": "visible"
+        },
+        "nav": {
+          "y": 0,
+          "height": 44,
+          "bottom": 44,
+          "minHeight": "44px",
+          "paddingTop": "2px",
+          "paddingBottom": "2px",
+          "display": "flex",
+          "visibility": "visible"
+        },
+        "panels": {
+          "y": 52,
+          "height": 708,
+          "bottom": 760,
+          "minHeight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px",
+          "display": "flex",
+          "visibility": "visible"
+        },
+        "browser": {
+          "y": 53,
+          "height": 707,
+          "bottom": 760,
+          "minHeight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px",
+          "display": "block",
+          "visibility": "visible"
+        }
+      },
+      "topCompact": false,
+      "sidebarCompact": false,
+      "kind": "page fullscreen"
+    },
+    {
+      "dom": false,
+      "size": "fullscreen",
+      "fullScreen": true,
+      "toolbox": {
+        "y": 0,
+        "height": 40,
+        "bottom": 40,
+        "minHeight": "auto",
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "display": "flex",
+        "visibility": "visible"
+      },
+      "nav": {
+        "y": 0,
+        "height": 40,
+        "bottom": 40,
+        "minHeight": "20px",
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "display": "flex",
+        "visibility": "visible"
+      },
+      "panels": {
+        "y": 40,
+        "height": 728,
+        "bottom": 768,
+        "minHeight": "0px",
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "display": "flex",
+        "visibility": "visible"
+      },
+      "browser": {
+        "y": 41,
+        "height": 727,
+        "bottom": 768,
+        "minHeight": "0px",
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "display": "block",
+        "visibility": "visible"
+      },
+      "topCompact": false,
+      "sidebarCompact": false,
+      "kind": "browser fullscreen toolbar accessible"
+    },
+    {
+      "dom": true,
+      "size": "fullscreen",
+      "fullScreen": true,
+      "toolbox": {
+        "y": 0,
+        "height": 0,
+        "bottom": 0,
+        "minHeight": "0px",
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "display": "none",
+        "visibility": "collapse"
+      },
+      "nav": {
+        "y": 0,
+        "height": 0,
+        "bottom": 0,
+        "minHeight": "20px",
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "display": "flex",
+        "visibility": "collapse"
+      },
+      "panels": {
+        "y": 0,
+        "height": 768,
+        "bottom": 768,
+        "minHeight": "0px",
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "display": "flex",
+        "visibility": "visible"
+      },
+      "browser": {
+        "y": 0,
+        "height": 768,
+        "bottom": 768,
+        "minHeight": "0px",
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "display": "block",
+        "visibility": "visible"
+      },
+      "exit": {
+        "dom": false,
+        "size": "normal",
+        "fullScreen": false,
+        "toolbox": {
+          "y": -40,
+          "height": 44,
+          "bottom": 4,
+          "minHeight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px",
+          "display": "flex",
+          "visibility": "visible"
+        },
+        "nav": {
+          "y": -40,
+          "height": 44,
+          "bottom": 4,
+          "minHeight": "44px",
+          "paddingTop": "2px",
+          "paddingBottom": "2px",
+          "display": "flex",
+          "visibility": "visible"
+        },
+        "panels": {
+          "y": 8,
+          "height": 752,
+          "bottom": 760,
+          "minHeight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px",
+          "display": "flex",
+          "visibility": "visible"
+        },
+        "browser": {
+          "y": 9,
+          "height": 751,
+          "bottom": 760,
+          "minHeight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px",
+          "display": "block",
+          "visibility": "visible"
+        }
+      },
+      "topCompact": true,
+      "sidebarCompact": false,
+      "kind": "page fullscreen"
+    },
+    {
+      "dom": false,
+      "size": "fullscreen",
+      "fullScreen": true,
+      "toolbox": {
+        "y": 0,
+        "height": 40,
+        "bottom": 40,
+        "minHeight": "auto",
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "display": "flex",
+        "visibility": "visible"
+      },
+      "nav": {
+        "y": 0,
+        "height": 40,
+        "bottom": 40,
+        "minHeight": "20px",
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "display": "flex",
+        "visibility": "visible"
+      },
+      "panels": {
+        "y": 40,
+        "height": 728,
+        "bottom": 768,
+        "minHeight": "0px",
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "display": "flex",
+        "visibility": "visible"
+      },
+      "browser": {
+        "y": 41,
+        "height": 727,
+        "bottom": 768,
+        "minHeight": "0px",
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "display": "block",
+        "visibility": "visible"
+      },
+      "topCompact": true,
+      "sidebarCompact": false,
+      "kind": "browser fullscreen toolbar accessible"
+    },
+    {
+      "dom": true,
+      "size": "fullscreen",
+      "fullScreen": true,
+      "toolbox": {
+        "y": 0,
+        "height": 0,
+        "bottom": 0,
+        "minHeight": "0px",
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "display": "none",
+        "visibility": "collapse"
+      },
+      "nav": {
+        "y": 0,
+        "height": 0,
+        "bottom": 0,
+        "minHeight": "20px",
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "display": "flex",
+        "visibility": "collapse"
+      },
+      "panels": {
+        "y": 0,
+        "height": 768,
+        "bottom": 768,
+        "minHeight": "0px",
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "display": "flex",
+        "visibility": "visible"
+      },
+      "browser": {
+        "y": 0,
+        "height": 768,
+        "bottom": 768,
+        "minHeight": "0px",
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "display": "block",
+        "visibility": "visible"
+      },
+      "exit": {
+        "dom": false,
+        "size": "normal",
+        "fullScreen": false,
+        "toolbox": {
+          "y": 0,
+          "height": 44,
+          "bottom": 44,
+          "minHeight": "auto",
+          "paddingTop": "0px",
+          "paddingBottom": "0px",
+          "display": "flex",
+          "visibility": "visible"
+        },
+        "nav": {
+          "y": 0,
+          "height": 44,
+          "bottom": 44,
+          "minHeight": "44px",
+          "paddingTop": "2px",
+          "paddingBottom": "2px",
+          "display": "flex",
+          "visibility": "visible"
+        },
+        "panels": {
+          "y": 52,
+          "height": 708,
+          "bottom": 760,
+          "minHeight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px",
+          "display": "flex",
+          "visibility": "visible"
+        },
+        "browser": {
+          "y": 53,
+          "height": 707,
+          "bottom": 760,
+          "minHeight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px",
+          "display": "block",
+          "visibility": "visible"
+        }
+      },
+      "topCompact": false,
+      "sidebarCompact": true,
+      "kind": "page fullscreen"
+    },
+    {
+      "dom": false,
+      "size": "fullscreen",
+      "fullScreen": true,
+      "toolbox": {
+        "y": 0,
+        "height": 40,
+        "bottom": 40,
+        "minHeight": "auto",
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "display": "flex",
+        "visibility": "visible"
+      },
+      "nav": {
+        "y": 0,
+        "height": 40,
+        "bottom": 40,
+        "minHeight": "20px",
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "display": "flex",
+        "visibility": "visible"
+      },
+      "panels": {
+        "y": 40,
+        "height": 728,
+        "bottom": 768,
+        "minHeight": "0px",
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "display": "flex",
+        "visibility": "visible"
+      },
+      "browser": {
+        "y": 41,
+        "height": 727,
+        "bottom": 768,
+        "minHeight": "0px",
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "display": "block",
+        "visibility": "visible"
+      },
+      "topCompact": false,
+      "sidebarCompact": true,
+      "kind": "browser fullscreen toolbar accessible"
+    },
+    {
+      "dom": true,
+      "size": "fullscreen",
+      "fullScreen": true,
+      "toolbox": {
+        "y": 0,
+        "height": 0,
+        "bottom": 0,
+        "minHeight": "0px",
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "display": "none",
+        "visibility": "collapse"
+      },
+      "nav": {
+        "y": 0,
+        "height": 0,
+        "bottom": 0,
+        "minHeight": "20px",
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "display": "flex",
+        "visibility": "collapse"
+      },
+      "panels": {
+        "y": 0,
+        "height": 768,
+        "bottom": 768,
+        "minHeight": "0px",
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "display": "flex",
+        "visibility": "visible"
+      },
+      "browser": {
+        "y": 0,
+        "height": 768,
+        "bottom": 768,
+        "minHeight": "0px",
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "display": "block",
+        "visibility": "visible"
+      },
+      "exit": {
+        "dom": false,
+        "size": "normal",
+        "fullScreen": false,
+        "toolbox": {
+          "y": -40,
+          "height": 44,
+          "bottom": 4,
+          "minHeight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px",
+          "display": "flex",
+          "visibility": "visible"
+        },
+        "nav": {
+          "y": -40,
+          "height": 44,
+          "bottom": 4,
+          "minHeight": "44px",
+          "paddingTop": "2px",
+          "paddingBottom": "2px",
+          "display": "flex",
+          "visibility": "visible"
+        },
+        "panels": {
+          "y": 8,
+          "height": 752,
+          "bottom": 760,
+          "minHeight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px",
+          "display": "flex",
+          "visibility": "visible"
+        },
+        "browser": {
+          "y": 9,
+          "height": 751,
+          "bottom": 760,
+          "minHeight": "0px",
+          "paddingTop": "0px",
+          "paddingBottom": "0px",
+          "display": "block",
+          "visibility": "visible"
+        }
+      },
+      "topCompact": true,
+      "sidebarCompact": true,
+      "kind": "page fullscreen"
+    },
+    {
+      "dom": false,
+      "size": "fullscreen",
+      "fullScreen": true,
+      "toolbox": {
+        "y": 0,
+        "height": 40,
+        "bottom": 40,
+        "minHeight": "auto",
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "display": "flex",
+        "visibility": "visible"
+      },
+      "nav": {
+        "y": 0,
+        "height": 40,
+        "bottom": 40,
+        "minHeight": "20px",
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "display": "flex",
+        "visibility": "visible"
+      },
+      "panels": {
+        "y": 40,
+        "height": 728,
+        "bottom": 768,
+        "minHeight": "0px",
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "display": "flex",
+        "visibility": "visible"
+      },
+      "browser": {
+        "y": 41,
+        "height": 727,
+        "bottom": 768,
+        "minHeight": "0px",
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "display": "block",
+        "visibility": "visible"
+      },
+      "topCompact": true,
+      "sidebarCompact": true,
+      "kind": "browser fullscreen toolbar accessible"
+    }
+  ],
+  "method": "Firefox 158/macOS isolated profile, headless window, trusted page-fullscreen button and Escape/Command+L keys. Original test windows and preferences restored. Physical macOS menu-bar behavior is outside this check.",
+  "top20Pixels": {
+    "bright": 0,
+    "total": 27320
+  },
+  "nestedExit": {
+    "dom": false,
+    "size": "fullscreen",
+    "fullScreen": true,
+    "toolbox": {
+      "y": 0,
+      "height": 40,
+      "bottom": 40,
+      "minHeight": "auto",
+      "paddingTop": "0px",
+      "paddingBottom": "0px",
+      "display": "flex",
+      "visibility": "visible"
+    },
+    "nav": {
+      "y": 0,
+      "height": 40,
+      "bottom": 40,
+      "minHeight": "20px",
+      "paddingTop": "0px",
+      "paddingBottom": "0px",
+      "display": "flex",
+      "visibility": "visible"
+    },
+    "panels": {
+      "y": 40,
+      "height": 728,
+      "bottom": 768,
+      "minHeight": "0px",
+      "paddingTop": "0px",
+      "paddingBottom": "0px",
+      "display": "flex",
+      "visibility": "visible"
+    },
+    "browser": {
+      "y": 41,
+      "height": 727,
+      "bottom": 768,
+      "minHeight": "0px",
+      "paddingTop": "0px",
+      "paddingBottom": "0px",
+      "display": "block",
+      "visibility": "visible"
+    }
+  },
+  "errors": [],
+  "themeSha256": "840efe919132dfd5b2ff93949f41c50df6cda1d7c569f8decc8d28d00ad5f98a",
+  "pass": true
+}

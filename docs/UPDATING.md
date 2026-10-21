@@ -10,6 +10,8 @@ The optional graphical installer has a **Review and update** button. It needs on
 
 Both the floating New Tab hook and the CSS that centered the address bar over the page have been removed. Option 4 updates the stylesheet as well as the scripts. Option 4 replaces its old script with a compatibility cleanup file, so older startup loaders stop intercepting New Tab too. No application-loader change is required for this removal. New Tab opens a regular Firefox tab after restart, and the address bar stays in the toolbar when focused.
 
+The fullscreen toolbar fix is included in both the full setup and appearance-only CSS downloads. It removes Firefox toolbar space during page/video fullscreen while preserving native toolbar access in ordinary browser fullscreen. It does not change macOS menu-bar settings.
+
 ## What stays
 
 - Your tabs, Favorites, folders, themes, Compact Mode preferences, shortcut, and unrelated Firefox settings. Updates now add a small managed session-restore block to `user.js` to enable **Open previous windows and tabs**. Existing preference lines are retained; `prefs.js` and session files are not rewritten by setup.

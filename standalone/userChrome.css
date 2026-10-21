@@ -43,7 +43,7 @@
 /* Gate layout changes to actual native vertical tabs. Popup browser windows and
  * Customize Toolbar retain Firefox's own layout. No Zen-only selectors. */
 @media ((-moz-platform: macos) or (-moz-platform: windows) or (-moz-platform: linux)) {
-  :root:has(#tabbrowser-tabs[orient="vertical"]):not([chromehidden]):not([customizing]) {
+  :root:has(#tabbrowser-tabs[orient="vertical"]):not([chromehidden]):not([customizing]):not([inDOMFullscreen]) {
     --tab-min-height: var(--zenfx-tab-height) !important;
     --tab-border-radius: var(--zenfx-tab-radius) !important;
     --tab-margin-inline-inner: var(--zenfx-sidebar-padding) !important;
@@ -55,51 +55,55 @@
     --sidebar-expanded-launcher-width: var(--zenfx-sidebar-width);
     --sidebar-launcher-collapsed-width: var(--zenfx-sidebar-collapsed-width) !important;
 
-    /* 2. Firefox owns the theme surfaces, images and foregrounds. Keep native
-     * painting on body/toolbox/toolbars rather than covering it with a palette. */
-    #navigator-toolbox {
-      border: 0 !important;
-      box-shadow: none !important;
-      z-index: 8 !important;
-      /* Deliberately no transform here: keeps native popup anchors unchanged. */
-    }
+    /* Native fullscreen owns toolbar size, padding and painting. */
+    &:not([sizemode="fullscreen"]) {
+      /* 2. Firefox owns the theme surfaces, images and foregrounds. Keep native
+       * painting on body/toolbox/toolbars rather than covering it with a palette. */
+      #navigator-toolbox {
+        border: 0 !important;
+        box-shadow: none !important;
+        z-index: 8 !important;
+        /* Deliberately no transform here: keeps native popup anchors unchanged. */
+      }
 
-    /* 3–4. Native macOS controls stay in their native nav-bar/titlebar area.
-     * Do not move, hide, recolor or synthesize traffic-light controls. */
-    #nav-bar {
-      min-height: var(--zenfx-toolbar-height) !important;
-      box-sizing: border-box !important;
-      padding-block: 2px !important;
-      border: 0 !important;
-      box-shadow: none !important;
-      -moz-window-dragging: drag;
-    }
-    #nav-bar :is(toolbarbutton, toolbaritem, input, moz-input-box),
-    #urlbar, #searchbar { -moz-window-dragging: no-drag; }
-    #nav-bar .toolbarbutton-1 {
-      --toolbarbutton-inner-padding: 6px;
-      padding-inline: 2px !important;
-    }
-    #PersonalToolbar {
-      border: 0 !important;
-      padding-inline: var(--zenfx-content-margin) !important;
-    }
+      /* 3–4. Native macOS controls stay in their native nav-bar/titlebar area.
+       * Do not move, hide, recolor or synthesize traffic-light controls. */
+      #nav-bar {
+        min-height: var(--zenfx-toolbar-height) !important;
+        box-sizing: border-box !important;
+        padding-block: 2px !important;
+        border: 0 !important;
+        box-shadow: none !important;
+        -moz-window-dragging: drag;
+      }
+      #nav-bar :is(toolbarbutton, toolbaritem, input, moz-input-box),
+      #urlbar, #searchbar { -moz-window-dragging: no-drag; }
+      #nav-bar .toolbarbutton-1 {
+        --toolbarbutton-inner-padding: 6px;
+        padding-inline: 2px !important;
+      }
+      #PersonalToolbar {
+        border: 0 !important;
+        padding-inline: var(--zenfx-content-margin) !important;
+      }
 
-    /* 5. URL field remains in the horizontal toolbar. Preserve Firefox's
-     * breakout positioning, autocomplete, permissions and identity indicators. */
-    #urlbar > .urlbar-background {
-      border-radius: var(--zenfx-control-radius) !important;
-      box-shadow: none !important;
+      /* 5. URL field remains in the horizontal toolbar. Preserve Firefox's
+       * breakout positioning, autocomplete, permissions and identity indicators. */
+      #urlbar > .urlbar-background {
+        border-radius: var(--zenfx-control-radius) !important;
+        box-shadow: none !important;
+      }
+      #urlbar[focused] > .urlbar-background {
+        background: var(--zenfx-panel) !important;
+        border-color: color-mix(in srgb, var(--zenfx-accent) 55%, transparent) !important;
+      }
+      #urlbar[focused] > .urlbar-background {
+        box-shadow: var(--zenfx-shadow) !important;
+      }
+      .urlbarView { color: var(--zenfx-panel-text) !important; }
+      .urlbarView-row-inner { border-radius: var(--zenfx-control-radius) !important; }
+
     }
-    #urlbar[focused] > .urlbar-background {
-      background: var(--zenfx-panel) !important;
-      border-color: color-mix(in srgb, var(--zenfx-accent) 55%, transparent) !important;
-    }
-    #urlbar[focused] > .urlbar-background {
-      box-shadow: var(--zenfx-shadow) !important;
-    }
-    .urlbarView { color: var(--zenfx-panel-text) !important; }
-    .urlbarView-row-inner { border-radius: var(--zenfx-control-radius) !important; }
 
     /* 6. Keep Firefox's own sidebar expansion/collapse and resize behavior.
      * Do not override its inline expanded width with !important. */
@@ -200,6 +204,12 @@
     }
     #sidebar-box { border: 0 !important; }
   }
+}
+
+/* Video/page fullscreen must have no browser toolbar paint or hit area.
+ * This does not hide the toolbar in ordinary browser/macOS fullscreen. */
+:root[inDOMFullscreen]:has(#tabbrowser-tabs[orient="vertical"]):not([chromehidden]):not([customizing]) #navigator-toolbox {
+  display: none !important;
 }
 
 /* 14–15. Never frame fullscreen video. Native macOS/browser fullscreen retains
