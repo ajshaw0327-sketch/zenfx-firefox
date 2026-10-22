@@ -87,17 +87,10 @@
   "tenReloadsAndNativeWheelRestored": true,
   "errors": [],
   "sourceHashes": {
-    "zenfx-tab-hierarchy.uc.js": "fc3baf873277247838bc300cee372ec71c0fae52e3645cfe8fb56416a7347bc5",
+    "zenfx-tab-hierarchy.uc.js": "1b1cbbc18ee6f5fc793eec1c33fb16ab7065a9a09ab80942391ea55cb8cb1c2e",
     "zenfx-drag-to-split.uc.js": "d561fbc8af2e09bf862f1ca9eaa9a5ba783878f004d19a707f84329986e6f385"
   },
   "pass": true,
-  "nativeBaselineBackgroundReveal": {
-    "hierarchyUnloaded": true,
-    "before": 696.9500122070312,
-    "after": 2709.5166015625,
-    "selectionPreserved": true,
-    "note": "Firefox also reveals an opened background tab with the hierarchy unloaded. Native opening policy is retained; subsequent manual scrolling and refresh remain usable."
-  },
   "fixture": {
     "tabs": 100,
     "initialFavorites": 4,
@@ -105,5 +98,13 @@
     "folders": 3,
     "splitPairs": 1,
     "pages": "disposable about:blank tabs"
+  },
+  "nativeBaselineBackgroundReveal": {
+    "hierarchyUnloaded": true,
+    "before": 696.9500122070312,
+    "after": 2709.5166015625,
+    "selectionPreserved": true,
+    "note": "Firefox also reveals an opened background tab with the hierarchy unloaded. Native opening policy is retained; subsequent manual scrolling and refresh remain usable.",
+    "observationCommit": "ac8d6243f7ffc12d1788695a5df1488c0d215048"
   }
 }

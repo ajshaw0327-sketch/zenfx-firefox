@@ -156,16 +156,16 @@
     return rect.height > 0 && box.height > 0 && rect.top >= box.top - 1 && rect.bottom <= box.bottom + 1 &&
       rect.left >= box.left - 1 && rect.right <= box.right + 1;
   }
-  function revealSelected(tab = gBrowser.selectedTab) {
+  function revealSelected(tab = gBrowser.selectedTab, selectionChanged = false) {
     cancelAnimationFrame(visibilityFrame);
     const box = tab && scrollboxFor(tab), top = box?.scrollTop, left = box?.scrollLeft;
     visibilityFrame = requestAnimationFrame(() => {
       visibilityFrame = 0;
       if (stopped || priorityDrag || strip.hasAttribute("movingtab") || strip.hasAttribute("movingtabgroup") ||
           tab !== gBrowser.selectedTab || !tab?.isConnected || tab.closing || tab.hidden ||
-          box.scrollTop !== top || box.scrollLeft !== left || tabIsVisible(tab)) return;
-      // Respect a wheel/trackpad scroll that arrived after this reveal request.
-      // Native selection still owns the usual reveal on TabSelect.
+          (!selectionChanged && (box.scrollTop !== top || box.scrollLeft !== left)) || tabIsVisible(tab)) return;
+      // Background refresh yields to intervening scrolling. An explicit tab
+      // selection also corrects native reveal geometry after folder layout.
       if (tab.getBoundingClientRect().height) (tab.pinned ? pins : normal).ensureElementIsVisible(tab, true);
     });
   }
@@ -373,6 +373,15 @@
     });
   }
   for (const type of ["TabOpen", "TabClose", "TabShow", "TabHide", "TabPinned", "TabMove", "TabGroupCreate", "TabGroupRemoved", "TabGrouped", "TabUngrouped", "SSTabRestoring", "SSTabRestored"]) listen(strip, type, schedule);
+  listen(strip, "TabSelect", () => {
+    // A collapsed folder reveals its selected child after native selection
+    // layout. Its protected slot can then lie above the old scroll position.
+    // Recheck on the next frame; ordinary refreshes still preserve manual scroll.
+    cancelAnimationFrame(visibilityFrame);
+    visibilityFrame = requestAnimationFrame(() => revealSelected(gBrowser.selectedTab, true));
+  });
+  // Loaded pages can finish their native visual switch after those frames.
+  listen(window, "TabSwitchDone", () => revealSelected(gBrowser.selectedTab, true));
   listen(strip, "TabUnpinned", event => { store.deleteCustomTabValue(event.target, favoriteKey); event.target.removeAttribute("zenfx-favorite"); schedule(); });
   const expansionObserver = new MutationObserver(() => { syncExpansion(); schedule(); revealSelected(); });
   expansionObserver.observe(strip, { attributes: true, attributeFilter: ["expanded", "orient"] });

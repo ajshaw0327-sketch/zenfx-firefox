@@ -1,0 +1,230 @@
+{
+  "method": "Firefox native chrome APIs and real WebDriver pointer/keyboard/wheel input in a disposable window. Loaded local data pages. Controlled drag setup and DOM dragover/drop dispatch; no OS drag loop.",
+  "version": "158.0.1",
+  "checks": [
+    {
+      "name": "60 distinct local pages loaded",
+      "evidence": 60
+    },
+    {
+      "name": "Favorite/pinned/folder order matches native indices",
+      "evidence": [
+        {
+          "label": "Fixture 00",
+          "index": 0,
+          "tier": "favorite"
+        },
+        {
+          "label": "Fixture 01",
+          "index": 1,
+          "tier": "favorite"
+        },
+        {
+          "label": "Fixture 02",
+          "index": 2,
+          "tier": "favorite"
+        },
+        {
+          "label": "Fixture 03",
+          "index": 3,
+          "tier": "pinned"
+        },
+        {
+          "label": "Fixture 04",
+          "index": 4,
+          "tier": "pinned"
+        },
+        {
+          "label": "Fixture 05",
+          "index": 5,
+          "tier": "pinned"
+        },
+        {
+          "label": "Fixture 06",
+          "index": 6,
+          "tier": "pinned"
+        },
+        {
+          "label": "Fixture 07",
+          "index": 7,
+          "tier": "pinned"
+        },
+        {
+          "label": "Fixture 08",
+          "index": 8,
+          "tier": "pinned"
+        },
+        {
+          "label": "Fixture 09",
+          "index": 9,
+          "tier": "pinned"
+        },
+        {
+          "label": "Fixture 10",
+          "index": 10,
+          "tier": "folder"
+        },
+        {
+          "label": "Fixture 11",
+          "index": 11,
+          "tier": "folder"
+        },
+        {
+          "label": "Fixture 12",
+          "index": 12,
+          "tier": "folder"
+        },
+        {
+          "label": "Fixture 13",
+          "index": 13,
+          "tier": "folder"
+        },
+        {
+          "label": "Fixture 14",
+          "index": 14,
+          "tier": "folder"
+        },
+        {
+          "label": "Fixture 15",
+          "index": 15,
+          "tier": "folder"
+        },
+        {
+          "label": "Fixture 16",
+          "index": 16,
+          "tier": "folder"
+        },
+        {
+          "label": "Fixture 17",
+          "index": 17,
+          "tier": "folder"
+        },
+        {
+          "label": "Fixture 18",
+          "index": 18,
+          "tier": "today"
+        },
+        {
+          "label": "Fixture 19",
+          "index": 19,
+          "tier": "today"
+        }
+      ]
+    },
+    {
+      "name": "Native pointer and keyboard selection across Favorites, pins, groups and ordinary tabs",
+      "evidence": true
+    },
+    {
+      "name": "Group rename/color/collapse/selection/ungroup and native Unpin clear Favorite metadata",
+      "evidence": true
+    },
+    {
+      "name": "Favorite URL, native pin and custom metadata survive native SessionStore round-trip",
+      "evidence": true
+    },
+    {
+      "name": "Command+W and Command+Shift+T restore the selected loaded page",
+      "evidence": true
+    },
+    {
+      "name": "Visible New Tab row creates one native tab without a floating search overlay",
+      "evidence": true
+    },
+    {
+      "name": "Six native-setup priority drops: ordinary to pins/Favorites and reorder/tier transitions",
+      "evidence": true
+    },
+    {
+      "name": "Split drop on both halves, correct order, clean header transforms, priority guard and separation",
+      "evidence": true
+    },
+    {
+      "name": "20 canceled drags leave page clicks working and no stale split overlay",
+      "evidence": true
+    },
+    {
+      "name": "Scrollable ordinary tabs, stable refresh, no New Tab overlap at three layouts",
+      "evidence": [
+        {
+          "width": 180,
+          "expanded": true,
+          "windowHeight": 500,
+          "buttonHeight": 36,
+          "overlap": [],
+          "client": 181,
+          "scroll": 1723,
+          "stableScrollTop": 300
+        },
+        {
+          "width": 300,
+          "expanded": true,
+          "windowHeight": 768,
+          "buttonHeight": 36,
+          "overlap": [],
+          "client": 396,
+          "scroll": 1723,
+          "stableScrollTop": 300
+        },
+        {
+          "width": 240,
+          "expanded": false,
+          "windowHeight": 500,
+          "buttonHeight": 36,
+          "overlap": [],
+          "client": 117,
+          "scroll": 1738,
+          "stableScrollTop": 552
+        }
+      ]
+    },
+    {
+      "name": "Tab edge reveal, selection and Command+T/W in all four compact configurations",
+      "evidence": [
+        {
+          "topCompact": false,
+          "sidebarCompact": false
+        },
+        {
+          "topCompact": true,
+          "sidebarCompact": false
+        },
+        {
+          "topCompact": false,
+          "sidebarCompact": true
+        },
+        {
+          "topCompact": true,
+          "sidebarCompact": true
+        }
+      ]
+    },
+    {
+      "name": "Real Clear click closes ordinary tabs and split pair; protects pins/Favorites/groups/hidden; Undo works",
+      "evidence": {
+        "closed": 44,
+        "protected": 16
+      }
+    },
+    {
+      "name": "Clearing the final ordinary tabs leaves a usable open window",
+      "evidence": true
+    },
+    {
+      "name": "10 full reloads create no duplicate controls; horizontal switch and uninstall restore native layout",
+      "evidence": true
+    }
+  ],
+  "sourceHashes": {
+    "zenfx-tab-hierarchy.uc.js": "1b1cbbc18ee6f5fc793eec1c33fb16ab7065a9a09ab80942391ea55cb8cb1c2e",
+    "zenfx-drag-to-split.uc.js": "d561fbc8af2e09bf862f1ca9eaa9a5ba783878f004d19a707f84329986e6f385",
+    "zenfx-compact-toggle.uc.js": "57fca8a4ee38585d418fc123be572a97fcd60eb81f5a83b5148d8601b461de64",
+    "zenfx-newtab-overlay.uc.js": "2e47033dbd7bf2ed79d3f2f10c80126ceeeca2761061394d7f986e2c1cf0d59b"
+  },
+  "limits": [
+    "Physical macOS drag release and overflow drag autoscroll are not certified.",
+    "SessionStore round-trip is tested; this does not certify application AutoConfig cold startup or physical sleep."
+  ],
+  "errors": [],
+  "pass": true
+}
