@@ -1,0 +1,9 @@
+# Zen scrolling source comparison
+
+Zen's public [arrowscrollbox patch](https://github.com/zen-browser/desktop/blob/cd46e498965b67a5c079ed20af5683c9ff69b595/src/toolkit/content/widgets/arrowscrollbox-js.patch), revision `cd46e498965b67a5c079ed20af5683c9ff69b595`, bypasses its main tab-list wheel handler and changes overflow tracking for its workspace containers. Its [vertical-tab CSS](https://github.com/zen-browser/desktop/blob/cd46e498965b67a5c079ed20af5683c9ff69b595/src/zen/tabs/zen-tabs/vertical-tabs.css) uses an overflow scroller for those containers and hides Firefox's original pinned container.
+
+The actual Firefox 158.0.1 widget in the test profile already has `#updateInputListeners()`: it removes wheel/touch listeners entirely in vertical mode, allowing native asynchronous scrolling without waiting for a script handler. Its ordinary and pinned scrollboxes both computed to `overflow-y: auto`. Porting Zen's older wheel early-return would add a redundant method wrapper; the tested final implementation leaves Firefox's methods and listeners alone. Zen's whole layout also depends on workspace containers absent from standard Firefox.
+
+The confirmed ZenFX defect was separate: each hierarchy refresh explicitly revealed the selected tab, overriding a manual scroll elsewhere. The fix preserves a visible selection after layout changes without pulling an offscreen selection back into view. Explicit selection, sidebar expansion and priority changes retain their reveal behavior. Canceled priority drags and split previews release temporary state on window blur or the next pointer gesture.
+
+No Zen code was copied into this change. The public code was inspected to verify its design and avoid adding an unnecessary scrolling layer. [Native regression checks](validation/tab-scrolling.json).

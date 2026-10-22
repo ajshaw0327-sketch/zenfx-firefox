@@ -147,11 +147,34 @@
     } else restoreSlots();
     sizeFavorites();
   }
+  const normalScrollbox = normal.shadowRoot.querySelector('[part="scrollbox"]');
+  const pinnedScrollbox = pins.shadowRoot.querySelector('[part="scrollbox"]');
+  const scrollboxFor = tab => tab.pinned ? pinnedScrollbox : normalScrollbox;
+  function tabIsVisible(tab) {
+    if (!tab?.isConnected || tab.closing || tab.hidden) return false;
+    const rect = tab.getBoundingClientRect(), box = scrollboxFor(tab).getBoundingClientRect();
+    return rect.height > 0 && box.height > 0 && rect.top >= box.top - 1 && rect.bottom <= box.bottom + 1 &&
+      rect.left >= box.left - 1 && rect.right <= box.right + 1;
+  }
+  function revealSelected(tab = gBrowser.selectedTab) {
+    cancelAnimationFrame(visibilityFrame);
+    const box = tab && scrollboxFor(tab), top = box?.scrollTop, left = box?.scrollLeft;
+    visibilityFrame = requestAnimationFrame(() => {
+      visibilityFrame = 0;
+      if (stopped || priorityDrag || strip.hasAttribute("movingtab") || strip.hasAttribute("movingtabgroup") ||
+          tab !== gBrowser.selectedTab || !tab?.isConnected || tab.closing || tab.hidden ||
+          box.scrollTop !== top || box.scrollLeft !== left || tabIsVisible(tab)) return;
+      // Respect a wheel/trackpad scroll that arrived after this reveal request.
+      // Native selection still owns the usual reveal on TabSelect.
+      if (tab.getBoundingClientRect().height) (tab.pinned ? pins : normal).ensureElementIsVisible(tab, true);
+    });
+  }
   function refresh() {
     if (stopped || updating || priorityDrag || strip.hasAttribute("movingtab") || strip.hasAttribute("movingtabgroup")) return;
     cancelAnimationFrame(queuedFrame); queuedFrame = 0;
     updating = true;
     try {
+      const selected = gBrowser.selectedTab, keepSelectionVisible = tabIsVisible(selected);
       const tabs = Array.from(gBrowser.tabs);
       const pinned = tabs.filter(tab => tab.pinned && !tab.closing);
       const favorites = new Set(pinned.filter(favorite));
@@ -178,19 +201,9 @@
         slots.delete(element);
       }
       syncExpansion(folders);
-      // Reordering protected folders and assigning slots changes scroll geometry
-      // after Firefox has already revealed the selected tab.
-      cancelAnimationFrame(visibilityFrame);
-      visibilityFrame = requestAnimationFrame(() => {
-        visibilityFrame = 0;
-        const selected = gBrowser.selectedTab;
-        if (!stopped && !strip.hasAttribute("movingtab") && !strip.hasAttribute("movingtabgroup") && selected?.isConnected) {
-          // Flush the new slot geometry before Firefox's no-flush visibility
-          // check. Its shared queue also cancels outdated reveal requests.
-          selected.getBoundingClientRect();
-          (selected.pinned ? pins : normal).ensureElementIsVisible(selected, true);
-        }
-      });
+      // Preserve an already-visible selection after layout changes. Background
+      // tab activity must not pull a manually scrolled list back to selection.
+      if (keepSelectionVisible) revealSelected(selected);
       const count = tabs.filter(clearable).length;
       if (count !== clearCount) {
         clearCount = count;
@@ -211,7 +224,7 @@
       if (tier === "today" && tab.group) gBrowser.ungroupTab(tab);
       if (tier === "pinned") gBrowser.pinTab(tab); else gBrowser.unpinTab(tab);
     }
-    refresh(); return true;
+    refresh(); if (gBrowser.selectedTab === tab) revealSelected(tab); return true;
   }
   function markDrop(target = null, edge = null) {
     if (priorityDrag?.target === target && priorityDrag?.edge === edge) return;
@@ -316,6 +329,10 @@
       }
     });
     during(document, "dragend", endPriorityDrag);
+    // A drag ending outside this document can lose its final dragend. The next
+    // gesture or a window deactivation must not leave refresh permanently paused.
+    during(document, "pointerdown", endPriorityDrag);
+    during(window, "blur", event => { if (event.target === window && Services.focus.activeWindow !== window) endPriorityDrag(); });
     during(document, "keydown", event => { if (event.key === "Escape") endPriorityDrag(); });
     during(strip, "TabClose", event => { if (event.target === source) endPriorityDrag(); });
   }, true);
@@ -357,7 +374,7 @@
   }
   for (const type of ["TabOpen", "TabClose", "TabShow", "TabHide", "TabPinned", "TabMove", "TabGroupCreate", "TabGroupRemoved", "TabGrouped", "TabUngrouped", "SSTabRestoring", "SSTabRestored"]) listen(strip, type, schedule);
   listen(strip, "TabUnpinned", event => { store.deleteCustomTabValue(event.target, favoriteKey); event.target.removeAttribute("zenfx-favorite"); schedule(); });
-  const expansionObserver = new MutationObserver(() => { syncExpansion(); schedule(); });
+  const expansionObserver = new MutationObserver(() => { syncExpansion(); schedule(); revealSelected(); });
   expansionObserver.observe(strip, { attributes: true, attributeFilter: ["expanded", "orient"] });
   const dragObserver = new MutationObserver(schedule);
   dragObserver.observe(strip, { attributes: true, attributeFilter: ["movingtab", "movingtabgroup"] });
@@ -373,7 +390,7 @@
     // Do not resize the observed grid synchronously inside ResizeObserver.
     if (!sizeFrame) sizeFrame = requestAnimationFrame(() => { sizeFrame = 0; sizeFavorites(); });
   }); sizeObserver.observe(pins);
-  root.setAttribute("zenfx-tab-hierarchy", "true"); refresh();
+  root.setAttribute("zenfx-tab-hierarchy", "true"); refresh(); revealSelected();
   const api = window.ZenfxTabHierarchy = {
     setTier, refresh, clearToday,
     tierOf(tab) { return favorite(tab) ? "favorite" : tab.pinned ? "pinned" : tab.group ? "folder" : "today"; },

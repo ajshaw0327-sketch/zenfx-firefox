@@ -129,12 +129,16 @@
     listenActive(gBrowser.tabContainer, "TabSelect", () => {
       if (state && !state.dropping && gBrowser.selectedTab !== state.target) clear();
     });
+    // A missed off-window dragend must not leave hit-testing zones over the page.
+    // These listeners exist only while a drag overlay is active.
+    listenActive(document, "pointerdown", clear);
+    listenActive(window, "blur", event => { if (event.target === window && Services.focus.activeWindow !== window) clear(); });
     listenActive(window, "resize", clear);
     listenActive(document, "fullscreenchange", clear);
     listenActive(document, "keydown", event => { if (event.key === "Escape") clear(); });
   }
   listen(document, "dragend", () => clear());
-  listen(strip, "pointerup", () => { if (!state && pending === null) pressed = null; });
+  listen(window, "pointerup", () => { if (!state && pending === null) pressed = null; });
   const api = window.ZenfxDragToSplit = {
     get active() { return !!state; },
     uninstall() { clear(); for (const remove of removers.splice(0)) remove(); if (window.ZenfxDragToSplit === api) delete window.ZenfxDragToSplit; },

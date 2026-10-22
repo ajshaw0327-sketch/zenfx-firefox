@@ -59,6 +59,8 @@ This feature requires the **hierarchy script plus the updated CSS and loader**; 
 
 ![Native split-tab headers with no divider](docs/images/split-tabs.png)
 
+Vertical tabs use Firefox’s existing asynchronous overflow scroller. [Zen source comparison and scrolling fixes](docs/ZEN-SCROLLING.md).
+
 ## Start with appearance only
 
 1. Open `about:support` in Firefox and reveal **Profile Folder**. Quit Firefox completely.

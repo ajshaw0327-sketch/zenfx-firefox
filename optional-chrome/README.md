@@ -12,6 +12,8 @@ Right-click the Compact Mode button or use **Tools → ZenFX shortcut settings�
 
 New Tab uses Firefox’s normal command and creates a regular tab. The floating New Tab feature has been removed. `zenfx-newtab-overlay.uc.js` is now a tiny compatibility cleanup file: older loaders can still reference it, but it only unloads an already-running old hook and adds no listeners or command wrappers. Managed updates replace the previous hook with this file without changing application files.
 
+Vertical tabs keep Firefox’s native asynchronous scrolling; [comparison with Zen’s public implementation](../docs/ZEN-SCROLLING.md). Background tab-list refreshes preserve manual scroll position; native tab selection and sidebar expansion still reveal the selected tab. Canceled priority drags and Split View previews release their temporary state on the next pointer gesture or window deactivation, including when a dragend was missed. No polling is added.
+
 ## Persistence
 
 The [guided setup](../START-HERE.md) offers a profile-scoped AutoConfig loader when both a profile and Firefox application are explicitly selected. It adds two application files, preserves conflicting AutoConfig setups by refusing installation, and backs up changed profile files. Application updates may remove the loader.

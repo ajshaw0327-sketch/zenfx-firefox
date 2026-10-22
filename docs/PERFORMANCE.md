@@ -51,6 +51,10 @@ The real extension API verified **zero alarms while paused**, with the normal fi
 
 Floating-search recovery adds focus and power-event handlers only while the overlay is open. Signals share a single pending display frame; a background or minimized window waits for activation rather than retrying. Closing the overlay removes all four power observers and cancels pending recovery, returning to the same two idle listeners. Thirty native open/recover/cancel cycles confirmed those counts. [Recovery checks](validation/search-wake.json).
 
+## Native scrolling and canceled gestures
+
+Firefox 158 already removes wheel/touch listeners in vertical mode and uses native asynchronous overflow scrolling. The hierarchy keeps that path intact. Refreshes preserve a manually scrolled list instead of always revealing the selected tab; intentional selection/expansion can still reveal it. Drag cleanup adds handlers only while a gesture is active, and uses the active browser window rather than transient document focus to distinguish deactivation from tab switching. No polling or permanent wheel listener was added. [Zen source comparison](ZEN-SCROLLING.md) and [native regression checks](validation/tab-scrolling.json).
+
 ## What these results do not establish
 
 No controlled battery-discharge test, energy-use comparison, or total retained-RAM comparison has been completed. Source/archive sizes are not RAM measurements. No percentage battery saving or negligible-overhead guarantee is claimed. The small new caches hold counts, widths, and an activity map; they do not retain extra webpage/browser instances or create another process.

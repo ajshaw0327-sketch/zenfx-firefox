@@ -18,4 +18,6 @@ Changing CSS/JavaScript, rebuilding ZIPs, or passing unit tests does not certify
 
 The retirement tests verify that old loaders can still evaluate the former New Tab script filename without intercepting native commands, and that an already-loaded old hook is unloaded once. Native keyboard/button/menu entry points require the isolated Firefox checks recorded in the validation report.
 
+Split-drag lifecycle tests cover a missing dragend followed by a fresh gesture, window versus descendant blur, release outside the strip, tab close/pin, 50 repeated cancellations, and uninstall during a gesture. Browser scrolling checks separately use real wheel input with overflowing ordinary/pinned tabs and native tab selection.
+
 Installer tests include managed updates from the old entry format, preserved custom CSS/settings/application files, no-op/preview behavior, rollback/retry, and original uninstall restoration after an update. All targets are temporary filesystem fixtures. To test an update manually, use the latest extracted package, a closed disposable Firefox 158 profile, and `--update --dry-run` before making changes. No normal browsing profile or real application bundle is needed for the automated checks.
