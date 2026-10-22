@@ -158,6 +158,9 @@
   }
   function revealSelected(tab = gBrowser.selectedTab, selectionChanged = false) {
     cancelAnimationFrame(visibilityFrame);
+    visibilityFrame = 0;
+    // Horizontal tabs use Firefox's own containers and selection scrolling.
+    if (strip.getAttribute("orient") !== "vertical") return;
     const box = tab && scrollboxFor(tab), top = box?.scrollTop, left = box?.scrollLeft;
     visibilityFrame = requestAnimationFrame(() => {
       visibilityFrame = 0;
@@ -180,11 +183,12 @@
       const favorites = new Set(pinned.filter(favorite));
       favoriteCount = favorites.size;
       const ordered = [...favorites, ...pinned.filter(tab => !favorites.has(tab))];
-      ordered.forEach((tab, tabIndex) => { if (tab.index !== tabIndex) gBrowser.moveTabTo(tab, { tabIndex }); });
+      const vertical = strip.getAttribute("orient") === "vertical";
+      if (vertical) ordered.forEach((tab, tabIndex) => { if (tab.index !== tabIndex) gBrowser.moveTabTo(tab, { tabIndex }); });
       // Match native tab/keyboard order to the protected folders above Clear.
       let index = pinned.length;
       const folders = groups();
-      for (const group of strip.getAttribute("orient") === "vertical" ? folders : []) {
+      for (const group of vertical ? folders : []) {
         const tabs = group.tabs.filter(tab => !tab.closing);
         if (tabs[0]?.index !== index) gBrowser.moveTabTo(group, { tabIndex: index, forceUngrouped: true });
         index += tabs.length;
@@ -378,6 +382,8 @@
     // layout. Its protected slot can then lie above the old scroll position.
     // Recheck on the next frame; ordinary refreshes still preserve manual scroll.
     cancelAnimationFrame(visibilityFrame);
+    visibilityFrame = 0;
+    if (strip.getAttribute("orient") !== "vertical") return;
     visibilityFrame = requestAnimationFrame(() => revealSelected(gBrowser.selectedTab, true));
   });
   // Loaded pages can finish their native visual switch after those frames.

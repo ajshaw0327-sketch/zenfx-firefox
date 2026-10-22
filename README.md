@@ -1,6 +1,6 @@
 # ZenFX for Firefox
 
-A Zen-inspired Firefox interface using native vertical tabs, folder-style tab groups and native Split View. Firefox supplies the sidebar’s native colors and header images; folder icons follow their native group colors, and the sidebar stays resizable.
+A Zen-inspired Firefox interface using native vertical tabs, folder-style tab groups and native Split View. Firefox supplies the sidebar’s native colors and header images; folder icons follow their native group colors in the expanded sidebar, collapsed rail and horizontal tab bar. The sidebar stays resizable.
 
 **Tested on Firefox 158 for macOS.** Windows/Linux styling and launchers are experimental. This is an independent customization, not an official Mozilla or Zen Browser product.
 
