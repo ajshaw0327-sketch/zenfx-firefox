@@ -35,7 +35,7 @@
 | New Tab | Opens a normal Firefox tab; the floating New Tab feature has been removed |
 | Tab hierarchy | Right-click a tab → **Tab priority** → Favorites / Pinned tabs / Today tabs; **↓ Clear** sits above New Tab |
 | Compact controls | Right-click the Compact Mode button, or use **Tools → ZenFX shortcut settings…**, to choose hidden bars and record a shortcut |
-| Drag to split | Drag an ordinary tab onto the left or right side of the current page; dropping creates native Split View |
+| Drag to split | Drag another ordinary tab onto the left or right side of the current page with no modifier key; dropping creates native Split View |
 | Tab restoration | Quit Firefox with windows still open, then reopen it; previous regular tabs return. On Mac use ⌘Q. |
 
 Tab hierarchy, Compact controls, and drag-to-split need the optional scripts. If only the appearance changes, follow the troubleshooting table below. The AutoConfig loader’s full quit/relaunch path remains unverified; these checks let you confirm it on your installation.

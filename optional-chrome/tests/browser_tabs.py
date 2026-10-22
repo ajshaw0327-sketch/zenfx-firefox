@@ -214,7 +214,15 @@ def main():
             assert js('return !ZenfxTabHierarchy.setTier(_tabs[35],"pinned")&&!_tabs[35].pinned;')
             assert js('return [_tabs[35],_tabs[20]].every(t=>!t.style.transform);')
             js('_tabs[35].splitview.unsplitTabs();'); wait()
-        check('Split drop on both halves, correct order, clean header transforms, priority guard and separation')
+        check('Plain split drop on both halves without modifiers, correct order, clean headers, priority guard and separation')
+
+        for fallback in ['copy', 'modifier']:
+            js('_beginDrag(_tabs[35]);_showSplitFixture(_tabs[35],_tabs[20]);'); wait()
+            assert js("const z=document.querySelector('[data-zenfx-split-side=left]');return !z.dispatchEvent(new DragEvent('dragover',{bubbles:true,cancelable:true,dataTransfer:_dt}));")
+            result = js("""const z=document.querySelector('[data-zenfx-split-side=left]');""" + ("_dt.dropEffect='copy';" if fallback == 'copy' else '') + """const init={bubbles:true,cancelable:true,dataTransfer:_dt,altKey:""" + str(fallback == 'modifier').lower() + """};const over=z.dispatchEvent(new DragEvent('dragover',init)),drop=z.dispatchEvent(new DragEvent('drop',init));return {over,drop,color:z.style.color,active:ZenfxDragToSplit.active,split:!!_tabs[35].splitview};""")
+            assert result == {'over': True, 'drop': True, 'color': 'transparent', 'active': True, 'split': False}, (fallback, result)
+            driver.key('\ue00c'); js('delete _tabs[35]._dragData;')
+        check('Copy and modified gestures are not claimed and clear a preceding split highlight')
 
         for cycle in range(20):
             js('_beginDrag(_tabs[35]);_showSplitFixture(_tabs[35],_tabs[20]);')

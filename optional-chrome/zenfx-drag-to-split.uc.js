@@ -53,7 +53,7 @@
     if (!zone || !state.overlay.contains(zone)) return null;
     try {
       const dt = event.dataTransfer;
-      if (dt.mozItemCount !== 1 || dt.mozGetDataAt(TAB_TYPE, 0) !== state.source) return null;
+      if (dt.dropEffect === "copy" || dt.mozItemCount !== 1 || dt.mozGetDataAt(TAB_TYPE, 0) !== state.source) return null;
       // Leave native copy/multi-tab/cross-window gestures alone.
       if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return null;
     } catch { return null; }
@@ -71,26 +71,30 @@
     // Native tab code populates DataTransfer and stops bubbling after capture.
     pending = setTimeout(() => {
       pending = null;
-      if (event.defaultPrevented || !source?._dragData || source._dragData.movingTabs.length !== 1) { pressed = null; return; }
+      if (event.defaultPrevented || Services.focus.activeWindow !== window ||
+          !source?._dragData || source._dragData.movingTabs.length !== 1) { pressed = null; return; }
       show(source, target);
     }, 0);
   });
   function watchDrag() {
     listenActive(document, "dragover", event => {
       const zone = zoneFor(event);
+      // Dragover fires repeatedly while the pointer stays on the same half.
+      // An invalid/copy gesture must also clear the preceding valid highlight.
+      const side = zone?.dataset.zenfxSplitSide ?? null;
+      if (state && state.side !== side) {
+        state.side = side;
+        for (const child of state.overlay.children) {
+          const active = child === zone;
+          child.style.background = active ? "color-mix(in srgb,var(--zenfx-accent,AccentColor) 18%,transparent)" : "transparent";
+          child.style.boxShadow = active ? "inset 0 0 0 2px var(--zenfx-accent,AccentColor)" : "none";
+          child.style.color = active ? "var(--zenfx-foreground,CanvasText)" : "transparent";
+          child.firstElementChild.style.background = active ? "var(--zenfx-panel,Canvas)" : "transparent";
+        }
+      }
       if (!zone) return;
       event.preventDefault(); event.stopImmediatePropagation();
       event.dataTransfer.dropEffect = "move";
-      // Dragover fires repeatedly while the pointer stays on the same half.
-      if (state.side === zone.dataset.zenfxSplitSide) return;
-      state.side = zone.dataset.zenfxSplitSide;
-      for (const child of state.overlay.children) {
-        const active = child === zone;
-        child.style.background = active ? "color-mix(in srgb,var(--zenfx-accent,AccentColor) 18%,transparent)" : "transparent";
-        child.style.boxShadow = active ? "inset 0 0 0 2px var(--zenfx-accent,AccentColor)" : "none";
-        child.style.color = active ? "var(--zenfx-foreground,CanvasText)" : "transparent";
-        child.firstElementChild.style.background = active ? "var(--zenfx-panel,Canvas)" : "transparent";
-      }
     });
     listenActive(document, "drop", event => {
       const zone = zoneFor(event);

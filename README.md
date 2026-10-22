@@ -38,7 +38,7 @@ The address bar stays in Firefox’s toolbar, including when focused. The floati
 | Part | Features | How it runs |
 | --- | --- | --- |
 | Appearance | Resizable vertical sidebar, theme-aware folder icons, rounded page frame, paired split-tab headers without an internal divider, draggable empty sidebar space | `userChrome.css` |
-| Drag to split | Drag one ordinary tab onto the left or right side of the current page to create native Split View | Optional browser script |
+| Drag to split | Drag another ordinary tab onto the left or right side of the current page to create native Split View; no modifier key is needed | Optional browser script |
 | Tab hierarchy | Favorites as icon tiles, Pinned tabs as full rows, unlabeled ordinary tabs below a Clear control; right-click → Tab priority to change a tab’s section | Optional browser script |
 | Compact Mode controls | Button and editable shortcut; the default takes over Firefox's sidebar-toggle binding, Control+Z in the tested macOS build | Optional browser script |
 | Tab cleanup | Protect pinned/grouped tabs; close eligible ordinary web tabs after 24 hours of inactivity, with pause, preview, and recovery controls | Separate unsigned WebExtension source |

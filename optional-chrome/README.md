@@ -4,7 +4,7 @@ These are privileged Firefox 158 interface scripts, not normal WebExtensions. A 
 
 | Script | Behavior |
 | --- | --- |
-| `zenfx-drag-to-split.uc.js` | Drag one ordinary unpinned tab onto the left/right half of the current page to create native Split View. Copy, modified, multi-tab, cross-window, and existing-split gestures remain outside this hook. |
+| `zenfx-drag-to-split.uc.js` | Drag another ordinary unpinned tab onto the left/right half of the current page to create native Split View. No modifier key is required. Copy, modified, multi-tab, cross-window, and existing-split gestures remain outside this hook; an ineligible drag clears any previous split highlight. |
 | `zenfx-tab-hierarchy.uc.js` | Adds Favorites icon tiles, full-width Pinned tabs, protected folders, and unlabeled ordinary tabs. Drag a single tab onto a tile/row to change its priority and position, or right-click → Tab priority. A **↓ Clear** divider closes ordinary tabs; New Tab sits immediately below it. Favorites use native pinning and saved session metadata; the cleanup add-on protects them as pinned tabs. |
 | `zenfx-compact-toggle.uc.js` | Adds the Compact Mode toolbar button and editable shortcut. Measures the real top-toolbar height so the shared compact sidebar inset follows bookmarks, theme sizing, and density changes. Its default replaces Firefox's localized sidebar-toggle shortcut (Control+Z on tested macOS). Choosing another shortcut, No shortcut, or uninstall restores native handling. |
 

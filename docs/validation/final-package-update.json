@@ -1,0 +1,12 @@
+{
+  "method": "Previous and current setup archives extracted into temporary filesystem fixtures; no live profile or application installation.",
+  "previousCommit": "b82dcf4d346e8b43d64114e1b37d5505fe1ab555",
+  "checks": [
+    "Preview identifies changed split script and writes nothing",
+    "Update preserves preference lines, shortcut, custom CSS, session bytes and application loader; managed restore block remains last",
+    "Every managed runtime file matches the current source",
+    "Second update is a true no-op, including file timestamps",
+    "Uninstall restores original appearance and retains later user settings, custom CSS and session bytes"
+  ],
+  "pass": true
+}

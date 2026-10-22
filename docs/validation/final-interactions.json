@@ -1,0 +1,62 @@
+{
+  "method": "Headless Firefox test profile; real page context menu and select popup clicks; controlled native moving-tab setup with real next-click/window-switch cleanup. OS drag release is not certified.",
+  "version": "158.0.1",
+  "popupCases": [
+    {
+      "independent": false,
+      "popup": "page context menu",
+      "topBottom": 4,
+      "sidebarRight": 0,
+      "topHidden": true,
+      "sideHidden": true
+    },
+    {
+      "independent": false,
+      "popup": "web select",
+      "topBottom": 4,
+      "sidebarRight": 0,
+      "topHidden": true,
+      "sideHidden": true
+    },
+    {
+      "independent": true,
+      "popup": "page context menu",
+      "topBottom": 4,
+      "sidebarRight": 0,
+      "topHidden": true,
+      "sideHidden": true
+    },
+    {
+      "independent": true,
+      "popup": "web select",
+      "topBottom": 4,
+      "sidebarRight": 0,
+      "topHidden": true,
+      "sideHidden": true
+    }
+  ],
+  "movingRecovery": [
+    {
+      "signal": "pointer",
+      "moving": false,
+      "data": false
+    },
+    {
+      "signal": "switch-then-pointer",
+      "moving": false,
+      "data": false
+    },
+    {
+      "signal": "native-end",
+      "moving": false,
+      "data": false
+    }
+  ],
+  "errors": [],
+  "sourceHashes": {
+    "chrome/zenfx/compact.css": "7c19e9d4eee085dd60fd8916d2729a4354769da7900aa0777c317c3867c1ceb9",
+    "optional-chrome/zenfx-tab-hierarchy.uc.js": "98d07d01c4bad6e1181515e33dcec41de01b5341691a72d27c88c217fed52b4a",
+    "optional-chrome/zenfx-drag-to-split.uc.js": "ab3f4d2820c3ffc2f96478f22011116867ff8b11841e213225f3327990a9b623"
+  },
+  "pass": true
+}
